@@ -1,1 +1,3 @@
 jobs/slurm_output/*.out
+data/chairs/
+data/chairs/*
