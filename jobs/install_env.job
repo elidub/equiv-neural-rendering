@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#SBATCH --gres=gpu:0
+#SBATCH --job-name=InstallEnv
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=3
+#SBATCH --time=04:00:00
+#SBATCH --mem=32000M
+#SBATCH --output=jobs/slurm_output/install-env_%A.out
+
+module purge
+module load 2021
+module load Anaconda3/2021.05
+
+cd $HOME/equiv-neural-rendering/
+conda env create -f env_nr.yml
