@@ -28,8 +28,11 @@ def rotate(volume, rotation_matrix, mode='bilinear'):
     # the appropriate permutation matrices)
     inverse_rotation_matrix_swap_xz = torch.flip(inverse_rotation_matrix,
                                                  dims=(1, 2))
+    # print('inverse_rotation_matrix_swap_xz', inverse_rotation_matrix_swap_xz)
     # Apply transformation to grid
     affine_grid = get_affine_grid(inverse_rotation_matrix_swap_xz, volume.shape)
+    # print('affine_grid', affine_grid)
+
     # Regrid volume according to transformation grid
     return torch.nn.functional.grid_sample(volume, affine_grid, mode=mode,
                                            align_corners=False)
@@ -53,6 +56,25 @@ def get_affine_grid(matrix, grid_shape):
     # Last column of affine matrix corresponds to translation which is 0 in our
     # case. Therefore pad original matrix with zeros, so shape changes from
     # (batch_size, 3, 3) to (batch_size, 3, 4)
+    # print('matrix', matrix)
+    
+    affine_matrix = matrix[:, 1:, :]
+    print('affine_matrix', affine_matrix)
+
+    print(affine_matrix[:, :, 1])
+
+    affine_matrix[:, :, [1,2,3,0]] = affine_matrix[:, :, [0,1,2,3]]
+
+    print('affine_matrix', affine_matrix)
+
+    
+
+    # swap the columns 0 and 3, note that it's batched
+
+
+    print('affine_matrix', affine_matrix)
+    # print('grid', grid_shape)
+
     translations = torch.zeros(batch_size, 3, 1, device=matrix.device)
     affine_matrix = torch.cat([matrix, translations], dim=2)
     return torch.nn.functional.affine_grid(affine_matrix, grid_shape,

@@ -50,7 +50,15 @@ def rotation_matrix_z(angle):
     return rotation_matrix
 
 
-def azimuth_elevation_to_rotation_matrix(azimuth, elevation):
+def translate(matrix, translations):
+    matrix2 = torch.zeros(matrix.shape[0], 4, 4, device=matrix.device)
+    matrix2[:, 0:3, 0:3] = matrix
+    matrix2[:, 3, 3] = 1.
+    matrix2[:, :3, 3] = translations
+    return matrix2
+
+
+def azimuth_elevation_to_rotation_matrix(azimuth, elevation, translations = torch.tensor((0., 0., 0.)) ):
     """Returns rotation matrix matching the default view (i.e. both azimuth and
     elevation are zero) to the view defined by the azimuth, elevation pair.
 
@@ -69,12 +77,19 @@ def azimuth_elevation_to_rotation_matrix(azimuth, elevation):
     # In the coordinate system we define (see README), azimuth rotation
     # corresponds to negative rotation about y axis and elevation rotation to a
     # negative rotation about z axis
+    print(azimuth, elevation, translations)
     azimuth_matrix = rotation_matrix_y(-azimuth)
     elevation_matrix = rotation_matrix_z(-elevation)
+
     # We first perform elevation rotation followed by azimuth when rotating camera
     camera_matrix = azimuth_matrix @ elevation_matrix
+    # print('camera matrix', camera_matrix, camera_matrix.shape)
+    translated_camera_matrix = translate(camera_matrix, translations)
+    
     # Object rotation matrix is inverse (i.e. transpose) of camera rotation matrix
-    return transpose_matrix(camera_matrix)
+    transpose_camera_matrix = transpose_matrix(translated_camera_matrix)
+    # print('transpose_camera_matrix', transpose_camera_matrix, transpose_camera_matrix.shape)
+    return transpose_camera_matrix
 
 
 def rotation_matrix_source_to_target(azimuth_source, elevation_source,
@@ -97,6 +112,11 @@ def rotation_matrix_source_to_target(azimuth_source, elevation_source,
     rotation_target = azimuth_elevation_to_rotation_matrix(azimuth_target, elevation_target)
     # Calculate rotation matrix bringing source view to target view (note that
     # for rotation matrix, inverse is transpose)
+
+    # print('rotation_source', rotation_source, rotation_source.shape)
+    # print('rotation_target', rotation_target, rotation_target.shape)
+    # print('returning', rotation_target @ transpose_matrix(rotation_source))
+
     return rotation_target @ transpose_matrix(rotation_source)
 
 
