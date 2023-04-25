@@ -1,3 +1,6 @@
 jobs/slurm_output/*.out
 data/chairs/
 data/chairs/*
+*/__pycache__/*
+exploration.ipynb
+exploration.ipynb
