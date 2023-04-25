@@ -4,7 +4,7 @@
 #SBATCH --job-name=InstallEnv
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
-#SBATCH --time=04:00:00
+#SBATCH --time=00:30:00
 #SBATCH --mem=32000M
 #SBATCH --output=jobs/slurm_output/install-env_%A.out
 
@@ -14,8 +14,4 @@ module load Anaconda3/2021.05
 
 cd $HOME/equiv-neural-rendering/
 
-# conda create --name nr5
-# source activate nr5
-# pip install -r requirements.txt
-
-conda env create -f env_nr.yml # not test yet
+conda env create -f env_nr.yml 
