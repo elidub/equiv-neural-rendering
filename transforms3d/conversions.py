@@ -54,11 +54,11 @@ def translate(matrix, translations):
     matrix2 = torch.zeros(matrix.shape[0], 4, 4, device=matrix.device)
     matrix2[:, 0:3, 0:3] = matrix
     matrix2[:, 3, 3] = 1.
-    matrix2[:, :3, 3] = translations
+    matrix2[:, :3, 3] = torch.tensor(translations)
     return matrix2
 
 
-def azimuth_elevation_to_rotation_matrix(azimuth, elevation, translations = torch.tensor((0., 0., 0.)) ):
+def azimuth_elevation_to_rotation_matrix(azimuth, elevation, translations = [0, 0.5, 0.] ):
     """Returns rotation matrix matching the default view (i.e. both azimuth and
     elevation are zero) to the view defined by the azimuth, elevation pair.
 
@@ -77,7 +77,7 @@ def azimuth_elevation_to_rotation_matrix(azimuth, elevation, translations = torc
     # In the coordinate system we define (see README), azimuth rotation
     # corresponds to negative rotation about y axis and elevation rotation to a
     # negative rotation about z axis
-    print(azimuth, elevation, translations)
+    # print(azimuth, elevation, translations)
     azimuth_matrix = rotation_matrix_y(-azimuth)
     elevation_matrix = rotation_matrix_z(-elevation)
 
