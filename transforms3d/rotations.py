@@ -70,8 +70,10 @@ def get_affine_grid(matrix, grid_shape):
                                            align_corners=False)
 
 
-def rotate_source_to_target(volume, azimuth_source, elevation_source,
-                            azimuth_target, elevation_target, mode='bilinear'):
+def rotate_source_to_target(volume, 
+                            azimuth_source, elevation_source, translations_source,
+                            azimuth_target, elevation_target, translations_target,
+                            mode='bilinear'):
     """Performs 3D rotation matching two coordinate frames defined by a source
     view and a target view.
 
@@ -88,6 +90,8 @@ def rotate_source_to_target(volume, azimuth_source, elevation_source,
     """
     rotation_matrix = rotation_matrix_source_to_target(azimuth_source,
                                                        elevation_source,
+                                                       translations_source,
                                                        azimuth_target,
-                                                       elevation_target)
+                                                       elevation_target,
+                                                       translations_target)
     return rotate(volume, rotation_matrix, mode=mode)

@@ -54,11 +54,11 @@ def translate(matrix, translations):
     matrix2 = torch.zeros(matrix.shape[0], 4, 4, device=matrix.device)
     matrix2[:, 0:3, 0:3] = matrix
     matrix2[:, 3, 3] = 1.
-    matrix2[:, :3, 3] = torch.tensor(translations)
+    matrix2[:, :3, 3] = translations
     return matrix2
 
 
-def azimuth_elevation_to_rotation_matrix(azimuth, elevation, translations = [0, 0.5, 0.] ):
+def azimuth_elevation_to_rotation_matrix(azimuth, elevation, translations):
     """Returns rotation matrix matching the default view (i.e. both azimuth and
     elevation are zero) to the view defined by the azimuth, elevation pair.
 
@@ -92,8 +92,8 @@ def azimuth_elevation_to_rotation_matrix(azimuth, elevation, translations = [0, 
     return transpose_camera_matrix
 
 
-def rotation_matrix_source_to_target(azimuth_source, elevation_source,
-                                     azimuth_target, elevation_target):
+def rotation_matrix_source_to_target(azimuth_source, elevation_source, translations_source,
+                                     azimuth_target, elevation_target, translations_target):
     """Returns rotation matrix matching two views defined by azimuth, elevation
     pairs.
 
@@ -108,8 +108,8 @@ def rotation_matrix_source_to_target(azimuth_source, elevation_source,
             target view in degrees.
     """
     # Calculate rotation matrix for each view
-    rotation_source = azimuth_elevation_to_rotation_matrix(azimuth_source, elevation_source)
-    rotation_target = azimuth_elevation_to_rotation_matrix(azimuth_target, elevation_target)
+    rotation_source = azimuth_elevation_to_rotation_matrix(azimuth_source, elevation_source, translations_source)
+    rotation_target = azimuth_elevation_to_rotation_matrix(azimuth_target, elevation_target, translations_target)
     # Calculate rotation matrix bringing source view to target view (note that
     # for rotation matrix, inverse is transpose)
 
