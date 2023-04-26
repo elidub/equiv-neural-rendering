@@ -4,8 +4,9 @@ import torchvision
 from misc.dataloaders import create_batch_from_data_list
 
 
-def generate_novel_views(model, img_source, azimuth_source, elevation_source,
-                         azimuth_shifts, elevation_shifts):
+def generate_novel_views(model, img_source, 
+                         azimuth_source, elevation_source, translations_source,
+                         azimuth_shifts, elevation_shifts, translations_shifts):
     """Generates novel views of an image by inferring its scene representation,
     rotating it and rendering novel views. Returns a batch of images
     corresponding to the novel views.
@@ -32,20 +33,23 @@ def generate_novel_views(model, img_source, azimuth_source, elevation_source,
         # Batchify azimuth and elevation source
         azimuth_source_batch = azimuth_source.repeat(num_views)
         elevation_source_batch = elevation_source.repeat(num_views)
+        translations_source_batch = translations_source.repeat(num_views, 1)
         # Calculate azimuth and elevation targets
         azimuth_target = azimuth_source_batch + azimuth_shifts
         elevation_target = elevation_source_batch + elevation_shifts
+        translations_target = translations_source_batch + translations_shifts
         # Rotate scenes
-        rotated = model.rotate_source_to_target(scenes_batch, azimuth_source_batch,
-                                                elevation_source_batch,
-                                                azimuth_target, elevation_target)
+        rotated = model.rotate_source_to_target(
+            scenes_batch, 
+            azimuth_source_batch, elevation_source_batch, translations_source_batch,
+            azimuth_target, elevation_target, translations_target)
     # Render images
     return model.render(rotated).detach()
 
 
-def batch_generate_novel_views(model, imgs_source, azimuth_source,
-                               elevation_source, azimuth_shifts,
-                               elevation_shifts):
+def batch_generate_novel_views(model, imgs_source, 
+                              azimuth_source, elevation_source, translations_source,
+                              azimuth_shifts, elevation_shifts, translations_shifts):
     """Generates novel views for a batch of images. Returns a list of batches of
     images, where each item in the list corresponds to a novel view for all
     images.
@@ -63,6 +67,8 @@ def batch_generate_novel_views(model, imgs_source, azimuth_source,
     num_imgs = imgs_source.shape[0]
     num_views = azimuth_shifts.shape[0]
 
+    # raise NotImplementedError("translations_source and translations_shifts not implemented yet")
+
     # Initialize novel views, i.e. a list of length num_views with each item
     # containing num_imgs images
     all_novel_views = [torch.zeros_like(imgs_source) for _ in range(num_views)]
@@ -72,7 +78,8 @@ def batch_generate_novel_views(model, imgs_source, azimuth_source,
         novel_views = generate_novel_views(model, imgs_source[i],
                                            azimuth_source[i:i+1],
                                            elevation_source[i:i+1],
-                                           azimuth_shifts, elevation_shifts).cpu()
+                                           translations_source[i:i+1],
+                                           azimuth_shifts, elevation_shifts, translations_shifts).cpu()
         # Add to list of all novel_views
         for j in range(num_views):
             all_novel_views[j][i] = novel_views[j]
@@ -96,6 +103,9 @@ def dataset_novel_views(device, model, dataset, img_indices, azimuth_shifts,
         elevation_shifts (torch.Tensor): Batch of angle shifts at which to
             generate novel views. Shape (num_views,).
     """
+
+    raise NotImplementedError("translations_source and translations_shifts not implemented yet")
+
     # Extract image and pose information for all views
     data_list = []
     for img_idx in img_indices:
@@ -189,6 +199,10 @@ def save_generate_novel_views(filename, model, img_source, azimuth_source,
         elevation_shifts (torch.Tensor): Batch of angle shifts at which to
             generate novel views. Shape (num_views,).
     """
+
+    raise NotImplementedError("translations_source and translations_shifts not implemented yet")
+
+
     # Generate novel views
     novel_views = generate_novel_views(model, img_source, azimuth_source,
                                        elevation_source, azimuth_shifts,
@@ -201,7 +215,7 @@ def save_generate_novel_views(filename, model, img_source, azimuth_source,
                                  padding=4, pad_value=1.)
 
 
-def save_img_sequence_as_gif(img_sequence, filename, nrow=4):
+def save_img_sequence_as_gif(img_sequence, filename, nrow=4, loop = 0):
     """Given a sequence of images as tensors, saves a gif of the images.
     If images are in batches, they are converted to a grid before being
     saved.
@@ -225,4 +239,4 @@ def save_img_sequence_as_gif(img_sequence, filename, nrow=4):
         img_grid = (img_grid * 255.).byte().cpu().numpy().transpose(1, 2, 0)
         img_grid_sequence.append(img_grid)
     # Save gif
-    imageio.mimwrite(filename, img_grid_sequence)
+    imageio.mimwrite(filename, img_grid_sequence, loop = loop)

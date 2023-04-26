@@ -22,6 +22,9 @@ class Rotate3d(nn.Module):
             rotation_matrix (torch.Tensor): Batch of rotation matrices of shape
                 (batch_size, 3, 3).
         """
+
+        raise NotImplementedError("The rotation matrix doesn't work as intended")
+
         return rotate(volume, rotation_matrix, mode=self.mode)
 
     def rotate_source_to_target(self, volume, azimuth_source, elevation_source, translations_source,

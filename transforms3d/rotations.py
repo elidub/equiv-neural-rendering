@@ -56,13 +56,9 @@ def get_affine_grid(matrix, grid_shape):
     # Last column of affine matrix corresponds to translation which is 0 in our
     # case. Therefore pad original matrix with zeros, so shape changes from
     # (batch_size, 3, 3) to (batch_size, 3, 4)
-    # print('matrix', matrix)
     
     affine_matrix = matrix[:, 1:, :]
-    # print('affine_matrix', affine_matrix)
-
     affine_matrix = torch.cat((affine_matrix[:, :, 1:], affine_matrix[:, :, 0].unsqueeze(-1)), dim=-1)
-    # print('affine_matrix', affine_matrix)
 
     # translations = torch.zeros(batch_size, 3, 1, device=matrix.device)
     # affine_matrix = torch.cat([matrix, translations], dim=2)
