@@ -131,8 +131,9 @@ class NeuralRenderer(nn.Module):
         """
         return self.rotation_layer(scene, rotation_matrix)
 
-    def rotate_source_to_target(self, scene, azimuth_source, elevation_source,
-                                azimuth_target, elevation_target):
+    def rotate_source_to_target(self, scene, 
+                                azimuth_source, elevation_source, translations_source,
+                                azimuth_target, elevation_target, translations_target):
         """Assuming the scene is being observed by a camera at
         (azimuth_source, elevation_source), rotates scene so camera is observing
         it at (azimuth_target, elevation_target).
@@ -147,8 +148,10 @@ class NeuralRenderer(nn.Module):
         return self.rotation_layer.rotate_source_to_target(scene,
                                                            azimuth_source,
                                                            elevation_source,
+                                                           translations_source,
                                                            azimuth_target,
-                                                           elevation_target)
+                                                           elevation_target,
+                                                           translations_target)
 
     def forward(self, batch):
         """Given a batch of images and poses, infers scene representations,
