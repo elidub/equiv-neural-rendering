@@ -107,7 +107,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
 
     # Place camera
     cam = scene.objects['Camera']
-    cam.location = (0, 4, 0) # put it a bit further away to see the effect of translations better
+    cam.location = (0, 3, 0) # put it a bit further away to see the effect of translations better
     cam.data.lens = 35
     cam.data.sensor_width = 32
 
@@ -196,7 +196,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
         # change the viewpoint for the next image
         if translation:
             # CHange object loc 
-            obj.location = (np.random.uniform(-0.9, 0.9), np.random.uniform(-0.9, 0.9), np.random.uniform(-0.9, 0.9))
+            obj.location = (np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5))
         
         if rotation: 
             # change camera rotation
@@ -229,7 +229,7 @@ if __name__ == '__main__':
                         help='Scaling that is applied to depth. Depends on size of mesh.') # ????
     parser.add_argument('--color_depth', type=str, default='8',
                         help='Number of bit per channel used for output. Either 8 or 16.') # ????
-    parser.add_argument('--resolution', type=int, default=600, # 128
+    parser.add_argument('--resolution', type=int, default=128, # 128
                         help='Resolution of the images.')
     parser.add_argument('--translation', action='store_true')
     parser.add_argument('--rotation', action='store_true')
