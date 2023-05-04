@@ -182,11 +182,27 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     # mw.translation = mw @ origin
 
     # For now, do it manually
-    obj.location = (-0.2, 0.2, -0.42)
+    # obj.location = (-0.2, 0.2, -0.42)
     # obj.location = (-0.2, -0.6, -0.37)
+    # Get the object's bounding box
+    bbox = obj.bound_box
+
+    # Compute the center of the bounding box
+    bbox_center = mathutils.Vector((0, 0, 0))
+    index = 0
+    for point in bbox:
+        print(f"point: {obj.matrix_world @ mathutils.Vector(point)}")
+        index +=1
+        bbox_center += obj.matrix_world @ mathutils.Vector(point)
+    bbox_center /= index
+    print(f"bbox_center: {bbox_center}")
+    # Translate the object to put its bounding box center at the origin
+    obj.location -= (bbox_center/2)
+    print(f"object location: {obj.location}")
     cam_empty.rotation_euler = (0.0, 0.0, 0.0)
     x_rot = 0.0
     z_rot = 0.0
+    bpy.ops.wm.save_as_mainfile(filepath='begin.blend')
 
     for i in range(n_views):
         render_file_path = fp + '/{0:05d}'.format(int(i))
