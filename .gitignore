@@ -3,4 +3,4 @@ data/chairs/
 data/chairs/*
 */__pycache__/*
 exploration.ipynb
-
+__pycache__
