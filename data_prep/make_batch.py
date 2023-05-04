@@ -17,7 +17,7 @@ parser.add_argument('--resolution', type=int, default=128, # 600
 argv = sys.argv[sys.argv.index("--") + 1:]
 args = parser.parse_args(argv)
 
-output_datasets = ["output/rot_dataset/", "output/trans_dataset/", "output/rototrans_dataset/"]
+output_datasets = ["output/rot_dataset/", "output/trans_dataset/", "output/rototrans_dataset/", "output/test/"]
 
 
 for scene in os.listdir("dataset"): 
@@ -26,7 +26,7 @@ for scene in os.listdir("dataset"):
     os.system(f'blender --background --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --rotation')
     
     # Do for translation only
-    os.system(f'blender --background --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_datasets[1]} --translation')
+    os.system(f'blender --background --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_datasets[1]} --translation') # output_datasets[1]
     
     # Do for rotation and translation only
     os.system(f'blender --background --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_datasets[2]}  --rotation --translation')

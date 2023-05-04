@@ -182,52 +182,60 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     # mw.translation = mw @ origin
 
     # For now, do it manually
-    # obj.location = (-0.2, 0.2, -0.42)
-    # obj.location = (-0.2, -0.6, -0.37)
+    if scene_name == "dataset/model.dae":
+        obj.location = (-0.2, -0.2, -0.4)
+    else:
+        obj.location = (-0.2, -0.6, -0.37)
     # Get the object's bounding box
     bbox = obj.bound_box
+    #bpy.ops.wm.save_as_mainfile(filepath='begin.blend')
 
     # Compute the center of the bounding box
     bbox_center = mathutils.Vector((0, 0, 0))
     index = 0
     for point in bbox:
-        print(f"point: {obj.matrix_world @ mathutils.Vector(point)}")
+        #print(f"point: {obj.matrix_world @ mathutils.Vector(point)}")
         index +=1
         bbox_center += obj.matrix_world @ mathutils.Vector(point)
     bbox_center /= index
-    print(f"bbox_center: {bbox_center}")
+    #print(f"bbox_center: {bbox_center}")
     # Translate the object to put its bounding box center at the origin
-    obj.location -= bbox_center
-    print(f"object location: {obj.location}")
+    #obj.location -= bbox_center
+    #print(f"object location: {obj.location}")
     cam_empty.rotation_euler = (0.0, 0.0, 0.0)
     x_rot = 0.0
     z_rot = 0.0
-    bpy.ops.wm.save_as_mainfile(filepath='begin.blend')
+    # bpy.ops.wm.save_as_mainfile(filepath='begin.blend')
 
     for i in range(n_views):
         render_file_path = fp + '/{0:05d}'.format(int(i))
         # x = loc.y
         # y = loc.z
         # z = loc.x
-        info_view = {"azimuth": z_rot,  "elevation" : x_rot, "x" : obj.location[1], "y" : obj.location[2], "z" : obj.location[0]}
+        info_view = {"azimuth": z_rot,  "elevation" : x_rot, "x" : -obj.location[1], "y" : obj.location[2], "z" : obj.location[0]}
         render_info['{0:05d}'.format(int(i))] = info_view 
+
         scene.render.filepath = render_file_path
+
+        bpy.ops.render.render(write_still=True)
 
         # change the viewpoint for the next image
         if translation:
             # CHange object loc 
             obj.location = (np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5))
-        
+            #obj.location = (0.2, 0, 0)
+            #print(f"object location: {obj.location}")
+
         if rotation: 
             # change camera rotation
             x_rot = np.random.uniform(0, 2*math.pi) # elevation
             z_rot = np.random.uniform(0, 2*math.pi) # azimuth
             cam_empty.rotation_euler = (x_rot, 0.0, z_rot)
     
-        bpy.ops.render.render(write_still=True)  # render still
+          # render still
 
         # For debugging the workflow
-    # bpy.ops.wm.save_as_mainfile(filepath='end.blend')
+    #bpy.ops.wm.save_as_mainfile(filepath='end.blend')
 
     with open(fp +"/render_params.json", "w") as f:
         json.dump(render_info, f)
