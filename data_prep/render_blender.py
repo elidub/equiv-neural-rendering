@@ -197,7 +197,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     bbox_center /= index
     print(f"bbox_center: {bbox_center}")
     # Translate the object to put its bounding box center at the origin
-    obj.location -= (bbox_center/2)
+    obj.location -= bbox_center
     print(f"object location: {obj.location}")
     cam_empty.rotation_euler = (0.0, 0.0, 0.0)
     x_rot = 0.0
