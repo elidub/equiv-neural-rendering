@@ -11,8 +11,8 @@ blender --background --python make_batch.py -- --n_images 50
 The dummy dataset can be found in the `output` folder, containing 3 subfolders of the datasets of the corresponding transformations. In each of these subfolders, two scenes are stored, each containing 50 images of different views of the scene and a `render_params.json` file. There, for each view, the azimuth and elevation (in radians) of the camera and the x, y and z coordinate of the chair are stored. 
 
 ### important notes
-- The camera is on a sphere with a radius of 4 (instead of 2 as the original authors did). This is because with a radius of 2, the translations were hard to capture. We could try maybe a radius of 3 if you would prefer this.
-- The translations are uniformly samples every view, the positions of the chair change for the x, y and z coordinate to np.random.uniform(-0.9, 0.9).
+- The camera is on a sphere with a radius of 3 (instead of 2 as the original authors did). This is because with a radius of 2, the translations were hard to capture. 
+- The translations are uniformly samples every view, the positions of the chair change for the x, y and z coordinate to np.random.uniform(-0.5, 0.5).
 - The camera rotates every view to an angle of np.random.uniform(0, 2*math.pi) for the x axis (elevation) and z axis (azimuth). This angle is denoted in radians. The original model expects degrees I think, so this would need to be converted. 
 - The chairs are not centered exactly in middle, but on different parts, like on one of the legs. Especially, for the rotation matrix, we should probably center the object in the origin. However, they do say that the model is scene centric and not object centric so in that sense, the object should not need to be centered perfectly. Maybe this is aso why the model can already handle translations a bit?
 
