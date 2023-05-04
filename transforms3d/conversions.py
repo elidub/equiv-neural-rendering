@@ -108,14 +108,20 @@ def rotation_matrix_source_to_target(azimuth_source, elevation_source, translati
             target view in degrees.
     """
     # Calculate rotation matrix for each view
-    rotation_source = azimuth_elevation_to_rotation_matrix(azimuth_source, elevation_source, translations_source)
-    rotation_target = azimuth_elevation_to_rotation_matrix(azimuth_target, elevation_target, translations_target)
+    rotation_source = azimuth_elevation_to_rotation_matrix(azimuth_source,
+                                                           elevation_source,
+                                                           torch.zeros_like(translations_source))
+    rotation_target = azimuth_elevation_to_rotation_matrix(azimuth_target,
+                                                           elevation_target,
+                                                           translations_target - translations_source)
     # Calculate rotation matrix bringing source view to target view (note that
     # for rotation matrix, inverse is transpose)
 
     # print('rotation_source', rotation_source, rotation_source.shape)
     # print('rotation_target', rotation_target, rotation_target.shape)
     # print('returning', rotation_target @ transpose_matrix(rotation_source))
+    # print('translations source', translations_source)
+    # print('translations target', translations_target)
 
     return rotation_target @ transpose_matrix(rotation_source)
 
