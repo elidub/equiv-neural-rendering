@@ -182,14 +182,18 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     # mw.translation = mw @ origin
 
     # For now, do it manually
-    obj.location = (-0.25, 0.5, 0)
+    obj.location = (-0.25, 0.2, -0.5)
+    #obj.location = ()
     cam_empty.rotation_euler = (0.0, 0.0, 0.0)
     x_rot = 0.0
     z_rot = 0.0
 
     for i in range(n_views):
         render_file_path = fp + '/{0:05d}'.format(int(i))
-        info_view = {"azimuth": z_rot,  "elevation" : x_rot, "x" : obj.location[0], "y" : obj.location[1], "z" : obj.location[2]}
+        # x = loc.y
+        # y = loc.z
+        # z = loc.x
+        info_view = {"azimuth": z_rot,  "elevation" : x_rot, "x" : obj.location[1], "y" : obj.location[2], "z" : obj.location[0]}
         render_info['{0:05d}'.format(int(i))] = info_view 
         scene.render.filepath = render_file_path
 
