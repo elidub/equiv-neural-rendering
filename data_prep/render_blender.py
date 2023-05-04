@@ -182,8 +182,8 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     # mw.translation = mw @ origin
 
     # For now, do it manually
-    obj.location = (-0.25, 0.2, -0.5)
-    #obj.location = ()
+    obj.location = (-0.2, 0.2, -0.42)
+    # obj.location = (-0.2, -0.6, -0.37)
     cam_empty.rotation_euler = (0.0, 0.0, 0.0)
     x_rot = 0.0
     z_rot = 0.0
