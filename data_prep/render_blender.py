@@ -107,7 +107,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
 
     # Place camera
     cam = scene.objects['Camera']
-    cam.location = (0, 3, 0) # put it a bit further away to see the effect of translations better
+    cam.location = (0, 2, 0) # put it a bit further away to see the effect of translations better
     cam.data.lens = 35
     cam.data.sensor_width = 32
 
@@ -182,7 +182,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     # mw.translation = mw @ origin
 
     # For now, do it manually
-    obj.location = (-0.2, 0, 0)
+    obj.location = (-0.25, 0.5, 0)
     cam_empty.rotation_euler = (0.0, 0.0, 0.0)
     x_rot = 0.0
     z_rot = 0.0
