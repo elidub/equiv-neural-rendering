@@ -38,7 +38,7 @@ rm blender-3.5.1-linux-x64.tar.xz
 
 # Go to data_prep and run an example blender command
 cd data_prep
-~/blender/blender -b --python render_blender.py -- --scene_name dataset/model.dae --rotation
+~/equiv-neural-rendering/blender/blender -b --python render_blender.py -- --scene_name dataset/model.dae --rotation
 # Thist last command is just an example for now, I guess one can also run `make_batch.py` with some changes.
 ```
 > I have renamed `"View Layer"` to `"ViewLayer"` in `render_blender.py` (see commits), so it might not work anymore locally!?
