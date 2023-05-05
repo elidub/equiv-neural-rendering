@@ -4,3 +4,6 @@ data/chairs/*
 */__pycache__/*
 exploration.ipynb
 __pycache__
+data_prep/output/test/
+exploration_elias.ipynb
+blender/
