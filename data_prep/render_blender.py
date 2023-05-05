@@ -26,9 +26,9 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     render.film_transparent = True
 
     scene.use_nodes = True
-    scene.view_layers["View Layer"].use_pass_normal = True
-    scene.view_layers["View Layer"].use_pass_diffuse_color = True
-    scene.view_layers["View Layer"].use_pass_object_index = True
+    scene.view_layers["ViewLayer"].use_pass_normal = True
+    scene.view_layers["ViewLayer"].use_pass_diffuse_color = True
+    scene.view_layers["ViewLayer"].use_pass_object_index = True
 
     nodes = scene.node_tree.nodes
     tree = scene.node_tree
@@ -63,7 +63,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     # Import textured mesh
     bpy.ops.object.select_all(action='DESELECT')
 
-    #bpy.ops.import_scene.obj(filepath=args.obj)
+    # bpy.ops.import_scene.obj(filepath=args.obj)
     bpy.ops.wm.collada_import(filepath=scene_name)
    
 
