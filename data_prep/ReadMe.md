@@ -41,6 +41,7 @@ cd data_prep
 ~/blender/blender -b --python render_blender.py -- --scene_name dataset/model.dae --rotation
 # Thist last command is just an example for now, I guess one can also run `make_batch.py` with some changes.
 ```
+> I have renamed `"View Layer"` to `"ViewLayer"` in `render_blender.py` (see commits), so it might not work anymore locally!?
 
 
 ### Activate GPU node 
