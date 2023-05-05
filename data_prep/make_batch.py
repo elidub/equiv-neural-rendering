@@ -18,15 +18,16 @@ argv = sys.argv[sys.argv.index("--") + 1:]
 args = parser.parse_args(argv)
 
 output_datasets = ["output/rot_dataset/", "output/trans_dataset/", "output/rototrans_dataset/", "output/test/"]
-
+output_dummy_datasets = ["output_dummy/rot_dataset/", "output_dummy/trans_dataset/", "output_dummy/rototrans_dataset/"]
 
 for scene in os.listdir("dataset"): 
+
     scene_name = "dataset/" + scene
     # Do for rotation only
-    os.system(f'blender --background --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --rotation')
+    os.system(f'~/equiv-neural-rendering/blender/blender -b --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_dummy_datasets[0]} --rotation')
     
     # Do for translation only
-    os.system(f'blender --background --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_datasets[1]} --translation') # output_datasets[1]
+    os.system(f'~/equiv-neural-rendering/blender/blender -b --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_dummy_datasets[1]} --translation') 
     
     # Do for rotation and translation only
-    os.system(f'blender --background --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_datasets[2]}  --rotation --translation')
+    os.system(f'~/equiv-neural-rendering/blender/blender -b --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_dummy_datasets[2]}  --rotation --translation')

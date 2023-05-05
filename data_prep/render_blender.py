@@ -63,8 +63,9 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     # Import textured mesh
     bpy.ops.object.select_all(action='DESELECT')
 
-    # bpy.ops.import_scene.obj(filepath=args.obj)
-    bpy.ops.wm.collada_import(filepath=scene_name)
+    fp_object_scene = scene_name + "/models/model_normalized.obj"
+    bpy.ops.import_scene.obj(filepath=fp_object_scene)
+    # bpy.ops.wm.collada_import(filepath=scene_name)
    
 
     obj = bpy.context.selected_objects[0]
@@ -107,7 +108,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
 
     # Place camera
     cam = scene.objects['Camera']
-    cam.location = (0, 2, 0) # put it a bit further away to see the effect of translations better
+    cam.location = (0, 2, 0)
     cam.data.lens = 35
     cam.data.sensor_width = 32
 
@@ -171,37 +172,6 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     fp = os.path.join(os.path.abspath(output_folder), model_identifier)
 
     render_info = {}
-
-    # Trying to center the object
-    # me = obj.data
-    # mw = obj.matrix_world
-    # origin = sum((v.co for v in me.vertices), mathutils.Vector()) / len(me.vertices)
-
-    # T = mathutils.Matrix.Translation(-origin)
-    # me.transform(T)
-    # mw.translation = mw @ origin
-
-    # For now, do it manually
-    if scene_name == "dataset/model.dae":
-        obj.location = (-0.2, -0.2, -0.4)
-    else:
-        obj.location = (-0.2, -0.6, -0.37)
-    # Get the object's bounding box
-    bbox = obj.bound_box
-    #bpy.ops.wm.save_as_mainfile(filepath='begin.blend')
-
-    # Compute the center of the bounding box
-    bbox_center = mathutils.Vector((0, 0, 0))
-    index = 0
-    for point in bbox:
-        #print(f"point: {obj.matrix_world @ mathutils.Vector(point)}")
-        index +=1
-        bbox_center += obj.matrix_world @ mathutils.Vector(point)
-    bbox_center /= index
-    #print(f"bbox_center: {bbox_center}")
-    # Translate the object to put its bounding box center at the origin
-    #obj.location -= bbox_center
-    #print(f"object location: {obj.location}")
     cam_empty.rotation_euler = (0.0, 0.0, 0.0)
     x_rot = 0.0
     z_rot = 0.0
