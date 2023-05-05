@@ -20,3 +20,35 @@ The dummy dataset can be found in the `output` folder, containing 3 subfolders o
 ### Things to do
 - The chair objects (i.e. the .dae files) all very differ in how the chairs are defined. The location is different, how they are build (some are one object, some a collection of different objects) and the scale is very different. Moreover, the orientation and where the 'center' of the chair is differ per chair.  We have to figure out how to incoorperate all these differences.  The two chairs in the dummyset are picked such that we do not have to incoorporate these differences.
 
+
+## Install Blender on LISA
+- Download Blender for Linux manually from the [webiste](https://www.blender.org/download/), or [here](https://www.blender.org/download/release/Blender3.5/blender-3.5.1-linux-x64.tar.xz/) (248MB) directly. Should also be able to do this directly on LISA with `wget`, but haven't been able to figure that out.
+- Copy the file `blender-3.5.1-linux-x64.tar.xz` to the director `/equiv-neural-rendering`.
+
+```
+# Unpack 
+tar -xvf blender-3.5.1-linux-x64.tar.xz
+
+# Rename for shorter commands
+mv blender-3.5.1-linux-x64 blender
+rm blender-3.5.1-linux-x64.tar.xz
+
+# Go to a GPU node and activate conda env (see below)
+# Not sure if conda env is even necessary
+
+# Go to data_prep and run an example blender command
+cd data_prep
+~/blender/blender -b --python render_blender.py -- --scene_name dataset/model.dae --rotation
+# Thist last command is just an example for now, I guess one can also run `make_batch.py` with some changes.
+```
+
+
+### Activate GPU node 
+```
+srun --partition=gpu_titanrtx_shared_course --gres=gpu:1 --mem=32000M --ntasks=1 --cpus-per-task=3 --time=01:00:00 --pty bash -i
+
+module purge
+module load 2021
+module load Anaconda3/2021.05
+conda activate nr
+```
