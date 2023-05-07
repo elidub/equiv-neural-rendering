@@ -1,7 +1,7 @@
 {
-  "id": "chairs-experiment",
-  "path_to_data": "chairs-train",
-  "path_to_test_data": "chairs-val",
+  "id": "dummy-test",
+  "path_to_data": "data_prep/output_dummy/rot_dataset",
+  "path_to_test_data": "data_prep/output_dummy/rot_dataset",
   "multi_gpu": false,
   "batch_size": 16,
   "lr": 2e-4,

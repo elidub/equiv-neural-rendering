@@ -177,6 +177,16 @@ class NeuralRenderer(nn.Module):
         params = batch["render_params"]
         azimuth = params["azimuth"].to(device)
         elevation = params["elevation"].to(device)
+        
+        #if I am reading render_params.json correctly, this is how we initialize translations
+        x=params["x"].to(device)
+        y=params["y"].to(device)
+        z=params["z"].to(device)
+
+        # TODO
+        # combine x, y and z to have the same 
+        # traslation = ....
+        
 
         # Infer scenes from images
         scenes = self.inverse_render(imgs)
@@ -194,9 +204,17 @@ class NeuralRenderer(nn.Module):
         # position for the camera
         azimuth_swapped = azimuth[swapped_idx]
         elevation_swapped = elevation[swapped_idx]
+        translation_swapped = translation[swapped_idx]
+
+        # scenes_swapped = \
+        #     self.rotate_source_to_target(scenes, azimuth, elevation,
+        #                                  azimuth_swapped, elevation_swapped)
+
+        #added translation 
         scenes_swapped = \
-            self.rotate_source_to_target(scenes, azimuth, elevation,
-                                         azimuth_swapped, elevation_swapped)
+            self.rotate_source_to_target(scenes, azimuth, elevation, translation,
+                                         azimuth_swapped, elevation_swapped, translation_swapped)
+        
 
         # Swap scenes, so rotated scenes match with original inferred scene.
         # Specifically, we have images x1, x2 from which we inferred the scenes
