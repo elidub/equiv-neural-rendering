@@ -178,16 +178,12 @@ class NeuralRenderer(nn.Module):
         azimuth = params["azimuth"].to(device)
         elevation = params["elevation"].to(device)
         
-        #if I am reading render_params.json correctly, this is how we initialize translations
-        x=params["x"].to(device)
-        y=params["y"].to(device)
-        z=params["z"].to(device)
-
-        # TODO
-        # combine x, y and z to have the same 
-        # traslation = ....
+        # if I am reading render_params.json correctly, this is how we initialize translations
+        x = params["x"].to(device)
+        y = params["y"].to(device)
+        z = params["z"].to(device)
+        translation = torch.cat((x.unsqueeze(1), y.unsqueeze(1), z.unsqueeze(1)), dim=1).to(device)
         
-
         # Infer scenes from images
         scenes = self.inverse_render(imgs)
 
