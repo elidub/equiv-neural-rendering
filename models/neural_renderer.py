@@ -179,9 +179,11 @@ class NeuralRenderer(nn.Module):
         elevation = params["elevation"].to(device)
         
         # if I am reading render_params.json correctly, this is how we initialize translations
-        x = params["x"].to(device)
-        y = params["y"].to(device)
-        z = params["z"].to(device)
+
+        try:
+            x, y, z = params["x"].to(device), params["y"].to(device), params["z"].to(device)
+        except:
+            x, y, z = torch.zeros_like(azimuth), torch.zeros_like(elevation), torch.zeros_like(azimuth)
         translation = torch.cat((x.unsqueeze(1), y.unsqueeze(1), z.unsqueeze(1)), dim=1).to(device)
         
         # Infer scenes from images
