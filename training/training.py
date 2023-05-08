@@ -4,6 +4,7 @@ import torch.nn as nn
 from models.neural_renderer import get_swapped_indices
 from pytorch_msssim import SSIM
 from torchvision.utils import save_image
+from tqdm import tqdm
 
 
 class Trainer():
@@ -88,7 +89,7 @@ class Trainer():
                 )
             # Print epoch losses
             print("Mean epoch loss:")
-            self._print_losses(epoch_loss=True)
+            print(self._print_losses(epoch_loss=True))
 
             # Optionally save generated images, losses and model
             if save_dir is not None:
@@ -143,13 +144,14 @@ class Trainer():
                 misc.dataloaders.SceneRenderDataset instance.
         """
         num_iterations = len(dataloader)
-        for i, batch in enumerate(dataloader):
+        for batch in (pbar := tqdm(dataloader)):
             # Train inverse and forward renderer on batch
             self._train_iteration(batch)
 
             # Print iteration losses
-            print("{}/{}".format(i + 1, num_iterations))
-            self._print_losses()
+            pbar.set_description(self._print_losses())
+            # print("{}/{}".format(i + 1, num_iterations))
+            # self._print_losses()
 
     def _train_iteration(self, batch):
         """Trains model for a single iteration.
@@ -209,7 +211,8 @@ class Trainer():
             else:
                 loss = self.loss_history[loss_type][-1]
             loss_info += [loss_type, loss]
-        print("{}: {:.3f}, {}: {:.3f}, {}: {:.3f}".format(*loss_info))
+        print_string = "{}: {:.3f}, {}: {:.3f}, {}: {:.3f}".format(*loss_info)
+        return print_string
 
 
 def mean_dataset_loss(trainer, dataloader):
