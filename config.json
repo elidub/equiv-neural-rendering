@@ -1,7 +1,7 @@
 {
   "id": "dummy-test",
-  "path_to_data":      "/nfs/scratch/dl2_nr/output_dummy/rot_dataset",
-  "path_to_test_data": "/nfs/scratch/dl2_nr/output_dummy/rot_dataset",
+  "path_to_data":      "/project/gpuuva022/shared/equiv-neural-rendering/output/rot_dataset",
+  "path_to_test_data": "/project/gpuuva022/shared/equiv-neural-rendering/output/rot_dataset",
   "multi_gpu": false,
   "batch_size": 16,
   "lr": 2e-4,

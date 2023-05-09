@@ -77,3 +77,4 @@ dependencies:
       - wcwidth==0.2.6
       - zipp==3.15.0
       - scikit-image==0.20.0
+      - pynvml==11.5.0

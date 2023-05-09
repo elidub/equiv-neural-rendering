@@ -6,6 +6,35 @@ from pytorch_msssim import SSIM
 from torchvision.utils import save_image
 from tqdm import tqdm
 
+import pynvml
+from pynvml import *
+
+def print_gpu_utilization(print_processes=False):
+    pynvml.nvmlInit()
+    handle = pynvml.nvmlDeviceGetHandleByIndex(0)
+    info = pynvml.nvmlDeviceGetMemoryInfo(handle)
+    if print_processes:
+        print(f"GPU memory occupied: {info.used//1024**2} MB")
+
+    for dev_id in range(pynvml.nvmlDeviceGetCount()):
+        handle = pynvml.nvmlDeviceGetHandleByIndex(dev_id)
+        for proc in pynvml.nvmlDeviceGetComputeRunningProcesses(handle):
+            if print_processes:
+                print(
+                    "pid %d using %d MB of memory on device %d."
+                    % (proc.pid, proc.usedGpuMemory // 1024**2, dev_id)
+                    )
+
+    gpu_info =  [
+        "GPUmem occupied", info.used//1024**2, 
+        "pid", proc.pid, 
+        "GPUmem by device", proc.usedGpuMemory // 1024**2, 
+        "device", dev_id, 
+        "device count", pynvml.nvmlDeviceGetCount(),
+    ]
+    
+    print_string = "{}: {}, {}: {}, {}: {}, {}:{}, {}: {}".format(*gpu_info)
+    return print_string
 
 class Trainer():
     """Class used to train neural renderers.
@@ -149,7 +178,7 @@ class Trainer():
             self._train_iteration(batch)
 
             # Print iteration losses
-            pbar.set_description(self._print_losses())
+            pbar.set_description(self._print_losses() + "  " + print_gpu_utilization())
             # print("{}/{}".format(i + 1, num_iterations))
             # self._print_losses()
 
