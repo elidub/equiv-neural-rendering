@@ -5,7 +5,7 @@ import bpy
 import mathutils
 import numpy as np
 
-def render_scene(scene_name, n_views, output_folder, color_depth, resolution, translation, rotation, remove_doubles = True, edge_split = True):
+def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, resolution, translation, rotation, remove_doubles = True, edge_split = True):
 
     # Set up rendering
     context = bpy.context
@@ -63,7 +63,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     # Import textured mesh
     bpy.ops.object.select_all(action='DESELECT')
 
-    fp_object_scene = scene_name + "/models/model_normalized.obj"
+    fp_object_scene = scene_folder + "/models/model_normalized.obj"
     bpy.ops.import_scene.obj(filepath=fp_object_scene)
     # bpy.ops.wm.collada_import(filepath=scene_name)
    
@@ -108,7 +108,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
 
     # Place camera
     cam = scene.objects['Camera']
-    cam.location = (0, 2, 0)
+    cam.location = (0, 1.5, 0)
     cam.data.lens = 35
     cam.data.sensor_width = 32
 
@@ -125,7 +125,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
     cam_constraint.target = cam_empty
     ########################################
     # Configure Camera Background
-    filepath = "background.png"
+    filepath = "data_prep/background.png"
 
     # Displaying the Background in the camera view
     img = bpy.data.images.load(filepath)
@@ -168,7 +168,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
 
     #######################################33
 
-    model_identifier = os.path.split(os.path.split(scene_name)[1])[1]
+    model_identifier = scene_name #os.path.split(os.path.split(scene_name)[1])[1]
     fp = os.path.join(os.path.abspath(output_folder), model_identifier)
 
     render_info = {}
@@ -179,7 +179,7 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
 
     for i in range(n_views):
         render_file_path = fp + '/{0:05d}'.format(int(i))
-        # x = loc.y
+        # x = -loc.y
         # y = loc.z
         # z = loc.x
         info_view = {"azimuth": z_rot,  "elevation" : x_rot, "x" : -obj.location[1], "y" : obj.location[2], "z" : obj.location[0]}
@@ -191,10 +191,9 @@ def render_scene(scene_name, n_views, output_folder, color_depth, resolution, tr
 
         # change the viewpoint for the next image
         if translation:
-            # CHange object loc 
+            # Change object loc 
             obj.location = (np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5))
-            #obj.location = (0.2, 0, 0)
-            #print(f"object location: {obj.location}")
+    
 
         if rotation: 
             # change camera rotation
@@ -219,15 +218,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create data for')
     parser.add_argument('--n_images', type=int, default=50,
                         help='number of views/images to be rendered per scende')
-    parser.add_argument('--scene_name', type=str,
+    parser.add_argument('--scene_folder', type=str,
                         help='Path to the .dae object')
+    parser.add_argument('--scene_name', type=str,
+                        help='name of the scene')
     parser.add_argument('--scale', type=float, default=1,
                         help='Scaling factor applied to model. Depends on size of mesh.') # ?????
     parser.add_argument('--output_folder', type=str, default="output/rot_dataset/",
                         help='Scaling that is applied to depth. Depends on size of mesh.') # ????
     parser.add_argument('--color_depth', type=str, default='8',
                         help='Number of bit per channel used for output. Either 8 or 16.') # ????
-    parser.add_argument('--resolution', type=int, default=128, # 128
+    parser.add_argument('--resolution', type=int, default=64, # 128
                         help='Resolution of the images.')
     parser.add_argument('--translation', action='store_true')
     parser.add_argument('--rotation', action='store_true')
@@ -236,6 +237,6 @@ if __name__ == '__main__':
     args = parser.parse_args(argv)
 
 
-    render_scene(args.scene_name, args.n_images, args.output_folder, args.color_depth, args.resolution, args.translation, args.rotation)
+    render_scene(args.scene_name, args.scene_folder, args.n_images, args.output_folder, args.color_depth, args.resolution, args.translation, args.rotation)
         
         
