@@ -1,7 +1,7 @@
 {
   "id": "dummy-test",
   "path_to_data":      "/project/gpuuva022/shared/equiv-neural-rendering/org_data/chairs/chairs-train",
-  "path_to_test_data": "/project/gpuuva022/shared/equiv-neural-rendering/org_data/chairs/chairs-val-50"
+  "path_to_test_data": "/project/gpuuva022/shared/equiv-neural-rendering/org_data/chairs/chairs-val-50",
   "multi_gpu": false,
   "batch_size": 16,
   "lr": 2e-4,
