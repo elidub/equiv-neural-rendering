@@ -7,6 +7,3 @@ __pycache__
 data_prep/output/test/
 exploration_elias.ipynb
 blender/
-org_data/
-elias_dev.ipynb
-data_dummy/

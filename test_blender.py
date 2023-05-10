@@ -11,6 +11,7 @@ from models.neural_renderer import load_model
 import pickle
 import argparse
 from tqdm import tqdm
+import os
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print('Using device:', DEVICE)
@@ -25,10 +26,15 @@ def img_tensor(img, nrow=4):
     img_grid = torchvision.utils.make_grid(img, nrow=nrow)
     return img_grid.cpu().numpy().transpose(1, 2, 0)
 
-def read_coords(img_id, data):
-    azimuth_source = rad2deg(torch.Tensor([data[img_id]['azimuth']])).to(DEVICE)
-    elevation_source = rad2deg(torch.Tensor([data[img_id]['elevation']])).to(DEVICE)
-    translations_source = torch.Tensor([data[img_id]['x'], data[img_id]['y'], data[img_id]['z']]).to(DEVICE)
+def read_coords(img_id, data, convert2degrees = True):
+    if convert2degrees:
+        azimuth_source = rad2deg(torch.Tensor([data[img_id]['azimuth']])).to(DEVICE)
+        elevation_source = rad2deg(torch.Tensor([data[img_id]['elevation']])).to(DEVICE)
+    else:
+        azimuth_source = torch.Tensor([data[img_id]['azimuth']]).to(DEVICE)
+        elevation_source = torch.Tensor([data[img_id]['elevation']]).to(DEVICE)
+
+    translations_source = torch.Tensor([data[img_id].get('x', 0), data[img_id].get('y', 0), data[img_id].get('z', 0)]).to(DEVICE)
     return azimuth_source, elevation_source, translations_source
 
 def render_source(img_source, model):
@@ -66,7 +72,7 @@ def plot_4_imgs(imgs, titles = ['source', 'target', 'rendered source', 'rendered
     plt.show()
 
 
-def produce_imgs(path, model, n = 10):
+def produce_imgs(path, model, n = 10, convert2degrees=True):
     with open(f'{path}/render_params.json') as f:
         data = json.load(f)
 
@@ -78,8 +84,8 @@ def produce_imgs(path, model, n = 10):
         img_source = imageio.imread(f'{path}/{source_id}.png')[:, :, :3]
         img_target = imageio.imread(f'{path}/{target_id}.png')[:, :, :3]
 
-        azimuth_source, elevation_source, translations_source = read_coords(source_id, data = data)
-        azimuth_target, elevation_target, translations_target = read_coords(target_id, data = data)
+        azimuth_source, elevation_source, translations_source = read_coords(source_id, data = data, convert2degrees=convert2degrees)
+        azimuth_target, elevation_target, translations_target = read_coords(target_id, data = data, convert2degrees=convert2degrees)
 
         img_source_rendered, scene = render_source(img_source, model)
         img_target_rendered = render_target(
@@ -108,7 +114,10 @@ def plot_per_4_imgs(imgs_all, titles = ['source', 'rendered source', 'target', '
 
 def parse_option():
     parser = argparse.ArgumentParser(description="Plot renderings")
-    parser.add_argument('--type', type=str, default='rot_dataset', help='type')
+    parser.add_argument('--data_path', type=str, default='/project/gpuuva022/shared/equiv-neural-rendering', help='type')
+    parser.add_argument('--type', type=str, default='chairs/data_all/rot_dataset/1a6f615e8b1b5ae4dbbc9440457e303e', help='type')
+    parser.add_argument('--n', type=int, default=50, help='number of images to plot')
+    parser.add_argument('--convert2degrees', action='store_true', help='convert azimuth and elevation to degrees')
     args = parser.parse_args()
     return args
 
@@ -116,10 +125,12 @@ def parse_option():
 def main(args):
     # Load trained chairs model
     model = load_model('trained-models/chairs.pt').to(DEVICE)
-    imgs_all = produce_imgs(path = f'data_prep/output/{args.type}/model.dae/', model = model, n = 50)
+    imgs_all = produce_imgs(path = os.path.join(args.data_path, args.type), model = model, n = args.n, convert2degrees=args.convert2degrees)
 
     # save imgs_all
-    with open(f'figs/{args.type}.pkl', 'wb') as f:
+    filename = f'figs/{args.type}.pkl'
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, 'wb') as f:
         pickle.dump(imgs_all, f)
 
 

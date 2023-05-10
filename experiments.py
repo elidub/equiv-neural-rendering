@@ -20,7 +20,8 @@ with open(path_to_config) as file:
 
 # Set up directory to store experiments
 timestamp = time.strftime("%Y-%m-%d_%H-%M")
-directory = "{}_{}".format(timestamp, config["id"])
+save_path = config["save_path"]
+directory = "{}/{}_{}".format(save_path, timestamp, config["id"])
 if not os.path.exists(directory):
     os.makedirs(directory)
 
@@ -55,14 +56,14 @@ trainer = Trainer(device, model, lr=config["lr"],
 dataloader = scene_render_dataloader(path_to_data=config["path_to_data"],
                                      batch_size=config["batch_size"],
                                      img_size=config["img_shape"],
-                                     crop_size=128)
+                                     crop_size=config["crop_size"])
 
 # Optionally set up test_dataloader
 if config["path_to_test_data"]:
     test_dataloader = scene_render_dataloader(path_to_data=config["path_to_test_data"],
                                               batch_size=config["batch_size"],
                                               img_size=config["img_shape"],
-                                              crop_size=128)
+                                              crop_size=config["crop_size"])
 else:
     test_dataloader = None
 

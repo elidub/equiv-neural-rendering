@@ -180,10 +180,8 @@ class NeuralRenderer(nn.Module):
         
         # if I am reading render_params.json correctly, this is how we initialize translations
 
-        try:
-            x, y, z = params["x"].to(device), params["y"].to(device), params["z"].to(device)
-        except:
-            x, y, z = torch.zeros_like(azimuth), torch.zeros_like(elevation), torch.zeros_like(azimuth)
+        x, y, z = params.get("x", torch.zeros_like(azimuth)).to(device), params.get("y", torch.zeros_like(azimuth)).to(device), params.get("z", torch.zeros_like(azimuth)).to(device)
+        # x, y, z = torch.zeros_like(azimuth), torch.zeros_like(elevation), torch.zeros_like(azimuth)
         translation = torch.cat((x.unsqueeze(1), y.unsqueeze(1), z.unsqueeze(1)), dim=1).to(device)
         
         # Infer scenes from images
