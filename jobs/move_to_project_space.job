@@ -14,4 +14,6 @@ module load Anaconda3/2021.05
 
 cd $HOME/equiv-neural-rendering/
 
-cp -r  org_data/ /project/gpuuva022/shared/equiv-neural-rendering/org_data/
+# cp -r  org_data/ /project/gpuuva022/shared/equiv-neural-rendering/org_data/
+cp -r  data_prep/dataset/ /project/gpuuva022/shared/equiv-neural-rendering/objects/ 
+cp -r  data_prep/output/ /project/gpuuva022/shared/equiv-neural-rendering/data/ 
