@@ -1,8 +1,8 @@
 import os
 
-data_dir_train = '/project/gpuuva022/shared/equiv-neural-rendering/data/half_data/train'
-data_dir_valid = '/project/gpuuva022/shared/equiv-neural-rendering/data/half_data/valid'
-data_dir_rest =  '/project/gpuuva022/shared/equiv-neural-rendering/data/half_data/rest'
+data_dir_train = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/train'
+data_dir_valid = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/val'
+data_dir_rest =  '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/rest'
 
 files = len(os.listdir(data_dir_train))
 print('Train files:')

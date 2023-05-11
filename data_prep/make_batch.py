@@ -18,12 +18,11 @@ parser.add_argument('--resolution', type=int, default=64, # 128
 argv = sys.argv[sys.argv.index("--") + 1:]
 args = parser.parse_args(argv)
 
-obj_dir = '/project/gpuuva022/shared/equiv-neural-rendering/objects/dataset/'
-data_dir_train = '/project/gpuuva022/shared/equiv-neural-rendering/data/half_data/train'
-data_dir_valid = '/project/gpuuva022/shared/equiv-neural-rendering/data/half_data/valid'
+obj_dir = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/objects/'
+data_dir_train = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/train'
+data_dir_valid = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/val'
+data_dir_test = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/test'
 
-#output_datasets = ["output/rot_dataset/", "output/trans_dataset/", "output/rototrans_dataset/", "output/test/"]
-#output_dummy_datasets = ["output_dummy/rot_dataset/", "output_dummy/trans_dataset/", "output_dummy/rototrans_dataset/"]
 i = 0
 files = os.listdir(obj_dir) 
 random.shuffle(files)
@@ -37,8 +36,3 @@ for scene in files:
         os.system(f'~/equiv-neural-rendering/blender/blender -b --python data_prep/render_blender.py -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {data_dir_valid} --rotation')
     
     i += 1
-    # Do for translation only
-    #os.system(f'~/equiv-neural-rendering/blender/blender -b --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_datasets[1]} --translation') 
-    
-    # Do for rotation and translation only
-    #os.system(f'~/equiv-neural-rendering/blender/blender -b --python render_blender.py -- --scene_name {scene_name} --n_images {args.n_images} --output_folder {output_datasets[2]}  --rotation --translation')
