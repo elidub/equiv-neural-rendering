@@ -5,6 +5,7 @@ from models.neural_renderer import get_swapped_indices
 from pytorch_msssim import SSIM
 from torchvision.utils import save_image
 from tqdm import tqdm
+import os
 
 import pynvml
 from pynvml import *
@@ -47,7 +48,7 @@ class Trainer():
         ssim_loss_weight (float): Weight assigned to SSIM loss.
     """
     def __init__(self, device, model, lr=2e-4, rendering_loss_type='l1',
-                 ssim_loss_weight=0.05):
+                 ssim_loss_weight=0.05, savedir = None):
         self.device = device
         self.model = model
         self.lr = lr
@@ -76,9 +77,17 @@ class Trainer():
 
         # Loss histories
         self.recorded_losses = ["total", "regression", "ssim"]
-        self.loss_history = {loss_type: [] for loss_type in self.recorded_losses}
-        self.epoch_loss_history = {loss_type: [] for loss_type in self.recorded_losses}
-        self.val_loss_history = {loss_type: [] for loss_type in self.recorded_losses}
+        if (savedir is None) and (not os.path.isfile(savedir + '/loss_history.json')):
+            self.loss_history = {loss_type: [] for loss_type in self.recorded_losses}
+            self.epoch_loss_history = {loss_type: [] for loss_type in self.recorded_losses}
+            self.val_loss_history = {loss_type: [] for loss_type in self.recorded_losses}
+        else:
+            with open(savedir + '/loss_history.json', 'r') as f:
+                self.loss_history = json.load(f)
+            with open(savedir + '/epoch_loss_history.json', 'r') as f:
+                self.epoch_loss_history = json.load(f)
+            with open(savedir + '/val_loss_history.json', 'r') as f:
+                self.val_loss_history = json.load(f)
 
     def train(self, dataloader, epochs, save_dir=None, save_freq=1,
               test_dataloader=None):
@@ -95,7 +104,7 @@ class Trainer():
             test_dataloader (torch.utils.DataLoader or None): If not None, will
                 test model on this dataset after every epoch.
         """
-        if save_dir is not None:
+        if (save_dir is not None) and (not os.path.isdir(save_dir + "/imgs_ground_truth.png")):
             # Extract one batch of data
             for batch in dataloader:
                 break
@@ -107,9 +116,12 @@ class Trainer():
             rendered = self._render_fixed_img()
             save_image(rendered.cpu(),
                        save_dir + "/imgs_gen_{}.png".format(str(0).zfill(3)), nrow=4)
+            
+        # Get the number of already trained epochs
+        epoch_start = len(self.epoch_loss_history['total'])
 
         for epoch in range(epochs):
-            print("\nEpoch {}".format(epoch + 1))
+            print("\nEpoch {}".format(epoch + 1 + epoch_start))
             self._train_epoch(dataloader)
             # Update epoch loss history with mean loss over epoch
             for loss_type in self.recorded_losses:
@@ -125,7 +137,7 @@ class Trainer():
                 # Save generated images
                 rendered = self._render_fixed_img()
                 save_image(rendered.cpu(),
-                           save_dir + "/imgs_gen_{}.png".format(str(epoch + 1).zfill(3)), nrow=4)
+                           save_dir + "/imgs_gen_{}.png".format(str(epoch + 1 + epoch_start).zfill(3)), nrow=4)
                 # Save losses
                 with open(save_dir + '/loss_history.json', 'w') as loss_file:
                     json.dump(self.loss_history, loss_file)
@@ -133,7 +145,7 @@ class Trainer():
                 with open(save_dir + '/epoch_loss_history.json', 'w') as loss_file:
                     json.dump(self.epoch_loss_history, loss_file)
                 # Save model
-                if (epoch + 1) % save_freq == 0:
+                if (epoch + 1 + epoch_start) % save_freq == 0:
                     if self.multi_gpu:
                         self.model.module.save(save_dir + "/model.pt")
                     else:
