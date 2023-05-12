@@ -225,7 +225,7 @@ if __name__ == '__main__':
                         help='name of the scene')
     parser.add_argument('--scale', type=float, default=1,
                         help='Scaling factor applied to model. Depends on size of mesh.') # ?????
-    parser.add_argument('--output_folder', type=str, default="output/rot_dataset/",
+    parser.add_argument('--output_folder', type=str, default="output/rot_trans_dataset/",
                         help='Scaling that is applied to depth. Depends on size of mesh.') # ????
     parser.add_argument('--color_depth', type=str, default='8',
                         help='Number of bit per channel used for output. Either 8 or 16.') # ????
