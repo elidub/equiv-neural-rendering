@@ -4,7 +4,7 @@ import sys
 import time
 import torch
 from misc.dataloaders import scene_render_dataloader
-from models.neural_renderer import NeuralRenderer
+from models.neural_renderer import NeuralRenderer, load_model
 from training.training import Trainer
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -18,8 +18,10 @@ path_to_config = sys.argv[1]
 with open(path_to_config) as file:
     config = json.load(file)
 
+continue_training = True if config["timestamp"] is not False else False
+
 # Set up directory to store experiments
-timestamp = time.strftime("%Y-%m-%d_%H-%M")
+timestamp = time.strftime("%Y-%m-%d_%H-%M") if not continue_training else config["timestamp"]
 save_path = config["save_path"]
 directory = "{}/{}_{}".format(save_path, timestamp, config["id"])
 if not os.path.exists(directory):
@@ -39,7 +41,7 @@ model = NeuralRenderer(
     num_channels_inv_projection=config["num_channels_inv_projection"],
     num_channels_projection=config["num_channels_projection"],
     mode=config["mode"]
-)
+) if not continue_training else load_model(os.path.join(directory, "best_model.pt"))
 
 model.print_model_info()
 
@@ -51,7 +53,8 @@ if config["multi_gpu"]:
 # Set up trainer for renderer
 trainer = Trainer(device, model, lr=config["lr"],
                   rendering_loss_type=config["loss_type"],
-                  ssim_loss_weight=config["ssim_loss_weight"])
+                  ssim_loss_weight=config["ssim_loss_weight"],
+                  savedir = directory,)
 
 dataloader = scene_render_dataloader(path_to_data=config["path_to_data"],
                                      batch_size=config["batch_size"],
@@ -68,6 +71,9 @@ else:
     test_dataloader = None
 
 print("PID: {}".format(os.getpid()))
+
+# Check how many folders there are that have 'directory' as prefix	
+
 
 # Train renderer, save generated images, losses and model
 trainer.train(dataloader, config["epochs"], save_dir=directory,
