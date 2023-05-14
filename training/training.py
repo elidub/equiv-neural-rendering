@@ -77,7 +77,7 @@ class Trainer():
 
         # Loss histories
         self.recorded_losses = ["total", "regression", "ssim"]
-        if (savedir is None) and (not os.path.isfile(savedir + '/loss_history.json')):
+        if not os.path.isfile(savedir + '/loss_history.json'):
             self.loss_history = {loss_type: [] for loss_type in self.recorded_losses}
             self.epoch_loss_history = {loss_type: [] for loss_type in self.recorded_losses}
             self.val_loss_history = {loss_type: [] for loss_type in self.recorded_losses}
