@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-from misc.dataloaders import create_batch_from_data_list
+from enr.misc.dataloaders import create_batch_from_data_list
 
 
 def get_dataset_psnr(device, model, dataset, source_img_idx_shift=64,

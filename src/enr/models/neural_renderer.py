@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
-from misc.utils import pretty_print_layers_info, count_parameters
-from models.submodels import ResNet2d, ResNet3d, Projection, InverseProjection
-from models.rotation_layers import SphericalMask, Rotate3d
+from enr.misc.utils import pretty_print_layers_info, count_parameters
+from enr.models.submodels import ResNet2d, ResNet3d, Projection, InverseProjection
+from enr.models.rotation_layers import SphericalMask, Rotate3d
 
 
 class NeuralRenderer(nn.Module):

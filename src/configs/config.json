@@ -2,7 +2,7 @@
   "save_path" : "train_results",
   "crop_size" : 64,
   "id": "roto_lr2e-4",
-  "timestamp" : "2023-05-10_12-31",
+  "timestamp" : false,
   "path_to_data":      "/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/train",
   "path_to_test_data": "/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/val",
   "multi_gpu": true,

@@ -1,7 +1,7 @@
 import imageio
 import torch
 import torchvision
-from misc.dataloaders import create_batch_from_data_list
+from enr.misc.dataloaders import create_batch_from_data_list
 
 
 def generate_novel_views(model, img_source, 

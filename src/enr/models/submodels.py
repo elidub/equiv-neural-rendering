@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from models.layers import ResBlock2d, ResBlock3d, num_channels_to_num_groups
+from enr.models.layers import ResBlock2d, ResBlock3d, num_channels_to_num_groups
 
 
 class ResNet2d(nn.Module):

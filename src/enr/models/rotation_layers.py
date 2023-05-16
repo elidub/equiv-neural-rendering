@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from transforms3d.rotations import rotate, rotate_source_to_target
+from enr.transforms3d.rotations import rotate, rotate_source_to_target
 
 
 class Rotate3d(nn.Module):

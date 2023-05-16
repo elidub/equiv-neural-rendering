@@ -1,5 +1,5 @@
 import torch
-from transforms3d.conversions import (rotation_matrix_source_to_target,
+from enr.transforms3d.conversions import (rotation_matrix_source_to_target,
                                       transpose_matrix)
 
 

@@ -3,9 +3,11 @@ import os
 import sys
 import time
 import torch
-from misc.dataloaders import scene_render_dataloader
-from models.neural_renderer import NeuralRenderer, load_model
-from training.training import Trainer
+
+sys.path.insert(1, os.path.join(sys.path[0], '../'))
+from enr.misc.dataloaders import scene_render_dataloader
+from enr.models.neural_renderer import NeuralRenderer, load_model
+from enr.training.training import Trainer
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 

@@ -1,5 +1,5 @@
-import models.layers
-import models.submodels
+import enr.models.layers
+import enr.models.submodels
 import torch
 from math import pi
 
@@ -84,7 +84,7 @@ def get_layers_info(model):
     in_shape = model.input_shape
     layers_info = []
 
-    if isinstance(model, models.submodels.Projection):
+    if isinstance(model, enr.models.submodels.Projection):
         out_shape = (in_shape[0] * in_shape[1], *in_shape[2:])
         layer_info = {"name": "Reshape", "in_shape": in_shape,
                       "out_shape": out_shape, "num_params": 0}
@@ -104,7 +104,7 @@ def get_layers_info(model):
             elif layer.stride[0] == 2:
                 out_shape = (layer.out_channels, in_shape[1] * 2, in_shape[2] * 2)
             name = "ConvTr2D"
-        elif isinstance(layer, models.layers.ResBlock2d):
+        elif isinstance(layer, enr.models.layers.ResBlock2d):
             out_shape = in_shape
             name = "ResBlock2D"
         elif isinstance(layer, torch.nn.Conv3d):
@@ -119,7 +119,7 @@ def get_layers_info(model):
             elif layer.stride[0] == 2:
                 out_shape = (layer.out_channels, in_shape[1] * 2, in_shape[2] * 2, in_shape[3] * 2)
             name = "ConvTr3D"
-        elif isinstance(layer, models.layers.ResBlock3d):
+        elif isinstance(layer, enr.models.layers.ResBlock3d):
             out_shape = in_shape
             name = "ResBlock3D"
         else:
@@ -133,7 +133,7 @@ def get_layers_info(model):
 
         in_shape = out_shape
 
-    if isinstance(model, models.submodels.InverseProjection):
+    if isinstance(model, enr.models.submodels.InverseProjection):
         layer_info = {"name": "Reshape", "in_shape": in_shape,
                       "out_shape": model.output_shape, "num_params": 0}
         layers_info.append(layer_info)
