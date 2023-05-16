@@ -192,13 +192,13 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
         # change the viewpoint for the next image
         if translation:
             # Change object loc 
-            obj.location = (np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5))
+            obj.location = (np.random.uniform(-0.4, 0.4), np.random.uniform(-0.4, 0.4), np.random.uniform(-0.3, 0.5))
     
 
         if rotation: 
             # change camera rotation
-            x_rot = np.random.uniform(0, 2*math.pi) # elevation
-            z_rot = np.random.uniform(0, 2*math.pi) # azimuth
+            x_rot = np.random.uniform(-math.pi/2, math.pi/2) # elevation
+            z_rot = np.random.uniform(-math.pi, math.pi) # azimuth
             cam_empty.rotation_euler = (x_rot, 0.0, z_rot)
     
           # render still
