@@ -27,6 +27,8 @@ directory = "{}/{}_{}".format(save_path, timestamp, config["id"])
 if not os.path.exists(directory):
     os.makedirs(directory)
 
+print("Saving to {}".format(directory))
+
 # Save config file in directory
 with open(directory + '/config.json', 'w') as file:
     json.dump(config, file)
@@ -43,7 +45,9 @@ model = NeuralRenderer(
     mode=config["mode"]
 ) if not continue_training else load_model(os.path.join(directory, "best_model.pt"))
 
-model.print_model_info()
+
+if not continue_training:
+    model.print_model_info()
 
 model = model.to(device)
 

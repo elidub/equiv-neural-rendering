@@ -77,7 +77,7 @@ class Trainer():
 
         # Loss histories
         self.recorded_losses = ["total", "regression", "ssim"]
-        if (savedir is None) and (not os.path.isfile(savedir + '/loss_history.json')):
+        if not os.path.isfile(savedir + '/loss_history.json'):
             self.loss_history = {loss_type: [] for loss_type in self.recorded_losses}
             self.epoch_loss_history = {loss_type: [] for loss_type in self.recorded_losses}
             self.val_loss_history = {loss_type: [] for loss_type in self.recorded_losses}
@@ -104,6 +104,10 @@ class Trainer():
             test_dataloader (torch.utils.DataLoader or None): If not None, will
                 test model on this dataset after every epoch.
         """
+
+        print(save_dir + "/imgs_ground_truth.png")
+        print(os.path.isdir(save_dir + "/imgs_ground_truth.png"))
+
         if (save_dir is not None) and (not os.path.isdir(save_dir + "/imgs_ground_truth.png")):
             # Extract one batch of data
             for batch in dataloader:

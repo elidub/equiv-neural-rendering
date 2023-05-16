@@ -19,9 +19,10 @@ argv = sys.argv[sys.argv.index("--") + 1:]
 args = parser.parse_args(argv)
 
 obj_dir = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/objects/'
-data_dir_train = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/train'
-data_dir_valid = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/val'
-data_dir_test = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rot_dataset/test'
+data_dir_train = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rototrans_dataset/train'
+data_dir_valid = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rototrans_dataset/val'
+data_dir_rest = '/project/gpuuva022/shared/equiv-neural-rendering/chairs/data_half/rototrans_dataset/rest'
+
 
 i = 0
 files = os.listdir(obj_dir) 
@@ -29,10 +30,13 @@ random.shuffle(files)
 for scene in files:
     scene_folder = obj_dir + scene
     
-    if i < 2306:
-        os.system(f'~/equiv-neural-rendering/blender/blender -b --python data_prep/render_blender.py -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {data_dir_train} --rotation')
+    if i < 2307:
+        os.system(f'~/equiv-neural-rendering/blender/blender -b --python data_prep/render_blender.py -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {data_dir_train} --rotation --translation')
     
-    elif i < 2637:
-        os.system(f'~/equiv-neural-rendering/blender/blender -b --python data_prep/render_blender.py -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {data_dir_valid} --rotation')
+    elif i < 2638:
+        os.system(f'~/equiv-neural-rendering/blender/blender -b --python data_prep/render_blender.py -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {data_dir_valid} --rotation --translation')
+    
+    else:
+        os.system(f'~/equiv-neural-rendering/blender/blender -b --python data_prep/render_blender.py -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {data_dir_rest} --rotation --translation')
     
     i += 1
