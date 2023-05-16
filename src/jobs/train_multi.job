@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#SBATCH --partition=gpu_titanrtx_shared_course
+#SBATCH --gres=gpu:2
+#SBATCH --job-name=Train
+#SBATCH --ntasks=2
+#SBATCH --cpus-per-task=3
+#SBATCH --time=40:00:00
+#SBATCH --mem=32000M
+#SBATCH --output=jobs/slurm_output/train-multi_%A.out
+
+module purge
+module load 2021
+module load Anaconda3/2021.05
+
+cd $HOME/equiv-neural-rendering/
+source activate nr
+
+# srun python -u experiments.py config_trans.json
+# srun python -u experiments.py config_roto_cont.json
+srun python -u experiments.py config_rototrans.json
