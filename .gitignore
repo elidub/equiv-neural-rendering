@@ -9,5 +9,5 @@ exploration_elias.ipynb
 blender/
 .nfs0000002439b2b7a400004a96
 train_results/*/model.pt
-train_results/*/best_model.pt
-train_results/*/*.pt
+# train_results/*/best_model.pt
+# train_results/*/*.pt
