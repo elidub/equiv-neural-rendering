@@ -75,9 +75,6 @@ class Trainer():
                 test model on this dataset after every epoch.
         """
 
-        print(save_dir + "/imgs_ground_truth.png")
-        print(os.path.isdir(save_dir + "/imgs_ground_truth.png"))
-
         if (save_dir is not None) and (not os.path.isdir(save_dir + "/imgs_ground_truth.png")):
             # Extract one batch of data
             for batch in dataloader:
@@ -164,7 +161,7 @@ class Trainer():
             self._train_iteration(batch)
 
             # Print iteration losses
-            pbar.set_description(self._print_losses() + "  " + print_gpu_utilization())
+            pbar.set_description(self._print_losses())
             # print("{}/{}".format(i + 1, num_iterations))
             # self._print_losses()
 

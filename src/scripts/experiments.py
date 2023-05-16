@@ -4,7 +4,8 @@ import sys
 import time
 import torch
 
-sys.path.insert(1, os.path.join(sys.path[0], '../'))
+src_path = os.path.join(sys.path[0], '../')
+sys.path.insert(1, src_path)
 from enr.misc.dataloaders import scene_render_dataloader
 from enr.models.neural_renderer import NeuralRenderer, load_model
 from enr.training.training import Trainer
@@ -14,10 +15,10 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # Get path to data from command line arguments
 if len(sys.argv) != 2:
     raise(RuntimeError("Wrong arguments, use python experiments.py <config>"))
-path_to_config = sys.argv[1]
+config_file = os.path.join(src_path, 'configs', sys.argv[1])
 
 # Open config file
-with open(path_to_config) as file:
+with open(config_file) as file:
     config = json.load(file)
 
 continue_training = True if config["timestamp"] is not False else False

@@ -1,8 +1,8 @@
 import sys
 import torch
-from misc.dataloaders import scene_render_dataset
-from misc.quantitative_evaluation import get_dataset_psnr
-from models.neural_renderer import load_model
+from enr.misc.dataloaders import scene_render_dataset
+from enr.misc.quantitative_evaluation import get_dataset_psnr
+from enr.models.neural_renderer import load_model
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
