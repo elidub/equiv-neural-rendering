@@ -31,7 +31,7 @@ def get_dataset_psnr(device, model, dataset, source_img_idx_shift=64,
     if max_num_scenes is not None:
         num_scenes = min(max_num_scenes, num_scenes)
     # Calculate number of batches per scene
-    assert (num_imgs_per_scene - 1) % batch_size == 0, "Batch size {} must divide number of images per scene {}."
+    assert (num_imgs_per_scene - 1) % batch_size == 0, f"Batch size {batch_size} must divide number of images per scene {num_imgs_per_scene-1}."
     # Comparison are made against all images except the source image (and
     # therefore subtract 1 from total number of images) 
     batches_per_scene = (num_imgs_per_scene - 1) // batch_size
