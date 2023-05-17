@@ -7,6 +7,8 @@ from torchvision.utils import save_image
 from tqdm import tqdm
 import os
 
+from enr.misc.viz import make_gif
+
 class Trainer():
     """Class used to train neural renderers.
 
@@ -121,6 +123,8 @@ class Trainer():
                         self.model.module.save(save_dir + "/model.pt")
                     else:
                         self.model.save(save_dir + "/model.pt")
+
+                make_gif(path = save_dir)
 
             if test_dataloader is not None:
                 regression_loss, ssim_loss, total_loss = mean_dataset_loss(self, test_dataloader)

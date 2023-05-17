@@ -2,7 +2,8 @@ import enr.models.layers
 import enr.models.submodels
 import torch
 from math import pi
-
+import json
+import os
 
 def full_rotation_angle_sequence(num_steps):
     """Returns a sequence of angles corresponding to a full 360 degree rotation.
@@ -182,3 +183,16 @@ def tuple_product(input_tuple):
     for elem in input_tuple:
         product *= elem
     return product
+
+def open_runs(
+        runs,
+        history_keys = ['val_loss_history', 'epoch_loss_history' , 'loss_history'],
+        train_results_path = './../src/train_results/',
+    ):
+    
+    for run in runs:
+        filename = lambda h : train_results_path + run + f'/{h}.json'
+        histories = {h: json.load(open(filename(h))) for h in history_keys if os.path.isfile(filename(h))}
+        runs[run]['histories'] = histories
+        
+    return runs, histories

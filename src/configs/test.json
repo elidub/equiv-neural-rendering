@@ -8,7 +8,7 @@
   "multi_gpu": true,
   "batch_size": 16,
   "lr": 2e-4,
-  "epochs": 60,
+  "epochs": 2,
   "loss_type": "l1",
   "ssim_loss_weight": 0.05,
   "save_freq": 1,

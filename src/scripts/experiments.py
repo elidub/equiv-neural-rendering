@@ -17,6 +17,8 @@ if len(sys.argv) != 2:
     raise(RuntimeError("Wrong arguments, use python experiments.py <config>"))
 config_file = os.path.join(src_path, 'configs', sys.argv[1])
 
+print('src_path: {}'.format(src_path))
+
 # Open config file
 with open(config_file) as file:
     config = json.load(file)
@@ -26,7 +28,7 @@ continue_training = True if config["timestamp"] is not False else False
 # Set up directory to store experiments
 timestamp = time.strftime("%Y-%m-%d_%H-%M") if not continue_training else config["timestamp"]
 save_path = config["save_path"]
-directory = "{}/{}_{}".format(save_path, timestamp, config["id"])
+directory = "{}/{}_{}".format(os.path.join(src_path, save_path), timestamp, config["id"])
 if not os.path.exists(directory):
     os.makedirs(directory)
 
