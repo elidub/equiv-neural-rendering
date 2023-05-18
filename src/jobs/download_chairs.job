@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#SBATCH --gres=gpu:0
+#SBATCH --job-name=DownloadChairs
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=3
+#SBATCH --time=04:00:00
+#SBATCH --mem=32000M
+#SBATCH --output=jobs/slurm_output/download-chairs_%A.out
+
+module purge
+module load 2021
+module load Anaconda3/2021.05
+
+cd $HOME/equiv-neural-rendering/
+
+cd data
+wget https://icml20-prod.cdn-apple.com/eqn-data/data/chairs.zip # Link from README
+
+unzip chairs.zip
+rm chairs.zip
+
+cd chairs
+unzip chairs-test.zip
+rm    chairs-test.zip
+unzip chairs-val.zip
+rm    chairs-val.zip
+unzip chairs-train.zip
+rm    chairs-train.zip
+
+# Delete `__MACOSX` folders
+find . -type d -name "__MACOSX" -exec rm -rf {} \;

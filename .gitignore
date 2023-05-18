@@ -1,16 +1,4 @@
-jobs/slurm_output/*.out
-data/chairs/
-data/chairs/*
-*/__pycache__/*
-.ipynb_checkpoints/*
-exploration.ipynb
-__pycache__
-data_prep/output/test/
-data_prep/output/
-data_prep/demo/output/
-exploration_elias.ipynb
+src/jobs/slurm_output/*.out
+__pycache__/
 blender/
-.nfs0000002439b2b7a400004a96
-train_results/*/model.pt
-# train_results/*/best_model.pt
-# train_results/*/*.pt
+.DS_Store
