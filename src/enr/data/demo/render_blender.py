@@ -125,7 +125,7 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
     cam_constraint.target = cam_empty
     ########################################
     # Configure Camera Background
-    filepath = local_path + "/data/demo/data/background.png"
+    filepath = local_path + "src/enr/data/demo/data/background.png"
     
     # Displaying the Background in the camera view
     img = bpy.data.images.load(filepath)
@@ -167,7 +167,7 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
 
 
     #######################################33
-    output_folder = local_path + '/data/demo/'+ output_folder
+    output_folder = local_path + 'src/enr/data/demo/'+ output_folder
 
     model_identifier = scene_name #os.path.split(os.path.split(scene_name)[1])[1]
     fp = os.path.join(os.path.abspath(output_folder), model_identifier)
