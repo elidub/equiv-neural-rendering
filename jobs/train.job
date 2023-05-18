@@ -5,7 +5,7 @@
 #SBATCH --job-name=Train
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
-#SBATCH --time=04:00:00
+#SBATCH --time=00:30:00
 #SBATCH --mem=32000M
 #SBATCH --output=jobs/slurm_output/train_%A.out
 
@@ -13,9 +13,10 @@ module purge
 module load 2021
 module load Anaconda3/2021.05
 
-cd $HOME/equiv-neural-rendering/
+cd $HOME/equiv-neural-rendering/src/scripts
 source activate nr
 
 # srun python -u src/scripts/experiments.py rot.json
 # srun python -u src/scripts/experiments.py trans.json
-srun python -u src/scripts/experiments.py rototrans.json
+# srun python -u src/scripts/experiments.py rototrans.json
+srun python -u experiments.py rototrans_lr1e-7.json

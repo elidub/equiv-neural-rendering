@@ -1,4 +1,4 @@
-src/jobs/slurm_output/*.out
+jobs/slurm_output/*.out
 __pycache__/
 blender/
 .DS_Store
