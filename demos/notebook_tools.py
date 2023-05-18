@@ -14,7 +14,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 """ Detect local path """
 local_path = os.getcwd()
-print('lp',local_path)
+
 main_path = local_path[:-5]
 
 
