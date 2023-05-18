@@ -1,33 +1,44 @@
 # Data preprocessing
-This folder contains the code for the data preprocessing. Blender version 2.8 needs to be installed to run the code. 
+This folder contains the code for the data preprocessing. Blender version 3.5 needs to be installed to run the code.
 
-## Dummy dataset
-The dummy dataset can be found in the `output_dummy` folder, containing 3 subfolders of the datasets of the corresponding transformations. In each of these subfolders, 10 scenes are stored, each containing 50 images of different views of the scene and a `render_params.json` file. There, for each view, the azimuth and elevation (in radians) of the camera and the x, y and z coordinate of the chair are stored. 
+## Structure
+- The `demo` folder contains files needed for the data demo (used by `demos/EquivariantNR.ipynb`)
+- `render_blender.py` is the file that creates scene images from a given object. When running this file, the path to blender has to be specified first. Moreover, it expects and can handle multiple arguments, namely;
+    - `--scene_name`:  the name of the scene folder, in which the `.obj` file, obtained from ShapeNet, is specified. 
+    - `--scene_folder`: the path to the above mentioned scene name.
+    - `--n_images`: number of views to be rendered for a given scene.
+    - `--output_folder`: directory the created data will be stored in.
+    - `--resolution`: defines the resolution of the images taken, default = 64.
+    - `--rotation`: if this argument is specified, the images will differ in camera angle.
+    - `--translation`: if this argument is specified, the images will differ in object location.
 
-## Install Blender on LISA
-- Download Blender for Linux manually from the [webiste](https://www.blender.org/download/), or [here](https://www.blender.org/download/release/Blender3.5/blender-3.5.1-linux-x64.tar.xz/) (248MB) directly. Should also be able to do this directly on LISA with `wget`, but haven't been able to figure that out.
-- Copy the file `blender-3.5.1-linux-x64.tar.xz` to the director `/equiv-neural-rendering`.
-
+For example, `render_blender.py` can be run with the following commandline to create 5 views with a change in rotation and in translation:
 ```
+blender -b --python render_blender.py -- --scene_name demo/data/model_1 --n_images 5 --output_folder demo/output --rotation --translation
+```
+
+## Dataset
+TO DO: explain where the three datasets can be downloaded.
+
+## Install Blender
+```
+""" Install / Load wget """
+%pip install wget
+import wget
+
+""" Install blender --> """
+# Download blender 3.5.1
+!wget https://ftp.nluug.nl/pub/graphics/blender/release/Blender3.5/blender-3.5.1-linux-x64.tar.xz
+
 # Unpack 
-tar -xvf blender-3.5.1-linux-x64.tar.xz
+!tar -xvf blender-3.5.1-linux-x64.tar.xz
+!rm {local_path}/blender-3.5.1-linux-x64.tar.xz
 
-# Rename for shorter commands
-mv blender-3.5.1-linux-x64 blender
-rm blender-3.5.1-linux-x64.tar.xz
-
-# Go to a GPU node and activate conda env (see below)
-# Not sure if conda env is even necessary
-
-# Go to data and run an example blender command
-cd data
-~/equiv-neural-rendering/blender/blender -b --python render_blender.py -- --scene_name dataset/model.dae --rotation
-# Thist last command is just an example for now, I guess one can also run `make_batch.py` with some changes.
+# Move and rename for shorter commands
+!mv {local_path}/blender-3.5.1-linux-x64 {main_path}src/enr/data/demo/blender
 ```
-> I have renamed `"View Layer"` to `"ViewLayer"` in `render_blender.py` (see commits), so it might not work anymore locally!?
 
-
-### Activate GPU node 
+### Activate GPU node (for Lisa)
 ```
 srun --partition=gpu_titanrtx_shared_course --gres=gpu:1 --mem=32000M --ntasks=1 --cpus-per-task=3 --time=01:00:00 --pty bash -i
 
