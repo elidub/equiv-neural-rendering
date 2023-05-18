@@ -16,4 +16,6 @@ module load Anaconda3/2021.05
 cd $HOME/equiv-neural-rendering/
 source activate nr
 
-srun python -u experiments.py config.json
+# srun python -u src/scripts/experiments.py rot.json
+# srun python -u src/scripts/experiments.py trans.json
+srun python -u src/scripts/experiments.py rototrans.json
