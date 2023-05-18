@@ -28,7 +28,7 @@ def parse_option():
     return args
 
 def main(args):
-    files = os.listdir(args.obj_dir)[:2]
+    files = os.listdir(args.obj_dir)
     random.shuffle(files)
     for i, scene in enumerate(files):
 
