@@ -21,7 +21,6 @@ main_path = local_path[:-5]
 sys.path.append(local_path + '/../src/')
 sys.path.append(local_path + '/../src/enr/')
 from models.neural_renderer import *
-from notebook_tools import *
 
 # ---------------------------------------------------------
 # Configure transformations for demonstration
