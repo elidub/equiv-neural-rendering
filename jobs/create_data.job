@@ -5,7 +5,7 @@
 #SBATCH --job-name=create_rtdata
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
-#SBATCH --time=06:00:00
+#SBATCH --time=10:00:00
 #SBATCH --mem=32000M
 #SBATCH --output=jobs/slurm_output/create_rtdata%A.out
 
@@ -16,4 +16,4 @@ module load Anaconda3/2021.05
 cd $HOME/equiv-neural-rendering/src/scripts/
 source activate nr
 
-srun python -u create_data.py  -- --n_images 10 --output_dir /project/gpuuva022/shared/equiv-neural-rendering/chairs/data_test
+srun python -u create_data.py  -- --n_images 50 --output_dir /project/gpuuva022/shared/equiv-neural-rendering/chairs/data_all/
