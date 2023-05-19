@@ -5,7 +5,7 @@
 #SBATCH --job-name=Train
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
-#SBATCH --time=00:10:00
+#SBATCH --time=10:00:00
 #SBATCH --mem=32000M
 #SBATCH --array=1-4%2
 #SBATCH --output=jobs/slurm_output/train_array_%A_%a.out
@@ -19,7 +19,4 @@ ARRAY_FILE=$HOME/equiv-neural-rendering/jobs/configs_array.txt
 cd $HOME/equiv-neural-rendering/src/scripts/
 source activate nr
 
-# srun python -u experiments.py rot.json
-# srun python -u experiments.py trans.json
-# srun python -u experiments.py rototrans.json
 srun python -u experiments.py $(head -$SLURM_ARRAY_TASK_ID $ARRAY_FILE | tail -1)
