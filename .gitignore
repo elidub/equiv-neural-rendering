@@ -1,4 +1,9 @@
+src/jobs/slurm_output/*.out
+src/enr/data/demo/output/*
 jobs/slurm_output/*.out
 __pycache__/
 blender/
 .DS_Store
+.ipynb_checkpoints/*
+*/.ipynb_checkpoints/*
+demos/blender*
