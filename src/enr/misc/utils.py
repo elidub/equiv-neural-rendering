@@ -195,4 +195,4 @@ def open_runs(
         histories = {h: json.load(open(filename(h))) for h in history_keys if os.path.isfile(filename(h))}
         runs[run]['histories'] = histories
         
-    return runs, histories
+    return runs
