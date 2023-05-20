@@ -5,7 +5,7 @@
 #SBATCH --job-name=Train
 #SBATCH --ntasks=2
 #SBATCH --cpus-per-task=3
-#SBATCH --time=00:30:00
+#SBATCH --time=24:00:00
 #SBATCH --mem=32000M
 #SBATCH --output=jobs/slurm_output/train_multi_%A.out
 
@@ -19,4 +19,4 @@ source activate nr
 # srun python -u experiments.py rot.json
 # srun python -u experiments.py trans.json
 # srun python -u experiments.py rototrans.json
-srun python -u experiments.py rototrans_lr1e-7.json
+srun python -u experiments.py finetune.json

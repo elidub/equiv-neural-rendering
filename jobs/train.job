@@ -19,4 +19,4 @@ source activate nr
 # srun python -u src/scripts/experiments.py rot.json
 # srun python -u src/scripts/experiments.py trans.json
 # srun python -u src/scripts/experiments.py rototrans.json
-srun python -u experiments.py rototrans_lr1e-7.json
+srun python -u experiments.py finetune.json
