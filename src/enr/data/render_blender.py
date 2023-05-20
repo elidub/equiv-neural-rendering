@@ -108,9 +108,9 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
 
     # Place camera
     cam = scene.objects['Camera']
-    cam.location = (0, 1.5, 0)
-    cam.data.lens = 35
-    cam.data.sensor_width = 32
+    cam.location = (0, 2, 0)
+    # cam.data.lens = 35
+    # cam.data.sensor_width = 32
 
     cam_constraint = cam.constraints.new(type='TRACK_TO')
     cam_constraint.track_axis = 'TRACK_NEGATIVE_Z'
@@ -192,7 +192,8 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
         # change the viewpoint for the next image
         if translation:
             # Change object loc 
-            obj.location = (np.random.uniform(-0.4, 0.4), np.random.uniform(-0.4, 0.4), np.random.uniform(-0.3, 0.5))
+            # obj.location = (np.random.uniform(-0.4, 0.4), np.random.uniform(-0.4, 0.4), np.random.uniform(-0.3, 0.5))
+            obj.location = (np.random.uniform(-0.3, 0.3), np.random.uniform(-0.3, 0.3), np.random.uniform(-0.3, 0.3))
     
 
         if rotation: 
@@ -219,7 +220,7 @@ if __name__ == '__main__':
     parser.add_argument('--n_images', type=int, default=50,
                         help='number of views/images to be rendered per scende')
     parser.add_argument('--scene_folder', type=str,
-                        help='Path to the .dae object')
+                        help='Path to the .obj object')
     parser.add_argument('--scene_name', type=str,
                         help='name of the scene')
     parser.add_argument('--scale', type=float, default=1,
@@ -228,7 +229,7 @@ if __name__ == '__main__':
                         help='Scaling that is applied to depth. Depends on size of mesh.') # ????
     parser.add_argument('--color_depth', type=str, default='8',
                         help='Number of bit per channel used for output. Either 8 or 16.') # ????
-    parser.add_argument('--resolution', type=int, default=64, # 128
+    parser.add_argument('--resolution', type=int, default=128, # 128
                         help='Resolution of the images.')
     parser.add_argument('--translation', action='store_true')
     parser.add_argument('--rotation', action='store_true')
