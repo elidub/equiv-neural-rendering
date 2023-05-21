@@ -44,6 +44,10 @@ def get_dataset_psnr(device, model, dataset, source_img_idx_shift=64,
         render_params = dataset[source_img_idx]["render_params"]
         azimuth_source = torch.Tensor([render_params["azimuth"]]).repeat(batch_size).to(device)
         elevation_source = torch.Tensor([render_params["elevation"]]).repeat(batch_size).to(device)
+        if 'translation' in render_params:
+            translation_source = torch.Tensor([render_params["translation"]]).repeat(batch_size).to(device)
+        else:
+            translation_source = torch.Tensor([0, 0, 0]).repeat(batch_size).to(device)
         # Infer source scene
         scenes = model.inverse_render(img_source)
 
@@ -60,14 +64,15 @@ def get_dataset_psnr(device, model, dataset, source_img_idx_shift=64,
             # If we have filled up a batch, make psnr calculation
             if num_points_in_batch == batch_size:
                 # Create batch for target data
-                img_target, azimuth_target, elevation_target = create_batch_from_data_list(data_list)
+                img_target, azimuth_target, elevation_target, translation_target = create_batch_from_data_list(data_list)
                 img_target = img_target.to(device)
                 azimuth_target = azimuth_target.to(device)
                 elevation_target = elevation_target.to(device)
+                translation_target = translation_target.to(device)
                 # Rotate scene and render image
                 rotated = model.rotate_source_to_target(scenes, azimuth_source,
-                                                        elevation_source, azimuth_target,
-                                                        elevation_target)
+                                                        elevation_source, translation_source, azimuth_target,
+                                                        elevation_target, translation_target)
                 img_predicted = model.render(rotated).detach()
                 scene_psnr += get_psnr(img_predicted, img_target)
                 data_list = []

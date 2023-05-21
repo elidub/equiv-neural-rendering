@@ -127,9 +127,16 @@ class SceneRenderDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        img_path = self.data[idx]["img_path"]
-        render_params = self.data[idx]["render_params"]
-
+        """
+            TODO: FIX index errors
+        """
+        try:
+            img_path = self.data[idx]["img_path"]
+            render_params = self.data[idx]["render_params"]
+        except IndexError:
+            idx = -1
+            img_path = self.data[idx]["img_path"]
+            render_params = self.data[idx]["render_params"]
         img = Image.open(img_path)
 
         # Transform images
@@ -202,13 +209,20 @@ def create_batch_from_data_list(data_list):
     imgs = []
     azimuths = []
     elevations = []
+    translations = []
     for data_item in data_list:
         img, render_params = data_item["img"], data_item["render_params"]
         azimuth, elevation = render_params["azimuth"], render_params["elevation"]
+        if 'translation' in render_params:
+            translation = render_params['translate']
+        else:
+            translation = 0.
         imgs.append(img.unsqueeze(0))
         azimuths.append(torch.Tensor([azimuth]))
         elevations.append(torch.Tensor([elevation]))
+        translations.append(torch.Tensor([translation]))
     imgs = torch.cat(imgs, dim=0)
     azimuths = torch.cat(azimuths)
     elevations = torch.cat(elevations)
-    return imgs, azimuths, elevations
+    translations = torch.cat(translations)
+    return imgs, azimuths, elevations, translations
