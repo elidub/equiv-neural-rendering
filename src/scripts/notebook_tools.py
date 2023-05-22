@@ -9,6 +9,8 @@ import imageio
 import torch
 import torchvision
 from torchvision.transforms import ToTensor
+import json
+import numpy as np
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -174,3 +176,18 @@ def apply_all_transformations(transformations, model, scene, init_camera_pos, or
     images = [original_img, rendered_img, roto_scene, trans_scene, roto_trans_scene]
     keys = ['Original Image', 'Rendered Image', 'Rotated Image', 'Translated Image', 'Roto-Translated Image']
     return images, keys
+
+
+def read_render_params(json_file, img_number='00000', mode='degrees'):
+    with open(json_file) as file:
+        data = json.load(file)
+
+    inner_dict = data[img_number]
+    azimuth = inner_dict.get("azimuth") * 180 / np.pi if mode == 'degrees' else inner_dict.get("azimuth")
+    elevation = inner_dict.get("elevation") * 180 / np.pi if mode == 'degrees' else inner_dict.get("elevation")
+    x_value = inner_dict.get("x")
+    y_value = inner_dict.get("y")
+    z_value = inner_dict.get("z")
+
+    return azimuth, elevation, x_value, y_value, z_value
+
