@@ -5,7 +5,7 @@
 #SBATCH --job-name=Train
 #SBATCH --ntasks=2
 #SBATCH --cpus-per-task=3
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --mem=32000M
 #SBATCH --output=jobs/slurm_output/train_multi_%A.out
 
