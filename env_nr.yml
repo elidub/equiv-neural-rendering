@@ -78,3 +78,5 @@ dependencies:
       - zipp==3.15.0
       - scikit-image==0.20.0
       - pynvml==11.5.0
+      - opencv-python==4.7.0.72
+      - seaborn
