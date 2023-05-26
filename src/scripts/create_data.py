@@ -55,7 +55,7 @@ def main(args):
 
         render_blender_file = os.path.join(sys.path[0], '../enr/data/render_blender.py')
 
-        os.system(f'{args.blender_dir} -b --python {render_blender_file} -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {output_dir} {blender_args}')
+        os.system(f'{args.blender_dir} -b --python {render_blender_file} -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {output_dir} --resolution {args.resolution} {blender_args}')
         
 
 
