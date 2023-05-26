@@ -229,7 +229,7 @@ if __name__ == '__main__':
                         help='Scaling that is applied to depth. Depends on size of mesh.') # ????
     parser.add_argument('--color_depth', type=str, default='8',
                         help='Number of bit per channel used for output. Either 8 or 16.') # ????
-    parser.add_argument('--resolution', type=int, default=128, # 128
+    parser.add_argument('--resolution', type=int, default=64, # 128
                         help='Resolution of the images.')
     parser.add_argument('--translation', action='store_true')
     parser.add_argument('--rotation', action='store_true')
