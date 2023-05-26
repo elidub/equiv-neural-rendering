@@ -9,7 +9,7 @@ from enr.misc.dataloaders import scene_render_dataset
 from enr.misc.quantitative_evaluation import get_dataset_psnr
 from enr.models.neural_renderer import load_model
 
-def evaluate(model_path, data_dir, img_res = 128):
+def evaluate(model_path, data_dir, img_res = 128, n_imgs = 64):
 	device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 	# Load model
@@ -18,9 +18,11 @@ def evaluate(model_path, data_dir, img_res = 128):
 
 	# Initialize dataset
 	dataset = scene_render_dataset(path_to_data=data_dir, img_size=(3, img_res, img_res),
-		                       crop_size=128, allow_odd_num_imgs=True)
+		                       crop_size=img_res, allow_odd_num_imgs=True)
 
 	# Calculate PSNR
 	with torch.no_grad():
-	    psnrs = get_dataset_psnr(device, model, dataset, source_img_idx_shift=64,
+	    psnrs = get_dataset_psnr(device, model, dataset, source_img_idx_shift= n_imgs,
 		                     batch_size=1, max_num_scenes=None)
+
+	return psnrs
