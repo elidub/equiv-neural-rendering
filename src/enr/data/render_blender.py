@@ -44,7 +44,7 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
     # Create normal output nodes
     scale_node = nodes.new(type="CompositorNodeMixRGB")
     scale_node.blend_type = 'MULTIPLY'
-    # scale_node.use_alpha = True
+   
     scale_node.inputs[2].default_value = (0.5, 0.5, 0.5, 1)
     links.new(render_layers.outputs['Normal'], scale_node.inputs[1])
 
@@ -54,18 +54,15 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
     bias_node.inputs[2].default_value = (0.5, 0.5, 0.5, 0)
     links.new(scale_node.outputs[0], bias_node.inputs[1])
 
-
     # Delete default cube
     context.active_object.select_set(True)
     bpy.ops.object.delete()
 
-   
     # Import textured mesh
     bpy.ops.object.select_all(action='DESELECT')
 
     fp_object_scene = scene_folder + "/models/model_normalized.obj"
     bpy.ops.import_scene.obj(filepath=fp_object_scene)
-    # bpy.ops.wm.collada_import(filepath=scene_name)
    
 
     obj = bpy.context.selected_objects[0]
@@ -93,24 +90,23 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
     light = bpy.data.lights['Light']
     light.type = 'SUN'
     light.use_shadow = False
+
     # Possibly disable specular shading:
-    light.specular_factor = 0 # 1.0
-    light.energy = 1.0 # 10
+    light.specular_factor = 0 
+    light.energy = 1.0 
 
     # Add another light source so stuff facing away from light is not completely dark
     bpy.ops.object.light_add(type='SUN')
     light2 = bpy.data.lights['Sun']
     light2.use_shadow = False
-    light2.specular_factor = 0 #1.0
-    light2.energy = 1.0 #0.015
+    light2.specular_factor = 0 
+    light2.energy = 1.0 
     bpy.data.objects['Sun'].rotation_euler = bpy.data.objects['Light'].rotation_euler
     bpy.data.objects['Sun'].rotation_euler[0] += 180
 
     # Place camera
     cam = scene.objects['Camera']
     cam.location = (0, 2, 0)
-    # cam.data.lens = 35
-    # cam.data.sensor_width = 32
 
     cam_constraint = cam.constraints.new(type='TRACK_TO')
     cam_constraint.track_axis = 'TRACK_NEGATIVE_Z'
@@ -123,6 +119,7 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
     scene.collection.objects.link(cam_empty)
     context.view_layer.objects.active = cam_empty
     cam_constraint.target = cam_empty
+
     ########################################
     # Configure Camera Background
     filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "background.png")
@@ -166,16 +163,15 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
 
 
 
-    #######################################33
+    #######################################
 
-    model_identifier = scene_name #os.path.split(os.path.split(scene_name)[1])[1]
+    model_identifier = scene_name 
     fp = os.path.join(os.path.abspath(output_folder), model_identifier)
 
     render_info = {}
     cam_empty.rotation_euler = (0.0, 0.0, 0.0)
     x_rot = 0.0
     z_rot = 0.0
-    # bpy.ops.wm.save_as_mainfile(filepath='begin.blend')
 
     for i in range(n_views):
         render_file_path = fp + '/{0:05d}'.format(int(i))
@@ -189,20 +185,17 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
 
         bpy.ops.render.render(write_still=True)
 
-        # change the viewpoint for the next image
+        # Change the viewpoint for the next image
         if translation:
-            # Change object loc 
-            # obj.location = (np.random.uniform(-0.4, 0.4), np.random.uniform(-0.4, 0.4), np.random.uniform(-0.3, 0.5))
+            # Change object location
             obj.location = (np.random.uniform(-0.3, 0.3), np.random.uniform(-0.3, 0.3), np.random.uniform(-0.3, 0.3))
     
 
         if rotation: 
-            # change camera rotation
+            # Change camera rotation
             x_rot = np.random.uniform(-math.pi/2, math.pi/2) # elevation
             z_rot = np.random.uniform(-math.pi, math.pi) # azimuth
             cam_empty.rotation_euler = (x_rot, 0.0, z_rot)
-    
-          # render still
 
         # For debugging the workflow
     #bpy.ops.wm.save_as_mainfile(filepath='end.blend')
@@ -213,23 +206,21 @@ def render_scene(scene_name, scene_folder, n_views, output_folder, color_depth, 
     bpy.data.objects.remove(obj, do_unlink=True)
     
 
-
-
 if __name__ == '__main__':
+
     parser = argparse.ArgumentParser(description='Create data for')
+
     parser.add_argument('--n_images', type=int, default=50,
                         help='number of views/images to be rendered per scende')
     parser.add_argument('--scene_folder', type=str,
-                        help='Path to the .obj object')
+                        help='Path to the scene object')
     parser.add_argument('--scene_name', type=str,
                         help='name of the scene')
-    parser.add_argument('--scale', type=float, default=1,
-                        help='Scaling factor applied to model. Depends on size of mesh.') # ?????
     parser.add_argument('--output_folder', type=str, default="output/rot_dataset/",
-                        help='Scaling that is applied to depth. Depends on size of mesh.') # ????
+                        help='Path to the store directory.')
     parser.add_argument('--color_depth', type=str, default='8',
-                        help='Number of bit per channel used for output. Either 8 or 16.') # ????
-    parser.add_argument('--resolution', type=int, default=64, # 128
+                        help='Number of bit per channel used for output. Either 8 or 16.')
+    parser.add_argument('--resolution', type=int, default=64, 
                         help='Resolution of the images.')
     parser.add_argument('--translation', action='store_true')
     parser.add_argument('--rotation', action='store_true')
