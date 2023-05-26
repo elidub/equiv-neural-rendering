@@ -126,19 +126,11 @@ class SceneRenderDataset(Dataset):
     def __len__(self):
         return len(self.data)
 
-    def __getitem__(self, idx):
-        """
-            TODO: FIX index errors
-        """
-        try:
-            img_path = self.data[idx]["img_path"]
-            render_params = self.data[idx]["render_params"]
-        except IndexError:
-            idx = -1
-            img_path = self.data[idx]["img_path"]
-            render_params = self.data[idx]["render_params"]
+    def __getitem__(self, idx):        
+        img_path = self.data[idx]["img_path"]
+        render_params = self.data[idx]["render_params"]
         img = Image.open(img_path)
-
+        
         # Transform images
         if self.img_transform:
             img = self.img_transform(img)
