@@ -153,6 +153,9 @@ The following section demonstrates the practical application of our pipeline for
 #### 3.1.1  Demonstration: populating datasets for the ISO(3)-group using Blender 
 Similar to Dupont et al., we perform experiments on the [ShapeNet Core](https://shapenet.org/download/shapenetcore)-Chairs benchmark. It is worth noting that the objects included in the ShapeNetCore dataset are already normalized and consistently aligned. However, the subsequent pipeline can be adapted to accommodate any 3D-object data that is processable by Blender. The notebook report contains a brief demonstration of how data can be constructed using Blender 3.5.1.
 
+Below is an example of the dataset
+
+![image](src/imgs/figs/data_demo.png)
 
 
 #### 3.1.2 Populating new datasets
@@ -250,24 +253,61 @@ Our conclusions on training a rototranslation model are that our data is not suf
 
 Training a rototranslation model from scratch was unsuccessful. But the model of the original authors, trained in rotations with high-quality images already succeeded in reconstructing the rendered images. We decided to use this potent model and finetune it with our own data, hoping to achieve the desirable rototranslation results. Our hypothesis was that a model that can already reconstruct an image successful and apply a rotation matrix to it, will be able to leverage this knowledge and combine it with another form of symmetry to achieve rototranslations.
 
-To test this hypothesis, we experimented with images that had a size of 128 x 128, the same as the original authors used. The images were created the same way as discussed in section 3.1. 
+To test this hypothesis, we experimented with images that had a size of 128 x 128, the same as the original authors used. The images were created the same way as discussed in section 3.1.
 
-First we finetuned on a rotation dataset, hoping to see some drop in loss which would provide a proof of concept for this method. We expected this outcome provide the original model with additional data in the same type of symmetry. 
-
-- The translation dataset would most likely not help with rototranslations, but we expected the model to learn shifts of the object along the x-axis (scaling). That would provide a model trained sequentially in both translations and rotations.
-
-- Finally, finetuning the model with our rototranslation dataset would provide the original desired rototranslation model. We reasoned that a pretrained model might more easily leverage its previous training on rotations and apply it on rototranslations. The effect of not having enough camera angles would be overcome by this method.
-
-The results of all three finetuning experiments can be seen in the figures below: 
+- First we finetuned on a rotation dataset, hoping to see some drop in loss which would provide a proof of concept for this method. We expected this outcome provide the original model with additional data in the same type of symmetry. 
 
 
+- Then we finetuned the original model on a rototranslation dataset. We reasoned that a pretrained model might leverage its previous training on rotations and apply it on rototranslations. Since the original problem was not having enough angles, we expected to obtain somewhat accurate rototranslations with this method
+
+The results of both finetuning experiments can be seen in the figures below: 
+
+**ADD FINETUNE ROTO IMAGE**
+
+![image](src/imgs/figs/finetune_roto.gif)
+
+**ADD FINETUNE ROTOTRANSLATION IMAGE**
+
+![image](src/imgs/figs/finetune_rototrans.gif)
+
+As the figures show, attempting to finetune the original models results in massive loss of precision in the reconstructed images. These results indicate that our datasets might be too different than the ones used in the original model. Finetuning seems to make the model worse, even if we just train for rotations. In any case, only blobs and low quality shapes are produced, which is why we concluded that this approach was unsuccessful.
 
 
+#### 3.3.5 Few-scene training
 
-## 4. Conclusion
+Since finetuning did not work, the only option is to obtain more data and train for more than 50 view for each scene, in an attempt to provide more camera angles and extrapolate into a 3D representation for rototranslations. Due to hardware and time limitations, using more views per scene while keeping the same amount of scenes as before was an impossible task. Therefore, we conducted an ablation study in the number of scenes and views. 
 
-- Some preliminary results (working model)
+By keeping a constant number of images, we start with one scene and produce a large amount of views for it. The total number of images is always 100.000 and we conducted experiments with 1,2,5 and 10 scenes, dividing the number of views equally among them. When creating each scene, we keep certain camera angle patches separate to test the quality of the rendered image and the transformations applied to it. This way we make sure to test our approach in a novel view that the model has not seen during training.
+
+The figs below showcase the results of training a model in one scene only. The training data is 100.000 images of the same chair, with a patch of angles left out. The test image below is part of these test angles.
+
+![Alt text](src/imgs/figs/ourRototr1.png)
+
+![Alt text](src/imgs/figs/ourRototr2.png)
+
+It is clear that this training procedure does result in accurate equivariant rendering with rototranslations. While the chair is already part of the training set, the angles tested on are not, which shows the model has successfully learned the assigned task.
+
+Below we provide a demonstration of the training procedure performed for different numbers of scenes.
+
+**Some kind of images/gifs**
+
+
+## 4. Conclusions
+
+Through experimentations throughouht the study, we were able to draw the following conclusions:
+
+- Translations are a simple type of symmetry for this model to learn. Information about changes in the object's coordinates is easiy encapsulated within the convolutional architecture along the image plane.
+
+- Translation along the third axis (scaling) is a simple operation to learn, as it consists of enlarging or shrinking features of the scene, similar to a pooling operation in CNNs.
+
+- This architecture is able to learn rototranslations. With adequate quality and quantity of data, it is possible to achieve a unification of the two symmetries and apply it to the implicit representations.
 
 ## 5. Contributions 
 
-Close the notebook with a description of the each students' contribution.
+**Oline**: Background research, dataset-production & scripting in blender, demonstration setup for blender, notebook & model-demonstrations, PSNR setup and evaluation.
+
+**Robin**: Adjusting code for homogenous coordinates to accomodate (roto-)translations, investigating how to align data generation with model (alignment of axis, order of translation and rotation), notebook & model demonstrations
+
+**Aniek**: Background research, dataset-production & scripting in blender, investigating how to align data generation with model (alignment of axis, order of translation and rotation).
+
+**Orestis**: Adjusting code for homogenous coordinates to accomodate (roto-)translations, notebook & model demonstrations, blogpost report drafting.
