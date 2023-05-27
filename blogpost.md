@@ -10,7 +10,7 @@ Current approaches in scene representations present difficulties with scalabilit
 
 The difference between an explicit scene representation (mesh grid) and an implicit one can be seen in the figure below. While an explicit representation requires structural information of the 3D shape in great detail, the implicit representation is described by an uninterpretable three-dimensional tensor. While the numerical values of the implicit form are abstract and not meant for a human to understand, they provide significant advantages in terms of memory and computational efficiency.
 
-![Alt text](figs/figg2.png)
+![Alt text](src/imgs/figs/figg2.png)
 
 To effectively use these implicit representations, the authors of the paper argue that the transformations applied to them have to be equivariant to the same transformations on an explicit representation.
 
@@ -23,13 +23,13 @@ The proposed model uses a series of convolutions to map scene representations to
 
 Equivariance is enforced between representation and image space by applying transformations in both spaces. Because the representation space is a deep voxel grid, the transformations in this space are defined by a 3D rotation matrix. Because there is a chance that the rotated points may fall out of the reconstructed grid, inverse warping with trilinear interpolation is used in the model, to reconstruct the rotated values within the grid boundaries.
 
-![Alt text](figs/fig5.png)
+![Alt text](src/imgs/figs/fig5.png)
 
 #### 1.1.1: Training
 
 Two images of the same object, obtained from different camera angles, are passed through the inverse renderer and the implicit representations are formed. Then, the forward and backward transformation grid is applied to both latent representations to turn one into the other, before passing them to the renderer. Finally, the reconstructed output images are compared to the original inputs to obtain the loss values. Training in this manner ensures the model learns equivariant representations, as the loss evaluates both the actual rendering and the accuracy of the matching transformations from both spaces.
 
-![Alt text](figs/fig4.png)
+![Alt text](src/imgs/figs/fig4.png)
 
 Finally, the authors claim that the rendering loss used makes little change in results. They provide l1 norm, l2 norm and SSIM loss as candidates, and conduct ablation studies to determine the tradeoffs between them.
 
@@ -60,7 +60,7 @@ The experiments of the study are confucted mainly on ShapeNet benchmarks, as wel
 
 The qualitative comparisons against the baseline models in single shot novel view synthesis with the ShapeNet chairs dataset reveals that the model achieves similar to SoTA results while making far fewer assumptions than the other methods. It can produce high quality novel views by achieving the desired equivariant transformation in representation space.
 
-![Alt text](figs/results.png)
+![Alt text](src/imgs/figs/results.png)
 
 Experiments in other datasets include:
 
@@ -70,13 +70,13 @@ Experiments in other datasets include:
 
 Results similar to the chairs were reported in the other datasets, with some variations due to the specific challenges of each one. For example, the mountains contain extremely complex geometric information, which severly limits the detail of the novel view synthesis.
 
-![Alt text](figs/chairs.png) 
+![Alt text](src/imgs/figs/chairs.png) 
 
-![Alt text](figs/cars.png) 
+![Alt text](src/imgs/figs/cars.png) 
 
-![Alt text](figs/mugs.png) 
+![Alt text](src/imgs/figs/mugs.png) 
 
-![Alt text](figs/mountains.png)
+![Alt text](src/imgs/figs/mountains.png)
 
 Finally, the authors performed ablation studies to test novel view synthesis when using different loss functions. The results in each one were similar and no inherent prefered approach was suggested. In the end, they reason that choice of loss function is task specific. Their claim is supported by their experiments with different losses, showing minimal qualitative images in outputs.
 
@@ -84,9 +84,9 @@ Finally, the authors performed ablation studies to test novel view synthesis whe
 
 The model infers from a single image and renders a second image from a novel view, as illustrated in the figures below.
 
-![Alt text](figs/demo1.png) 
+![Alt text](src/imgs/figs/demo1.png) 
 
-![Alt text](figs/demo2.png)
+![Alt text](src/imgs/figs/demo2.png)
 
 
 ## 2. Response 
@@ -119,17 +119,17 @@ Furthermore, due to the central positioning of the objects in the images, the mo
 
 #### Translations
 
-![Alt text](figs/translations.png)
+![Alt text](src/imgs/figs/translations.png)
 
 Another problem with out-of-the-box translations from the rotation model is that it only shifts the 2D image instead of developing a real 3D understanding of the scene. When we compare the rendered image to the ground truth, we observe that the model does not grasp that a shift also changes the angle at which the camera is looking at the object. It is obvious because the model has never seen a shift and only works on 2D equivariance as described above. Furthermore, we simply added a functionality for translations without ever training the model on them.
 
-![Alt text](figs/translations2.png)
+![Alt text](src/imgs/figs/translations2.png)
 
 #### Roto-translations
 
 We further observe that the same properties allow for out-of-the-box roto-translations. Also the roto-translations do not account for the angular shift between camera and object.
 
-![Alt text](figs/rototrans.png)
+![Alt text](src/imgs/figs/rototrans.png)
 
 #### In conclusion...
 
@@ -151,7 +151,7 @@ The authors present datasets consisting of rotational transformations. However, 
 The following section demonstrates the practical application of our pipeline for data production, by demonstrating how to use blender to generate new training data containing roto-translations.
 
 #### 3.1.1  Demonstration: populating datasets for the ISO(3)-group using Blender 
-Similar to Dupont et al., we perform experiments on the [ShapeNet Core](https://shapenet.org/download/shapenetcore)-Chairs benchmark. It is worth noting that the objects included in the ShapeNetCore dataset are already normalized and consistently aligned. However, the subsequent pipeline can be adapted to accommodate any 3D-object data that is processable by Blender. Here follows a brief demonstration of how data can be constructed using Blender 3.5.1.
+Similar to Dupont et al., we perform experiments on the [ShapeNet Core](https://shapenet.org/download/shapenetcore)-Chairs benchmark. It is worth noting that the objects included in the ShapeNetCore dataset are already normalized and consistently aligned. However, the subsequent pipeline can be adapted to accommodate any 3D-object data that is processable by Blender. The notebook report contains a brief demonstration of how data can be constructed using Blender 3.5.1.
 
 
 
@@ -180,29 +180,86 @@ Table 2: _Partition of new datasets_
 
 Table 3: _Hyperparameters used when populating the new dataset._
 
-% Need to include rotations for training here, and fill in more info.
+<!-- % Need to include rotations for training here, and fill in more info. -->
 
 We construct the datasets by sampling poses from various views. In case of rotations the camera is placed on a sphere with a radius **R**. For each view, a value between 0 and $2\pi$ is uniformly sampled for the elevation and azimuth angle of the camera and rotated accordingly. In case of translations, for each view, a value is uniformly sampled from a range of **X**, **Y** and **Z** locations of the chair.
 
 
 ### 3.2 Extending the model
 
-After evaluating the pretrained model supplied by Dupont et al., we extend the architecture to allow for translation matrices to be applied to the input image. Furthermore, by combining it with the previously implemented rotation matrix, we also allow for rototranslations. 
+After evaluating the pretrained model supplied by Dupont et al., we extend the architecture to allow for translation matrices to be applied to the input image. Furthermore, by combining it with the previously implemented rotation matrix, we also allow for rototranslations. To combine these two symmetries, we use a single rototranslation matric and perform the operartion in one go.
 
 **TODO: WRITE MORE ABOUT MODEL ARCHITECTURE EXTENSIONS**
+
+### 3.3 Experiment Analysis
 
 With these extentions to the model architecture, we conducted the following experiments:
 
 
-#### 3.2.1 Reproducing rotations with our dataset
+#### 3.3.1 Retraining a rotation model with our dataset
 
-With the dataset we created as discussed in 3.1, we tried training a rotation-based model from scratch, hoping to reproduce the authors' original results on our data. The results were 
+With the dataset we created as discussed in 3.1, we tried training a rotation-based model from scratch, hoping to reproduce the authors' original results on our data. The resulting model outputs did not match up to the original model, as can be seen in the figures below. Not an insignificant amount of detail is gone in the reconstructed image. We suspect the reason behind this loss in performance might be the reduced image size, as the same amount of error piexels will impact our new images more significantly. 
 
-![Alt text](figs/ourRot1.png)
+![Alt text](src/imgs/figs/ourRot1.png)
 
-![Alt text](figs/ourRot2.png)
+![Alt text](src/imgs/figs/ourRot2.png)
 
 ![image](./src/imgs/output/rotations.gif)
+
+
+#### 3.3.2 Training a translation model with our dataset
+
+Our next experiment was to train a model focusing only on translations. As shown in section 3.2, the original model, which was pretrained on rotation data only, can already produce valid shifts for short distances along the image plane but not along the line of sight. We produced a translation dataset for the model to learn how to deal with more extensive shifts of the camera, as well as learning how to deal with shifts of any size along the line of sight. Because the depth dimension is encoded within the channels of the convolution layers, it is plausible that the model can learn to make use of this information to produce a zoom-like effect, similar to which one would expect when moving the camera closer to the object.
+
+Since we can only cover a finite range of translations, we limit the range of shift to -0.4 and 0.4 for all directions. This value was chosen because it still leaves the chair mostly in the image and hence, still contains useful information for training and inference. 
+
+As the figures below show, this model reconstructs the original image with very high accuracy. Its use is very limited, since it is only capable of portraying translations, but it can do so in all 3 axes.
+
+![image](src/imgs/figs/ourTrans1.png)
+
+![image](src/imgs/figs/ourTrans2.png)
+
+<!-- *** Depending on how our experiments go, we might need to talk about model architecture and more inductive biases here *** -->
+
+In particular, we observe that the models capabilities of translations along the x-axis (scaling) has significantly increased after training upon the translation data 
+
+![image](src/imgs/figs/ourTrans3.png)
+
+![image](src/imgs/figs/ourTrans4.png)
+
+The training gif also shows that convergence is fast in this model, which we expected to be the case, as translations are a simpler symmetry form and require little information about the object's 3D structure.
+
+![image](src/imgs/output/translations.gif)
+
+
+
+#### 3.3.3 Roto-Translations
+
+The motivation for our research was to extend the equivariant neural rendering model to be able to produce novel views for any camera position in 3D space. Roto-translations fulfill this requirement. More specifically, we can cover all 3D positions by limiting the azimuth angle to a range of -180 to 180 degrees and the elevation angle to a range of -90 to 90 degrees. The latter avoids a flipping of the camera which causes problems with the compatibility of translations in Blender vs translations in the model. Nonetheless, by being able to rotate the camera along the azimuth, we can still cover all necessary views. For translations, we can obviously only cover a finite distances, therefore we chose the same range as in section 3.2 (-0.4 to 0.4 for all directions). 
+
+The results were not on par with the previous experiments. At first, the outputs were completely white and the object completely disappeared in the reconstructed image.
+
+![image](src/train_results/2023-05-18_13-38_rototrans_lr1e-4/images_during_training.gif)
+
+We performed an ablation study on the learning rate, hypothesizing that the features the model learns when a full rototranslation matrix is applied might need a less steep learning curve. We tested several values in the range of $[10^{-4}, 10^{-7}]$, but the output was blank. 
+
+
+Our conclusions on training a rototranslation model are that our data is not suficcient for this task. The experiment was unsuccessful and we hypothesize that there are not enough camera angles in our dataset for the model to leverage and construct an accurate representation. Using only 50 views for each scene might be too limiting to learn something as complex as rototranslations. To try and overcome this problem, we followed two different approaches.
+
+#### 3.3.4 Finetuning the model
+
+Training a rototranslation model from scratch was unsuccessful. But the model of the original authors, trained in rotations with high-quality images already succeeded in reconstructing the rendered images. We decided to use this potent model and finetune it with our own data, hoping to achieve the desirable rototranslation results. Our hypothesis was that a model that can already reconstruct an image successful and apply a rotation matrix to it, will be able to leverage this knowledge and combine it with another form of symmetry to achieve rototranslations.
+
+To test this hypothesis, we experimented with images that had a size of 128 x 128, the same as the original authors used. The images were created the same way as discussed in section 3.1. 
+
+First we finetuned on a rotation dataset, hoping to see some drop in loss which would provide a proof of concept for this method. We expected this outcome provide the original model with additional data in the same type of symmetry. 
+
+- The translation dataset would most likely not help with rototranslations, but we expected the model to learn shifts of the object along the x-axis (scaling). That would provide a model trained sequentially in both translations and rotations.
+
+- Finally, finetuning the model with our rototranslation dataset would provide the original desired rototranslation model. We reasoned that a pretrained model might more easily leverage its previous training on rotations and apply it on rototranslations. The effect of not having enough camera angles would be overcome by this method.
+
+The results of all three finetuning experiments can be seen in the figures below: 
+
 
 
 
