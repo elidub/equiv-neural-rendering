@@ -13,15 +13,10 @@ def parse_option():
     parser.add_argument('--n_images', type=int, default=50,
                         help='number of views/images to be rendered per scende')
     parser.add_argument('--data_folder', type=str,
-                        help='Path to the dataset with .dae objects')
-    parser.add_argument('--scale', type=float, default=1,
-                        help='Scaling factor applied to model. Depends on size of mesh.') # ?????
-    parser.add_argument('--depth_scale', type=float, default=1.4,
-                        help='Scaling that is applied to depth. Depends on size of mesh.') # ????
-    parser.add_argument('--color_depth', type=str, default='8',
-                        help='Number of bit per channel used for output. Either 8 or 16.') # ????
-    parser.add_argument('--resolution', type=int, default=128, # 128
+                        help='Path to the dataset with scene objects')
+    parser.add_argument('--resolution', type=int, default=64,
                         help='Resolution of the images.')
+    parser.add_argument('--same_scene_val', action='store_true')
 
     argv = sys.argv[sys.argv.index("--") + 1:]
     args = parser.parse_args(argv)
@@ -46,17 +41,28 @@ def main(args):
 
         output_dir = os.path.join(args.output_dir, transf_output_dir)
 
-        if i < 4613:
-            output_dir = os.path.join(output_dir, 'train')
-        elif i < 5275:
-            output_dir = os.path.join(output_dir, 'val')
-        else:
-            output_dir = os.path.join(output_dir, 'rest')
-
         render_blender_file = os.path.join(sys.path[0], '../enr/data/render_blender.py')
 
-        os.system(f'{args.blender_dir} -b --python {render_blender_file} -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {output_dir} --resolution {args.resolution} {blender_args}')
+        # If validation set has to contain the same scenes, with novel views
+        # *for the POC of the rototranslation model
+        if args.same_scene_val:
+            output_dir_train = os.path.join(output_dir, 'train')
+            output_dir_val = os.path.join(output_dir, 'val')
+            os.system(f'{args.blender_dir} -b --python {render_blender_file} -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {output_dir_train} --resolution {args.resolution} {blender_args}')
+            os.system(f'{args.blender_dir} -b --python {render_blender_file} -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {output_dir_val} --resolution {args.resolution} {blender_args}')
         
+        # If validation and test set have to contain novel scenes 
+        # *for the rotation and translation model
+        else: 
+            if i < 4613:
+                output_dir = os.path.join(output_dir, 'train')
+            elif i < 5275:
+                output_dir = os.path.join(output_dir, 'val')
+            else: 
+                output_dir = os.path.join(output_dir, 'test')
+
+            os.system(f'{args.blender_dir} -b --python {render_blender_file} -- --scene_name {scene} --scene_folder {scene_folder} --n_images {args.n_images} --output_folder {output_dir} --resolution {args.resolution} {blender_args}')
+            
 
 
 if __name__ == '__main__':
