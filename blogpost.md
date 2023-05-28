@@ -115,16 +115,12 @@ The model infers from a single image and renders a second image from a novel vie
 </p>
 
 <p align="center">
-   <img src="src/imgs/gifs/org_rot.gif" width="200"> 
-   <img src="src/imgs/gifs/org_trans.gif" width="200"> 
-   <img src="src/imgs/gifs/org_rototrans.gif" width="200">
+   <img src="src/imgs/gifs/org_rot.gif"  width = 200> 
+   <img src="src/imgs/gifs/org_trans.gif" width = 200> 
+   <img src="src/imgs/gifs/org_rototrans.gif" width = 200> </br>
+   <br>
+   <text><b>Figure 6. </b><em>Novel view synthesis by the original model (left rotations, middle translations, right roto-translations).</em></text>
 </p>
-<p align="center">
-   <em>Subtitle for Image 1</em>
-   <em>Subtitle for Image 2</em>
-   <em>Subtitle for Image 3</em>
-</p>
-<text><p align="center"><b>Figure 6. </b>ALTERNATIVE FIGURE 6.</p></text>
 
 
 
@@ -282,7 +278,7 @@ With the dataset we created as discussed in [Section 3.1](#31-datasets), we trie
    <img src="src/imgs/gifs/rot_trans.gif" width = 200> 
    <img src="src/imgs/gifs/rot_rototrans.gif" width = 200> </br>
    <br>
-   <text><b>Figure 11. </b><em>ALTERNATIVE FIGURE 11.</em></text>
+   <text><b>Figure 11. </b><em>Novel view synthesis by our model trained on rotations (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
 <p align="center">
@@ -414,7 +410,7 @@ The figs below showcase the results of training a model in one scene only. The t
    <img src="src/imgs/gifs/one_trans.gif" width = 200> 
    <img src="src/imgs/gifs/one_rototrans.gif" width = 200> </br>
    <br>
-   <text><b>Figure 14. </b><em>ALTERNATIVE FIGURE 14.</em></text>
+   <text><b>Figure 14. </b><em>Novel view synthesis by our model trained on roto-translations from a single scene (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
 It is clear that this training procedure does result in accurate equivariant rendering with rototranslations. While the chair is already part of the training set, the angles tested on are not, which shows the model has successfully learned the assigned task.
