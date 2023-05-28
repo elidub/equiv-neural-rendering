@@ -413,7 +413,7 @@ The figs below showcase the results of training a model in one scene only. The t
    <text><b>Figure 14. </b><em>Novel view synthesis by our model trained on roto-translations from a single scene (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
-It is clear that this training procedure does result in accurate equivariant rendering with rototranslations. While the chair is already part of the training set, the angles tested on are not, which shows the model has successfully learned the assigned task.
+It is clear that this training procedure does result in accurate equivariant rendering with rototranslations. While the chair is already part of the training set, some of the angles tested on are not, which shows the model has successfully learned the assigned task.
 
 Below we provide a demonstration of the training procedure performed for different numbers of scenes.
 
@@ -425,6 +425,8 @@ Below we provide a demonstration of the training procedure performed for differe
    <br>
    <text><b>Figure 15. </b><em>Comparison of quality of rototranslation on a previously seen scene. The models were traned with one, two, five, and ten scenes (left to right).</em></text>
 </p>
+
+We observe that scaling the number of scenes does not negatively affect the quality of the novel view synthesis on a previously seen scene. Nonetheless, these models are still not capable of generating a novel view for a novel scene. Because the original authors were able to do that with more training time and more data for rotations, we believe that more data and more training time can do the same for roto-translations. We argue that the nonexistent decrease of quality implies that there is room for generalization without compromising on the quality of the images.
 
 #### 3.3.6 PSNR estimations 
 Table 4 presents the PSNR values estimated for a selection of the experiments. 
