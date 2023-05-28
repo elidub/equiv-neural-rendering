@@ -1,6 +1,6 @@
 # Equivariant Neural Rendering
 
-*Authors: Elias Dubbeldam, Aniek Eijpe, Robin Sasse, Oline Ranum, Orestis Gorgogiannis*
+*Authors: Elias Dubbeldam, Aniek Eijpe, Orestis Gorgogiannis, Oline Ranum, Robin Sasse*
 
 ## Introduction
 
