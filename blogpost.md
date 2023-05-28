@@ -114,6 +114,15 @@ The model infers from a single image and renders a second image from a novel vie
    <text><b>Figure 6. </b><em>CAPTION HERE.</em></text>
 </p>
 
+<p align="center">
+   <text> test </text> <br>
+   <img src="src/imgs/gifs/org_rot.gif"  width = 200> 
+   <img src="src/imgs/gifs/org_trans.gif" width = 200> 
+   <img src="src/imgs/gifs/org_rototrans.gif" width = 200> </br>
+   <br>
+   <text><b>Figure 6. </b><em>ALTERNATIVE FIGURE 6.</em></text>
+</p>
+
 
 
 ## 2. Response 

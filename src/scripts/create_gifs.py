@@ -18,7 +18,7 @@ from enr.misc.viz import generate_novel_views
 from enr.misc.utils import full_rotation_angle_sequence, sine_squared_angle_sequence, back_and_forth_angle_sequence, constant_angle_sequence
 from enr.misc.viz import batch_generate_novel_views, save_img_sequence_as_gif
 from enr.models.neural_renderer import load_model
-
+from enr.transforms3d.conversions import deg2rad
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -43,6 +43,9 @@ def rotation_shifts(num_frames):
     elevation_shifts = sine_squared_angle_sequence(num_frames, -10., 20.).to(device)
     # elevation_shifts = constant_angle_sequence(num_frames).to(device) 
     translations_shifts = torch.zeros((num_frames, 3)).to(device)
+
+    azimuth_shifts = deg2rad(azimuth_shifts)
+    elevation_shifts = deg2rad(elevation_shifts)
 
     return azimuth_shifts, elevation_shifts, translations_shifts
 
@@ -75,6 +78,9 @@ def rototranslation_shifts(num_frames):
         torch.cat((zeros, back_and_forth, zeros), dim = 0),
         torch.cat((zeros, zeros, back_and_forth), dim = 0),
     ), dim = 1).to(device)
+
+    azimuth_shifts = deg2rad(azimuth_shifts)
+    elevation_shifts = deg2rad(elevation_shifts)
 
     return azimuth_shifts, elevation_shifts, translations_shifts
 
