@@ -20,5 +20,6 @@ source activate nr
 # srun python -u src/scripts/experiments.py trans.json
 # srun python -u src/scripts/experiments.py rototrans.json
 # srun python -u experiments.py finetune.json
-srun python -u experiments.py single_64.json
+# srun python -u experiments.py single_64.json
 # srun python -u experiments.py single_128.json
+srun python -u experiments.py single_ten.json
