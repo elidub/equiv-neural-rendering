@@ -6,11 +6,15 @@
 
 <!-- The paper from Dupont et al. introduces an approach to render 2D images into implicit, equivariant 3D representations. The authors argue that the scene representations need not be explicit, as long as the transformations to it occur in an equivariant manner. Their model is trained on a dataset of rotation symmetries, learning to produce novel views from a single image of a scene. -->
 
-Current approaches in scene representations present difficulties with scalability. Voxel grids, point clouds and other traditional methods have high computational and memory requirements. Reconstrucion from incomplete or noisy data is also a challenging task with these methods, often requiring 3D information during training. Generating novel views of a scene given limited input views presents the same difficulties. Finally, traditional neural networks are not equivariant with respect to general transformation groups. 3D equivariance especially requires specifc techniques like steerable filters. Dupont et al. attempt to solve these problems by proposing a new method which results in more scalable, implicit representations that are also equivariant with respect to transformations. 
+Current approaches in scene representations present difficulties with scalability. Voxel grids, point clouds and other traditional methods have high computational and memory requirements. Reconstrucion from incomplete or noisy data is also a challenging task with these methods, often requiring 3D information during training. Generating novel views of a scene given limited input views presents the same difficulties. Finally, traditional neural networks are not equivariant with respect to general transformation groups. 3D equivariance especially requires specifc techniques like steerable filters. Dupont *et al.* (2020)[^1] attempt to solve these problems by proposing a new method which results in more scalable, implicit representations that are also equivariant with respect to transformations. 
 
-The difference between an explicit scene representation (mesh grid) and an implicit one can be seen in the figure below. While an explicit representation requires structural information of the 3D shape in great detail, the implicit representation is described by an uninterpretable three-dimensional tensor. While the numerical values of the implicit form are abstract and not meant for a human to understand, they provide significant advantages in terms of memory and computational efficiency.
+The difference between an explicit scene representation (mesh grid) and an implicit one can be seen in Figure 1. While an explicit representation requires structural information of the 3D shape in great detail, the implicit representation is described by an uninterpretable three-dimensional tensor. While the numerical values of the implicit form are abstract and not meant for a human to understand, they provide significant advantages in terms of memory and computational efficiency. 
 
-![Alt text](src/imgs/figs/figg2.png)
+<p align="center">
+   <img src="src/imgs/figs/figg2.png">
+   <br>
+   <em>Figure 1: Visualization of explicit (left) and implicit (right) scene representation. Taken from [1].</em>
+</p>
 
 To effectively use these implicit representations, the authors of the paper argue that the transformations applied to them have to be equivariant to the same transformations on an explicit representation.
 
@@ -19,24 +23,35 @@ To effectively use these implicit representations, the authors of the paper argu
  
 #### 1.1.1: Architecture
 
-The proposed model uses a series of convolutions to map scene representations to images. Specifically, the scene representation is passed through 3D convolutions, followed by 1x1 convolutions and a set of 2D convolutions that maps them to image space. The reverse renderer is the transpose of this operation. In the figure below, an image is passed through the inverse render pipeline, creating the implicit 3D representation. Any transformation can be applied to this representation space, before following the forward renderer to obtain the recreated original, or transformed image.
+The proposed model uses a series of convolutions to map scene representations to images. Specifically, the scene representation is passed through 3D convolutions, followed by $1\times1$ convolutions and a set of 2D convolutions that maps them to image space. The reverse renderer is the transpose of this operation. As shown in Figure 2, an image is passed through the inverse render pipeline, creating the implicit 3D representation. Any transformation can be applied to this representation space, before following the forward renderer to obtain the recreated original, or transformed image.
 
 Equivariance is enforced between representation and image space by applying transformations in both spaces. Because the representation space is a deep voxel grid, the transformations in this space are defined by a 3D rotation matrix. Because there is a chance that the rotated points may fall out of the reconstructed grid, inverse warping with trilinear interpolation is used in the model, to reconstruct the rotated values within the grid boundaries.
 
-![Alt text](src/imgs/figs/fig5.png)
+<!-- ![Alt text](src/imgs/figs/fig5.png) -->
+<p align="center">
+   <img src="src/imgs/figs/fig5.png">
+   <br>
+   <em>Figure 2: Model architecture. An image is processed by the inverse render (right-pointing arrow, rotated in the implicite scene representation (down-pointing arrow), and reversed back to an image by the rendered (left-pointing arrow). Taken from [1].</em>
+</p>
 
 #### 1.1.1: Training
 
-Two images of the same object, obtained from different camera angles, are passed through the inverse renderer and the implicit representations are formed. Then, the forward and backward transformation grid is applied to both latent representations to turn one into the other, before passing them to the renderer. Finally, the reconstructed output images are compared to the original inputs to obtain the loss values. Training in this manner ensures the model learns equivariant representations, as the loss evaluates both the actual rendering and the accuracy of the matching transformations from both spaces.
+As shown in Figure 4, two images of the same object, obtained from different camera angles, are passed through the inverse renderer and the implicit representations are formed. Then, the forward and backward transformation grid is applied to both latent representations to turn one into the other, before passing them to the renderer. Finally, the reconstructed output images are compared to the original inputs to obtain the loss values. Training in this manner ensures the model learns equivariant representations, as the loss evaluates both the actual rendering and the accuracy of the matching transformations from both spaces.
 
-![Alt text](src/imgs/figs/fig4.png)
+<!-- ![Alt text](src/imgs/figs/fig4.png) -->
+<p align="center">
+   <img src="src/imgs/figs/fig4.png">
+   <br>
+   <em>Figure 3: Model training, indicating how two images from the same scene are rotated and used for training. Taken from [1].</em>
+</p>
 
 Finally, the authors claim that the rendering loss used makes little change in results. They provide l1 norm, l2 norm and SSIM loss as candidates, and conduct ablation studies to determine the tradeoffs between them.
 
 ### 1.2: Datasets
-The authors evaluate their model on 4 datasets, including two ShapeNet benchmarks as well as two novel datasets of the authors design. They use an image size of 128 x 128 and a representation size of 64 x 32 x 32 x 32.
-The datasets are presented in table 1. 
+The authors evaluate their model on 4 datasets, including two ShapeNet benchmarks as well as two novel datasets of the authors design. They use an image size of $128 \times 128$ and a representation size of $64 \times 32 \times 32 \times 32$. The datasets are presented in Table 1. 
 
+<!-- <p align="center"> -->
+<center>
 
 | *Dataset*  | *Source*  |  *Sample* | *# Scenes*  |*# images per scene*| *# datapoints*|
 |---|---|---|---|---|---|
@@ -46,7 +61,11 @@ The datasets are presented in table 1.
 | 3D mountainset  |  [Apple](https://icml20-prod.cdn-apple.com/eqn-data/data/mountains.zip) | ![Mountain](./src/imgs/paper_screenshots/mountain.png)  |  559 |  50 | 27 950|
 
 Table 1.: *Overview of datasets considered for equivariant neural rendering by Dupont et al.*
+<!-- <br>
+   <em>Figure 3: Model training, indicating how two images from the same scene are rotated and used for training. Taken from [1].</em>
+</p> -->
 
+</center>
 
 ### 1.3: Experiments of paper
 
@@ -311,3 +330,5 @@ Through experimentations throughouht the study, we were able to draw the followi
 **Aniek**: Background research, dataset-production & scripting in blender, investigating how to align data generation with model (alignment of axis, order of translation and rotation).
 
 **Orestis**: Adjusting code for homogenous coordinates to accomodate (roto-)translations, notebook & model demonstrations, blogpost report drafting.
+
+[^1]: Kolek et al. (2022, October). *Cartoon Explanations of Image Classifiers.* In Computer Vision–ECCV 2022.
