@@ -23,6 +23,7 @@ print('src_path: {}'.format(src_path))
 with open(config_file) as file:
     config = json.load(file)
 
+# We continue training if a timestamp is given (and it should match an exisiting training run), otherwise, we start a new training run
 continue_training = True if config["timestamp"] is not False else False
 
 # Set up directory to store experiments

@@ -12,8 +12,6 @@ def parse_option():
 
     parser.add_argument('--n_images', type=int, default=50,
                         help='number of views/images to be rendered per scende')
-    parser.add_argument('--data_folder', type=str,
-                        help='Path to the dataset with scene objects')
     parser.add_argument('--resolution', type=int, default=64,
                         help='Resolution of the images.')
     parser.add_argument('--same_scene_val', action='store_true')
