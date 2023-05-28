@@ -9,12 +9,12 @@
 
 Equivariant neural rendering is a complex task that builds upon geometric deep learning, computer vision and
 representation theory. One critical component of this task is scene representation, which involves modeling
-and describing scenes for processing. Recent advancements in neural scene representations [1][2][3] address
-issues of scalability in traditional 3D representation methods such as Voxel grids[4][5], meshes [6], point
-clouds [7] and signed distance functions [8]. The neural methods enable greater model complexity for the
+and describing scenes for processing. Recent advancements in neural scene representations [7][8][9] address
+issues of scalability in traditional 3D representation methods such as Voxel grids[7][8], meshes [9], point
+clouds [10] and signed distance functions [11]. The neural methods enable greater model complexity for the
 incorporation of texture, lighting and background.
 
-In the paper Equivariant Neural Rendering Dupont et al. argue that equivariance with respect to 3D transformations provide a strong inductive bias for neural rendering and scene representations [11]. Their methodology offers to learn equivariant scene representations unsupervised from 2D images, under the condition that the learned representations transforms like real scenes. As such, equivariant representations can be used to perform novel view synthesis, which refers to the process of synthesizing an image from an arbitrary
+In the paper Equivariant Neural Rendering Dupont et al. argue that equivariance with respect to 3D transformations provide a strong inductive bias for neural rendering and scene representations [1]. Their methodology offers to learn equivariant scene representations unsupervised from 2D images, under the condition that the learned representations transforms like real scenes. As such, equivariant representations can be used to perform novel view synthesis, which refers to the process of synthesizing an image from an arbitrary
 camera pose given a source image and camera position.
 
 In the following blogpost we investigate wheter the framework for equivariant representation proposed by Dupont et al can be extended to the task of novel view synthesis with regards to translations and roto-translations, with the goal of obtaining a more extensive (or even transitive) model that allows for novel view synthesis from a broader range of viewpoints.
@@ -464,3 +464,32 @@ We observed that equivariance can be used as a supervision signal to train a mod
 2. Joo Cheoi, et all. "Empirical Remarks on the Translational Equivariance of Convolutional Layers." Applied Sciences 10(9):3161, 2020.
 
 3. Wang, Zirui, et al. "NeRF--: Neural radiance fields without known camera parameters." arXiv preprint arXiv:2102.07064 (2021).
+
+4. S. Eslami, Danilo Jimenez Rezende, Frederic Besse, Fabio Viola, Ari Morcos, Marta Garnelo, Avra-
+ham Ruderman, Andrei Rusu, Ivo Danihelka, Karol Gregor, David Reichert, Lars Buesing, Theophane
+Weber, Oriol Vinyals, Dan Rosenbaum, Neil Rabinowitz, Helen King, Chloe Hillier, Matt Botvinick,
+and Demis Hassabis. Neural scene representation and rendering. Science, 360:1204–1210, 06 2018. doi:
+10.1126/science.aar6170.
+
+5. Vincent Sitzmann, Justus Thies, Felix Heide, Matthias Nießner, Gordon Wetzstein, and Michael
+Zollh ̈ofer. Deepvoxels: Learning persistent 3d feature embeddings, 2019.
+
+6. Vincent Sitzmann, Michael Zollh ̈ofer, and Gordon Wetzstein. Scene representation networks: Continu-
+ous 3d-structure-aware neural scene representations, 2020.
+
+7. Daniel Maturana and Sebastian Scherer. Voxnet: A 3d convolutional neural network for real-time object
+recognition. In 2015 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS),
+pages 922–928, 2015. doi: 10.1109/IROS.2015.7353481.
+
+8. Thu Nguyen-Phuoc, Chuan Li, Stephen Balaban, and Yong-Liang Yang. Rendernet: A deep convolu-
+tional network for differentiable rendering from 3d shapes, 2019.
+
+9. Dominic Jack, Jhony K. Pontes, Sridha Sridharan, Clinton Fookes, Sareh Shirazi, Frederic Maire, and
+Anders Eriksson. Learning free-form deformations for 3d object reconstruction, 2018.
+
+10. Eldar Insafutdinov and Alexey Dosovitskiy. Unsupervised learning of shape and pose with differentiable
+point clouds. In Neural Information Processing Systems, 2018.
+
+11. Jeong Joon Park, Peter Florence, Julian Straub, Richard A. Newcombe, and Steven Lovegrove. Deepsdf:
+Learning continuous signed distance functions for shape representation. CoRR, abs/1901.05103, 2019.
+URL http://arxiv.org/abs/1901.05103
