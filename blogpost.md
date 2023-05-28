@@ -312,15 +312,15 @@ Below we provide a demonstration of the training procedure performed for differe
 
 #### 3.3.6 PSNR estimations 
 
-| **Experiment**   	| **PSNR**  	|
-|---	|---	|
-| Original (rotation) model  	|  21.11 	|
-| Rotation model  	         |  19.95 	|
-| Translation model         	|  12.03 	|
-| Rototranslation model - 1 chair  	|  10.35 	|
-| Rototranslation model - 2 chairs  	| 10.89  	|
-| Rototranslation model - 5 Chairs  	| 10.06  	|
-| Rototranslation model - 10 Chairs  	| 10.90  	|
+| **Experiment**   	| **PSNR**  	| **# Scenes** | **# Images per Scene**|
+|---	|---	|---	|---	|
+| Original (rotation) model  	|  21.11 	|30|250|
+| Rotation model  	         |  19.95 	|30|50|
+| Translation model         	|  12.03 	|30|50|
+| Rototranslation model - 1 chair  	|  10.35 	|1|175|
+| Rototranslation model - 2 chairs  	| 10.89  	|1|55|
+| Rototranslation model - 5 Chairs  	| 10.06  	|1|31|
+| Rototranslation model - 10 Chairs  	| 10.90  	|1|20|
 
 ## 4. Conclusions
 
