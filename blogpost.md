@@ -317,10 +317,10 @@ Below we provide a demonstration of the training procedure performed for differe
 | Original (rotation) model  	|  21.11 	|
 | Rotation model  	         |  19.95 	|
 | Translation model         	|  12.03 	|
-| Rototranslation model - 1 chair  	|  8.75 	|
-| Rototranslation model - 2 chairs  	| 12.00  	|
-| Rototranslation model - 5 Chairs  	| 11.59  	|
-| Rototranslation model - 10 Chairs  	| 12.35  	|
+| Rototranslation model - 1 chair  	|  10.35 	|
+| Rototranslation model - 2 chairs  	| 10.89  	|
+| Rototranslation model - 5 Chairs  	| 10.06  	|
+| Rototranslation model - 10 Chairs  	| 10.90  	|
 
 ## 4. Conclusions
 
