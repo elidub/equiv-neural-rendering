@@ -39,7 +39,7 @@ conda activate nr
 !mv ./blender-3.5.1-linux-x64 ./src/enr/data/demo/blender
 ```
 
-Finally, download the [chair objects from ShapeNet](https://shapenet.org/login/).
+Finally, download the [ShapeNet Core dataset](https://shapenet.org/login/), the subset comprised of chair models can be found in folder *03001627*.
 
 ## Usage
 
