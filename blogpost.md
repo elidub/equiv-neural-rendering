@@ -197,7 +197,7 @@ The authors present datasets consisting of rotational transformations. However, 
 
 The following section demonstrates the practical application of our pipeline for data production, by demonstrating how to use blender to generate new training data containing roto-translations.
 
-#### 3.1.1  Demonstration: populating datasets for the SE(3)-group using Blender 
+#### 3.1.1  Demonstration: populating datasets using Blender 
 Similar to [1], we perform experiments on the [ShapeNet Core](https://shapenet.org/download/shapenetcore)-Chairs benchmark. It is worth noting that the objects included in the ShapeNetCore dataset are already normalized and consistently aligned. However, the subsequent pipeline can be adapted to accommodate any 3D-object data that is processable by Blender. The notebook report contains a brief demonstration of how data can be constructed using Blender 3.5.1. Some examples are shown in Figure 10.
 
 <p align="center">
