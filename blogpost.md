@@ -6,7 +6,7 @@
 
 <!-- The paper from Dupont et al. introduces an approach to render 2D images into implicit, equivariant 3D representations. The authors argue that the scene representations need not be explicit, as long as the transformations to it occur in an equivariant manner. Their model is trained on a dataset of rotation symmetries, learning to produce novel views from a single image of a scene. -->
 
-Current approaches in scene representations present difficulties with scalability. Voxel grids, point clouds and other traditional methods have high computational and memory requirements. Reconstrucion from incomplete or noisy data is also a challenging task with these methods, often requiring 3D information during training. Generating novel views of a scene given limited input views presents the same difficulties. Finally, traditional neural networks are not equivariant with respect to general transformation groups. 3D equivariance especially requires specifc techniques like steerable filters. Dupont *et al.* (2020) [1] attempt to solve these problems by proposing a new method which results in more scalable, implicit representations that are also equivariant with respect to transformations. 
+Current approaches in scene representations present difficulties with scalability. Voxel grids, point clouds and other traditional methods have high computational and memory requirements. Reconstrucion from incomplete or noisy data is also a challenging task with these methods, often requiring 3D information during training. Generating novel views of a scene given limited input views presents the same difficulties. Finally, traditional neural networks are not equivariant with respect to general transformation groups. 3D equivariance especially requires specifc techniques like steerable filters. Dupont *et al.* (2022) [1] attempt to solve these problems by proposing a new method which results in more scalable, implicit representations that are also equivariant with respect to transformations. 
 
 The difference between an explicit scene representation (mesh grid) and an implicit one can be seen in Figure 1. While an explicit representation requires structural information of the 3D shape in great detail, the implicit representation is described by an uninterpretable three-dimensional tensor. While the numerical values of the implicit form are abstract and not meant for a human to understand, they provide significant advantages in terms of memory and computational efficiency. 
 
@@ -59,7 +59,7 @@ The authors evaluate their model on 4 datasets, including two ShapeNet benchmark
 | MugsHQ  |  [Apple](https://icml20-prod.cdn-apple.com/eqn-data/data/mugs.zip) | ![Mug](./src/imgs/paper_screenshots/mug.png)  |  214 | 150  | 32 100|
 | 3D mountainset  |  [Apple](https://icml20-prod.cdn-apple.com/eqn-data/data/mountains.zip) | ![Mountain](./src/imgs/paper_screenshots/mountain.png)  |  559 |  50 | 27 950|
 
-**Table 1.** _Overview of datasets considered for equivariant neural rendering by Dupont et al. (2020) [1]._
+**Table 1.** _Overview of datasets considered for equivariant neural rendering by [1]._
 
 ### 1.3: Experiments of paper 
 
@@ -187,9 +187,9 @@ Their model has some useful capabilities for generating novel views including (r
 
 In this section we describe the novel contributions of our research.
 
-- We introduce a method to generate training data for the equivariant neural rendering models (section 3.1).
+- We introduce a method to generate training data for the equivariant neural rendering models ([Section 3.1](#31-datasets)).
 
-- We introduce a model that has been trained on translations and a model that has been trained on roto-translations (section 3.2). This part constitutes the main contribution of our research.
+- We introduce a model that has been trained on translations and a model that has been trained on roto-translations ([Section 3.2](#32-extending-the-model)). This part constitutes the main contribution of our research.
 
 ### 3.1 Datasets
 
@@ -197,38 +197,42 @@ The authors present datasets consisting of rotational transformations. However, 
 
 The following section demonstrates the practical application of our pipeline for data production, by demonstrating how to use blender to generate new training data containing roto-translations.
 
-#### 3.1.1  Demonstration: populating datasets for the ISO(3)-group using Blender 
-Similar to Dupont et al., we perform experiments on the [ShapeNet Core](https://shapenet.org/download/shapenetcore)-Chairs benchmark. It is worth noting that the objects included in the ShapeNetCore dataset are already normalized and consistently aligned. However, the subsequent pipeline can be adapted to accommodate any 3D-object data that is processable by Blender. The notebook report contains a brief demonstration of how data can be constructed using Blender 3.5.1.
+#### 3.1.1  Demonstration: populating datasets for the SE(3)-group using Blender 
+Similar to [1], we perform experiments on the [ShapeNet Core](https://shapenet.org/download/shapenetcore)-Chairs benchmark. It is worth noting that the objects included in the ShapeNetCore dataset are already normalized and consistently aligned. However, the subsequent pipeline can be adapted to accommodate any 3D-object data that is processable by Blender. The notebook report contains a brief demonstration of how data can be constructed using Blender 3.5.1. Some examples are shown in Figure 10.
 
-Below is an example of the dataset
+<p align="center">
+   <img src="src/imgs/figs/data_demo.png"> </br>
+   <br>
+   <text><b>Figure 10. </b><em>Examples of the dataset used for our novel contribution.</em></text>
+</p>
 
-![image](src/imgs/figs/data_demo.png)
 
 
 #### 3.1.2 Populating new datasets
 
 We use the afformention pipeline to build 3 new datasets: 
 
-   * _Rotations_: used to reproduce the results presented by Dupont et al.
+   * _Rotations_: used to reproduce the results presented by [1].
    * _Translations_: used to train a model with higher capacity for translation invariance.
    * _Roto-translations_: used to train a roto-translational invariant model.
     
-We downscale the datasets in order to reduce the computational costs of training the new models. For all three datasets we use the partitioning described in table 2. 
+The original datasets are recouse intensive to train, both from a computational and a memory perspective. Because our computational resources are limited, both in timeline and parallel GPU availability, we downscale the datasets in order to reduce the computational costs and therefore time of training the new models. For all three datasets we use the partitioning described in Table 2.
 
 
-|   | **# Scenes**  |  **# Images per scene** | **Resolution**  | **# datapoints**  |
+|   | **# Scenes**  |  **# Images per scene** | **Resolution**  | **# Total images**  |
 |---|---|---|---|---|
 | Train  | 2306  |  50 | 64 x 64  |  115300 |
 | Validataion  | 331  | 50  |  64 x 64 | 16550  |
+| Test  |  331 | 50  |  64 x 64 | 16550  |
 
-Table 2: _Partition of new datasets_
+**Table 2:** _Partition of new datasets_
 
 
 | **Hyperparameter**  | **R**  |  **X** | **Y**  | **Z**  | **Resolution** |
 |---|---|---|---|---|---|
 |   | 1.5  | [-0.4, 0.4]  | [-0.3, 0.5]  | [-0.4, 0.4] | 64 x 64|
 
-Table 3: _Hyperparameters used when populating the new dataset._
+**Table 3:** _Hyperparameters used when populating the new dataset._
 
 <!-- % Need to include rotations for training here, and fill in more info. -->
 
@@ -237,7 +241,7 @@ We construct the datasets by sampling poses from various views. In case of rotat
 
 ### 3.2 Extending the model
 
-After evaluating the pretrained model supplied by Dupont et al., we extend the architecture to allow for translation matrices to be applied to the input image. Furthermore, by combining it with the previously implemented rotation matrix, we also allow for rototranslations. To combine these two symmetries, we use a single rototranslation matric and perform the operartion in one go.
+After evaluating the pretrained model supplied by [1], we extend the architecture to allow for translation matrices to be applied to the input image. Furthermore, by combining it with the previously implemented rotation matrix, we also allow for rototranslations. To combine these two symmetries, we use a single rototranslation matric and perform the operartion in one go.
 
 **TODO: WRITE MORE ABOUT MODEL ARCHITECTURE EXTENSIONS**
 
