@@ -311,16 +311,25 @@ Below we provide a demonstration of the training procedure performed for differe
 **Some kind of images/gifs**
 
 #### 3.3.6 PSNR estimations 
+Table 4 presents the PSNR values estimated for a selection of the experiments. 
 
 | **Experiment**   	| **PSNR**  	| **# Scenes** | **# Images per Scene**|
 |---	|---	|---	|---	|
-| Original (rotation) model  	|  21.11 	|30|250|
+| Original (ENR-rotation) model  	|  21.11 	|30|250|
 | Rotation model  	         |  19.95 	|30|50|
 | Translation model         	|  12.03 	|30|50|
-| Rototranslation model - 1 chair  	|  10.35 	|1|175|
-| Rototranslation model - 2 chairs  	| 10.89  	|1|55|
-| Rototranslation model - 5 Chairs  	| 10.06  	|1|31|
-| Rototranslation model - 10 Chairs  	| 10.90  	|1|20|
+| Roto-translation model - 1 chair  	|  10.35 	|1|175|
+| Roto-translation model - 2 chairs  	| 10.89  	|1|55|
+| Roto-translation model - 5 Chairs  	| 10.06  	|1|31|
+| Roto-translation model - 10 Chairs  	| 10.90  	|1|20|
+
+Table 4: *PSNR-values for a selection of the experiments. The PSNR values of the original ENR rotation model, as well as our rotation and translation models on lower resolution, were tested on novel scenes. The PSNR values of the roto-translation model were estimated using the training scenes, but with novel angles and translation intervals held out during training.*
+
+When comparing the PSNR values of the original ENR model and our rotation model we observe a minor decrease in the PSNR value. This is expected due to to the fact that we used half the number of training scenes at half the resolution compared to the original ENR model. However our model still appears to perform well, indicating that training on a lower resolution with a smaller trainingset yields comparable quantitative results.
+
+We observe a more drastic decrease in the PSNR values during testing of the translation and the roto-translation models. However, the signal is still sufficiently prominent to conclude that the models have learned reasonable representations. This supports the original observations in our qualitiative evaluations. 
+
+We denote that due to the additional complexity of testing on novel scenes with unseen textures and shapes, the PSNR values between the translation and rotation models with the roto-translation models are not directly comparable. We simply provide the PSNR values of the roto-translation models to yield a quantitative indication that the model has learned a reasonable signal also in patches characterized by novel views. 
 
 ## 4. Conclusions
 
