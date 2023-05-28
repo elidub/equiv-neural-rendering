@@ -2,7 +2,7 @@
 
 *Authors: Elias Dubbeldam, Aniek Eijpe, Robin Sasse, Oline Ranum, Orestis Gorgogiannis*
 
-This repository contains code and blogpost on the reproduction and extension of [Equivariant Neural Rendering](https://arxiv.org/abs/2006.07630), ICML 2020. We present framework for learning neural scene implicit scene representations directly from images. The framework is able to render a scene from a single image. We present models trained on rotations-only, translations-only and roto-translations. For an in-depth discussion of our work, see the blogpost.
+This repository contains code and blogpost on the reproduction and extension of [Equivariant Neural Rendering](https://arxiv.org/abs/2006.07630), ICML 2020. We present framework for learning neural scene implicit scene representations directly from images. The framework is able to render a scene from a single image. We present models trained on rotations-only, translations-only and roto-translations. For an in-depth discussion of our work, see [the blogpost](blogpost.md).
 
 <p align="center">
    <img src="src/imgs/gifs/one_rototrans.gif" width = 500> 
@@ -45,7 +45,7 @@ conda activate nr
 !mv ./blender-3.5.1-linux-x64 ./src/enr/data/demo/blender
 ```
 
-Finally, download the [ShapeNet Core dataset](https://shapenet.org/login/), the subset comprised of chair models can be found in folder *03001627*.
+Finally, download the [ShapeNet Core dataset](https://shapenet.org/login/), the subset comprised of chair models can be found in folder `03001627`.
 
 ## Usage
 
@@ -87,7 +87,7 @@ Models are stored in `src/train_results/<timestamp>_<id>/best_model.pt`, The pat
 
 Finally, the model can be analyzed and used to render scenes using the notebooks in `demos/`. The notebook `demos/analyze_training.ipynb` shows the loss curves of the different training runs. The notebook `EquivariantNR.ipynb` shows how to use a trained model to infer a scene representation from a single image and how to use this representation to render novel views.
 
-An in-depth discussion and analysis on the results can be found in the blogpost.
+An in-depth discussion and analysis on the results can be found in [the blogpost](blogpost.md).
 
 ## License
 As this code has been built upon the the [repository `apple/ml-equivariant-neural-rendering`](https://github.com/apple/ml-equivariant-neural-rendering), the same license applies. That is, this project is licensed under the Apple Sample Code License.
