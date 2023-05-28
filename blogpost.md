@@ -2,11 +2,25 @@
 
 *Authors: Elias Dubbeldam, Aniek Eijpe, Orestis Gorgogiannis, Oline Ranum, Robin Sasse*
 
+
 ## Introduction
 
 <!-- The paper from Dupont et al. introduces an approach to render 2D images into implicit, equivariant 3D representations. The authors argue that the scene representations need not be explicit, as long as the transformations to it occur in an equivariant manner. Their model is trained on a dataset of rotation symmetries, learning to produce novel views from a single image of a scene. -->
 
-Current approaches in scene representations present difficulties with scalability. Voxel grids, point clouds and other traditional methods have high computational and memory requirements. Reconstrucion from incomplete or noisy data is also a challenging task with these methods, often requiring 3D information during training. Generating novel views of a scene given limited input views presents the same difficulties. Finally, traditional neural networks are not equivariant with respect to general transformation groups. 3D equivariance especially requires specifc techniques like steerable filters. Dupont *et al.* (2022) [1] attempt to solve these problems by proposing a new method which results in more scalable, implicit representations that are also equivariant with respect to transformations. 
+Equivariant neural rendering is a complex task that builds upon geometric deep learning, computer vision and
+representation theory. One critical component of this task is scene representation, which involves modeling
+and describing scenes for processing. Recent advancements in neural scene representations [1][2][3] address
+issues of scalability in traditional 3D representation methods such as Voxel grids[4][5], meshes [6], point
+clouds [7] and signed distance functions [8]. The neural methods enable greater model complexity for the
+incorporation of texture, lighting and background.
+
+In the paper Equivariant Neural Rendering Dupont et al. argue that equivariance with respect to 3D transformation groups provides a strong inductive bias for neural rendering and scene representations [11]. Their methodology offers to learn equivariant scene representations unsupervised from 2D images, under the condition that the learned representations transforms like real scenes. As such, the equivariant representations can be used to perform novel view synthesis, which refers to the process of synthesizing an image from an arbitrary
+camera pose given a source image and its camera pose.
+
+In the following blogpost we investigate wheter the equivariant representation proposed by Dupont et al can be extended to the task of novel view synthesis with regards to translations and roto-translations, with the goal of obtaining a more extensive (or even transitive) model that allows for novel view synthesis from a broader range of viewpoints.
+
+### A brief note on scene representations
+Scene representations have traditionally faced challenges in terms of scalability. Voxel grids, point clouds and other traditional methods have high computational and memory requirements. Reconstrucion from incomplete or noisy data is also a challenging task with these methods, often requiring 3D information during training. Generating novel views of a scene given limited input views presents the same difficulties. Finally, traditional neural networks are not equivariant with respect to general transformation groups. 3D equivariance especially requires specifc techniques like steerable filters. Dupont *et al.* (2022) [1] attempt to solve these problems by proposing a new method which results in more scalable, implicit representations that are also equivariant with respect to transformations.
 
 The difference between an explicit scene representation (mesh grid) and an implicit one can be seen in Figure 1. While an explicit representation requires structural information of the 3D shape in great detail, the implicit representation is described by an uninterpretable three-dimensional tensor. While the numerical values of the implicit form are abstract and not meant for a human to understand, they provide significant advantages in terms of memory and computational efficiency. 
 
