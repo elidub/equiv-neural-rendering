@@ -274,6 +274,14 @@ With the dataset we created as discussed in [Section 3.1](#31-datasets), we trie
 </p>
 
 <p align="center">
+   <img src="src/imgs/gifs/rot_rot.gif"  width = 200> 
+   <img src="src/imgs/gifs/rot_trans.gif" width = 200> 
+   <img src="src/imgs/gifs/rot_rototrans.gif" width = 200> </br>
+   <br>
+   <text><b>Figure 11. </b><em>ALTERNATIVE FIGURE 11.</em></text>
+</p>
+
+<p align="center">
    <img src="./src/imgs/output/rotations.gif"> </br>
    <br>
    <text><b>Video 1. </b><em>Training of rendering a new angle with our <b>rotation-only</b> trained model.</em></text>
