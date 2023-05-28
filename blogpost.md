@@ -223,7 +223,7 @@ The original datasets are recouse intensive to train, both from a computational 
 |---|---|---|---|---|
 | Train  | 2306  |  50 | 64 x 64  |  115300 |
 | Validataion  | 331  | 50  |  64 x 64 | 16550  |
-| Test  |  331 | 50  |  64 x 64 | 16550  |
+| Test  |  30 | 50  |  64 x 64 | 1500  |
 
 **Table 2:** _Partition of new datasets_
 
@@ -249,29 +249,48 @@ After evaluating the pretrained model supplied by [1], we extend the architectur
 
 With these extentions to the model architecture, we conducted the following experiments:
 
-
 #### 3.3.1 Retraining a rotation model with our dataset
 
-With the dataset we created as discussed in 3.1, we tried training a rotation-based model from scratch, hoping to reproduce the authors' original results on our data. The resulting model outputs did not match up to the original model, as can be seen in the figures below. Not an insignificant amount of detail is gone in the reconstructed image. We suspect the reason behind this loss in performance might be the reduced image size, as the same amount of error piexels will impact our new images more significantly. 
+With the dataset we created as discussed in [Section 3.1](#31-datasets), we tried training a rotation-based model from scratch, hoping to reproduce the authors' original results on our data. The resulting model outputs did not match up to the original model, as can be seen in Figure 11. Not an insignificant amount of detail is gone in the reconstructed image. We suspect the reason behind this loss in performance might be the reduced image size, as the same amount of error pixels will impact our new images more significantly. 
 
-![Alt text](src/imgs/figs/ourRot1.png)
+<!-- ![Alt text](src/imgs/figs/ourRot1.png)
 
-![Alt text](src/imgs/figs/ourRot2.png)
+![Alt text](src/imgs/figs/ourRot2.png) -->
 
-![image](./src/imgs/output/rotations.gif)
+
+<p align="center">
+   <img src="src/imgs/figs/ourRot1.png"> </br>
+   <img src="src/imgs/figs/ourRot2.png"> </br>
+   <br>
+   <text><b>Figure 11. </b><em>Results of rendering a new angle with our <b>rotation-only</b> trained model.</em></text>
+</p>
+
+<p align="center">
+   <img src="./src/imgs/output/rotations.gif"> </br>
+   <br>
+   <text><b>Video 1. </b><em>Training of rendering a new angle with our <b>rotation-only</b> trained model.</em></text>
+</p>
+
+
 
 
 #### 3.3.2 Training a translation model with our dataset
 
-Our next experiment was to train a model focusing only on translations. As shown in section 3.2, the original model, which was pretrained on rotation data only, can already produce valid shifts for short distances along the image plane but not along the line of sight. We produced a translation dataset for the model to learn how to deal with more extensive shifts of the camera, as well as learning how to deal with shifts of any size along the line of sight. Because the depth dimension is encoded within the channels of the convolution layers, it is plausible that the model can learn to make use of this information to produce a zoom-like effect, similar to which one would expect when moving the camera closer to the object.
+Our next experiment is to train a model focusing only on translations. As shown in [Section 3.2](#32-extending-the-model), the original model, which was pretrained on rotation data only, can already produce valid shifts for short distances along the image plane but not along the line of sight. We produced a translation dataset for the model to learn how to deal with more extensive shifts of the camera, as well as learning how to deal with shifts of any size along the line of sight. Because the depth dimension is encoded within the channels of the convolution layers, it is plausible that the model can learn to make use of this information to produce a zoom-like effect, similar to which one would expect when moving the camera closer to the object.
 
 Since we can only cover a finite range of translations, we limit the range of shift to -0.4 and 0.4 for all directions. This value was chosen because it still leaves the chair mostly in the image and hence, still contains useful information for training and inference. 
 
 As the figures below show, this model reconstructs the original image with very high accuracy. Its use is very limited, since it is only capable of portraying translations, but it can do so in all 3 axes.
 
-![image](src/imgs/figs/ourTrans1.png)
+<p align="center">
+   <img src="src/imgs/figs/ourTrans1.png"> </br>
+   <img src="src/imgs/figs/ourTrans2.png"> </br>
+   <br>
+   <text><b>Figure 12. </b><em>Results of rendering a new angle with our <b>translation-only</b> trained model.</em></text>
+</p>
 
-![image](src/imgs/figs/ourTrans2.png)
+<!-- ![image](src/imgs/figs/ourTrans1.png) -->
+<!-- ![image](src/imgs/figs/ourTrans2.png) -->
 
 <!-- *** Depending on how our experiments go, we might need to talk about model architecture and more inductive biases here *** -->
 
