@@ -282,13 +282,6 @@ Since we can only cover a finite range of translations, we limit the range of sh
 As the figures below show, this model reconstructs the original image with very high accuracy. Its use is very limited, since it is only capable of portraying translations, but it can do so in all 3 axes.
 
 <p align="center">
-   <img src="src/imgs/figs/ourTrans1.png"> </br>
-   <img src="src/imgs/figs/ourTrans2.png"> </br>
-   <br>
-   <text><b>Figure 12. </b><em>Results of rendering a new angle with our <b>translation-only</b> trained model.</em></text>
-</p>
-
-<p align="center">
    <img src="src/imgs/gifs/trans_rot.gif"  width = 200> 
    <img src="src/imgs/gifs/trans_trans.gif" width = 200> 
    <img src="src/imgs/gifs/trans_rototrans.gif" width = 200> </br>
