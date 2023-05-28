@@ -4,6 +4,12 @@
 
 This repository contains code and blogpost on the reproduction and extension of [Equivariant Neural Rendering](https://arxiv.org/abs/2006.07630), ICML 2020. We present framework for learning neural scene implicit scene representations directly from images. The framework is able to render a scene from a single image. We present models trained on rotations-only, translations-only and roto-translations. For an in-depth discussion of our work, see the blogpost.
 
+<p align="center">
+   <img src="src/imgs/gifs/one_rototrans.gif" width = 500> 
+   <br>
+   <text><em>Novel view synthesis rendered from a single image.</em></text>
+</p>
+
 
 ## Code structure
 
