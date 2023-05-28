@@ -12,7 +12,9 @@ def full_rotation_angle_sequence(num_steps):
     Args:
         num_steps (int): Number of steps in sequence.
     """
-    return torch.linspace(0., 360. - 360. / num_steps, num_steps)
+    # return torch.linspace(0., 360. - 360. / num_steps, num_steps)
+    return torch.linspace(0., 180. - 180. / num_steps, num_steps)
+
 
 
 def constant_angle_sequence(num_steps, value=0.):
