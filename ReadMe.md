@@ -17,9 +17,9 @@ This repository contains code and blogpost on the reproduction and extension of 
 | `src/train_results/` | Location where all trained models and its (intermediate) results are stored. |
 | `blogpost.md` | Report introducing original work, discussing our novel contribution and analaysis. |
 
-## Usage
 
-### Installation & download
+
+## Installation & download
 
 <!-- To create the necessary data, follow the instructions in the [ReadMe about the data](src/enr/data/ReadMe.md) -->
 
@@ -41,9 +41,11 @@ conda activate nr
 
 Finally, download the [chair objects from ShapeNet](https://shapenet.org/login/).
 
-### How to run
+## Usage
 
-After the instalaltion insctructions from above, one can run the scripts in `src/scripts/` to create the data and reproduce the training runs and results. To create the necessary data, run the following:
+#### Creating data
+
+After the installation insctructions from above, one can run the scripts in `src/scripts/` to create the data and reproduce the training runs and results. To create the necessary data, run the following:
 
 ```shell
 python src/enr/data/create_data.py --blender_dir <blender location> --obj_dir <location of blender objects to read> \\
@@ -51,12 +53,15 @@ python src/enr/data/create_data.py --blender_dir <blender location> --obj_dir <l
 ```
 Depening on the `transformation`-flag, one produces images from the objects in `obj_dir` with Blender See the [ReadMe about the data](src/enr/data/ReadMe.md) for more information.
 
+#### Training a model
 To train a model, run the following:
 
 ```shell
 python src/scripts/experiments.py config.json
 ```
 See the configuration files in `src/configs/` for detailed training options, such as training on rotations,translations or roto-translations, single or multi-GPU and more. To reproduce our results, use the `config.json` files as they are saved in `/src/train_results/<timestamp>_<id>`. That is, one should change `id`, `path_to_data` and `path_to_test_data` accordingly, to the paths where one created the data following the instructions in the [ReadMe about the data](src/enr/data/ReadMe.md). 
+
+#### Evaluate results and produce renderings
 
 To evaluate a model, run the following:
 
@@ -72,9 +77,11 @@ python src/scripts/render_gif.py --img_path <source_img_path> --model_path <mode
 ```
 Models are stored in `src/train_results/<timestamp>_<id>/best_model.pt`, The path to data is dependent on the user, where it has saved its data.
 
-
+#### Analyze results and explore the model
 
 Finally, the model can be analyzed and used to render scenes using the notebooks in `demos/`. The notebook `demos/analyze_training.ipynb` shows the loss curves of the different training runs. The notebook `EquivariantNR.ipynb` shows how to use a trained model to infer a scene representation from a single image and how to use this representation to render novel views.
+
+An in-depth discussion and analysis on the results can be found in the blogpost.
 
 ## License
 As this code has been built upon the the [repository `apple/ml-equivariant-neural-rendering`](https://github.com/apple/ml-equivariant-neural-rendering), the same license applies. That is, this project is licensed under the Apple Sample Code License.
