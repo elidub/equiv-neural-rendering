@@ -409,7 +409,7 @@ Table 4 presents the PSNR values estimated for a selection of the experiments.
 | Roto-translation model - 5 Chairs  	| 10.06  	|1|31|
 | Roto-translation model - 10 Chairs  	| 10.90  	|1|20|
 
-Table 4: *PSNR-values for a selection of the experiments. The PSNR values of the original ENR rotation model, as well as our rotation and translation models on lower resolution, were tested on novel scenes. The PSNR values of the roto-translation model were estimated using the training scenes, but with novel angles and translation intervals held out during training.*
+**Table 4**: *PSNR-values for a selection of the experiments. The PSNR values of the original ENR rotation model, as well as our rotation and translation models on lower resolution, were tested on novel scenes. The PSNR values of the roto-translation model were estimated using the training scenes, but with novel angles and translation intervals held out during training.*
 
 When comparing the PSNR values of the original ENR model and our rotation model we observe a minor decrease in the PSNR value. This is expected due to to the fact that we used half the number of training scenes at half the resolution compared to the original ENR model. However our model still appears to perform well, indicating that training on a lower resolution with a smaller trainingset yields comparable quantitative results.
 
@@ -429,7 +429,7 @@ Through experimentations throughouht the study, we were able to draw the followi
 
 - Roto-translations are difficult to learn and we did not have the time nor the resources to successfully produce a model that is capable of producing novel views for novel scenes. Nonetheless, the experiments we have run on the original model and on different training variations with variable numbers of scenes indicate that if enough data exists, the model is likely able to learn a good representation, allowing for better generalization across scenes.
 
-We observed that equivariance can be used as a supervision signal to train a model on learning implicit 3D scene representations of scenes. We believe that there is much more potential to leverage this idea. In future research we might see more methods making use of this property in a self-supervised setting, similar to NeRF models [2].
+We observed that equivariance can be used as a supervision signal to train a model on learning implicit 3D scene representations of scenes. We believe that there is much more potential to leverage this idea. In future research we might see more methods making use of this property in a self-supervised setting, similar to NeRF models [3].
 
 ## 5. Contributions 
 
@@ -441,8 +441,12 @@ We observed that equivariance can be used as a supervision signal to train a mod
 
 **Orestis**: Adjusting code for homogenous coordinates to accomodate (roto-)translations, notebook & model demonstrations, blogpost report drafting.
 
+**Elias**: Generalized translation to roto-translations in code; fit original code into repository structure; wrote ReadMe; automated multi GPU training; made continuing training possible; made the project space available on Lisa; developed and automated all visualizations (loss curves, rendering images per epoch GIFs and the rotation, translation and roto-translation GIFs); experimenting for various datasets and learning rates.
+
 ## 6. References
 
 1. Dupont, Emilien, et al. "Equivariant neural rendering." International Conference on Machine Learning. PMLR, 2020.
 
-2. Wang, Zirui, et al. "NeRF--: Neural radiance fields without known camera parameters." arXiv preprint arXiv:2102.07064 (2021).
+2. Joo Cheoi, et all. "Empirical Remarks on the Translational Equivariance of Convolutional Layers." Applied Sciences 10(9):3161, 2020.
+
+3. Wang, Zirui, et al. "NeRF--: Neural radiance fields without known camera parameters." arXiv preprint arXiv:2102.07064 (2021).
