@@ -115,21 +115,16 @@ The model infers from a single image and renders a second image from a novel vie
 </p>
 
 <p align="center">
-   <img src="src/imgs/gifs/org_rot.gif"  width = 200>
-   <br>
-   <em>Rotations</em>
-   <br><br>
-   <img src="src/imgs/gifs/org_trans.gif" width = 200>
-   <br>
-   <em>Translations</em>
-   <br><br>
-   <img src="src/imgs/gifs/org_rototrans.gif" width = 200>
-   <br>
-   <em>Rototranslations</em>
-   <br><br> </br>
-   <br>
-   <text><b>Figure 6. </b><em>ALTERNATIVE FIGURE 6.</em></text>
+   <img src="src/imgs/gifs/org_rot.gif" width="200"> 
+   <img src="src/imgs/gifs/org_trans.gif" width="200"> 
+   <img src="src/imgs/gifs/org_rototrans.gif" width="200">
 </p>
+<p align="center">
+   <em>Subtitle for Image 1</em>
+   <em>Subtitle for Image 2</em>
+   <em>Subtitle for Image 3</em>
+</p>
+<text><p align="center"><b>Figure 6. </b>ALTERNATIVE FIGURE 6.</p></text>
 
 
 
