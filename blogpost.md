@@ -242,8 +242,6 @@ We construct the datasets by sampling poses from various views. In case of rotat
 
 After evaluating the pretrained model supplied by [1], we extend the architecture to allow for translation matrices to be applied to the input image. Furthermore, by combining it with the previously implemented rotation matrix, we also allow for rototranslations. To combine these two symmetries, we use a single rototranslation matric and perform the operartion in one go.
 
-**TODO: WRITE MORE ABOUT MODEL ARCHITECTURE EXTENSIONS**
-
 ### 3.3 Experiment Analysis
 
 With these extentions to the model architecture, we conducted the following experiments:
@@ -363,8 +361,6 @@ To test this hypothesis, we experimented with images that had a size of 128 x 12
    <br>
    <text><b>Video 4. </b><em>Training of rendering a new angle while funetuning the original rotations model with rotations (top) and roto-translations (bottom).</em></text>
 </p>
-
-**TODO: FIX THESE GIFS OR REMOVE THEM**
 
 The results of both finetuning experiments can be seen in Video 4. It shows that finetuning the original models results in massive loss of precision in the reconstructed images. These results indicate that our datasets might be too different than the ones used in the original model. Finetuning seems to make the model worse, even if we just train for rotations. In any case, only blobs and low quality shapes are produced, which is why we concluded that this approach was unsuccessful.
 
