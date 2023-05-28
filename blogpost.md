@@ -6,14 +6,15 @@
 
 <!-- The paper from Dupont et al. introduces an approach to render 2D images into implicit, equivariant 3D representations. The authors argue that the scene representations need not be explicit, as long as the transformations to it occur in an equivariant manner. Their model is trained on a dataset of rotation symmetries, learning to produce novel views from a single image of a scene. -->
 
-Current approaches in scene representations present difficulties with scalability. Voxel grids, point clouds and other traditional methods have high computational and memory requirements. Reconstrucion from incomplete or noisy data is also a challenging task with these methods, often requiring 3D information during training. Generating novel views of a scene given limited input views presents the same difficulties. Finally, traditional neural networks are not equivariant with respect to general transformation groups. 3D equivariance especially requires specifc techniques like steerable filters. Dupont *et al.* (2020)[^1] attempt to solve these problems by proposing a new method which results in more scalable, implicit representations that are also equivariant with respect to transformations. 
+Current approaches in scene representations present difficulties with scalability. Voxel grids, point clouds and other traditional methods have high computational and memory requirements. Reconstrucion from incomplete or noisy data is also a challenging task with these methods, often requiring 3D information during training. Generating novel views of a scene given limited input views presents the same difficulties. Finally, traditional neural networks are not equivariant with respect to general transformation groups. 3D equivariance especially requires specifc techniques like steerable filters. Dupont *et al.* (2020) [1] attempt to solve these problems by proposing a new method which results in more scalable, implicit representations that are also equivariant with respect to transformations. 
 
 The difference between an explicit scene representation (mesh grid) and an implicit one can be seen in Figure 1. While an explicit representation requires structural information of the 3D shape in great detail, the implicit representation is described by an uninterpretable three-dimensional tensor. While the numerical values of the implicit form are abstract and not meant for a human to understand, they provide significant advantages in terms of memory and computational efficiency. 
 
 <p align="center">
    <img src="src/imgs/figs/figg2.png">
    <br>
-   <em>Figure 1: Visualization of explicit (left) and implicit (right) scene representation. Taken from [1].</em>
+   <text><b><em>Figure 1. </b>Visualization of explicit (left) and implicit (right) scene representation. Taken from [1].</em></text>
+
 </p>
 
 To effectively use these implicit representations, the authors of the paper argue that the transformations applied to them have to be equivariant to the same transformations on an explicit representation.
@@ -31,7 +32,7 @@ Equivariance is enforced between representation and image space by applying tran
 <p align="center">
    <img src="src/imgs/figs/fig5.png">
    <br>
-   <em>Figure 2: Model architecture. An image is processed by the inverse render (right-pointing arrow, rotated in the implicite scene representation (down-pointing arrow), and reversed back to an image by the rendered (left-pointing arrow). Taken from [1].</em>
+   <text><b>Figure 2. </b><em>Model architecture. An image is processed by the inverse render (right-pointing arrow, rotated in the implicite scene representation (down-pointing arrow), and reversed back to an image by the rendered (left-pointing arrow). Taken from [1].</em></text>
 </p>
 
 #### 1.1.1: Training
@@ -42,7 +43,7 @@ As shown in Figure 4, two images of the same object, obtained from different cam
 <p align="center">
    <img src="src/imgs/figs/fig4.png">
    <br>
-   <em>Figure 3: Model training, indicating how two images from the same scene are rotated and used for training. Taken from [1].</em>
+   <text><b>Figure 3. </b><em>Model training, indicating how two images from the same scene are rotated and used for training. Taken from [1].</em></text>
 </p>
 
 Finally, the authors claim that the rendering loss used makes little change in results. They provide l1 norm, l2 norm and SSIM loss as candidates, and conduct ablation studies to determine the tradeoffs between them.
@@ -50,8 +51,6 @@ Finally, the authors claim that the rendering loss used makes little change in r
 ### 1.2: Datasets
 The authors evaluate their model on 4 datasets, including two ShapeNet benchmarks as well as two novel datasets of the authors design. They use an image size of $128 \times 128$ and a representation size of $64 \times 32 \times 32 \times 32$. The datasets are presented in Table 1. 
 
-<!-- <p align="center"> -->
-<center>
 
 | *Dataset*  | *Source*  |  *Sample* | *# Scenes*  |*# images per scene*| *# datapoints*|
 |---|---|---|---|---|---|
@@ -60,16 +59,11 @@ The authors evaluate their model on 4 datasets, including two ShapeNet benchmark
 | MugsHQ  |  [Apple](https://icml20-prod.cdn-apple.com/eqn-data/data/mugs.zip) | ![Mug](./src/imgs/paper_screenshots/mug.png)  |  214 | 150  | 32 100|
 | 3D mountainset  |  [Apple](https://icml20-prod.cdn-apple.com/eqn-data/data/mountains.zip) | ![Mountain](./src/imgs/paper_screenshots/mountain.png)  |  559 |  50 | 27 950|
 
-Table 1.: *Overview of datasets considered for equivariant neural rendering by Dupont et al.*
-<!-- <br>
-   <em>Figure 3: Model training, indicating how two images from the same scene are rotated and used for training. Taken from [1].</em>
-</p> -->
+**Table 1.** _Overview of datasets considered for equivariant neural rendering by Dupont et al. (2020) [1]._
 
-</center>
+### 1.3: Experiments of paper 
 
-### 1.3: Experiments of paper
-
-The experiments of the study are confucted mainly on ShapeNet benchmarks, as well as two novel datasets of their design. They use an image size of 128 x 128 and a representation size of 64 x 32 x 32 x 32. The proposed model is compared against three baseline models. All three built for 3D rendering from one or multiple 2D images, but they all make assumptions much stronger than the original study. 
+The experiments of the study are confucted mainly on ShapeNet benchmarks, as well as two novel datasets of their design. The proposed model is compared against three baseline models. All three built for 3D rendering from one or multiple 2D images, but they all make assumptions much stronger than the original study. Comparison off the assumptions between other SoTA models and the proposed model is presented in Table 2.
 
 |   | TCO  |  DGQN | SRN  | Proposed model  |
 |---|---|---|---|---|
@@ -77,9 +71,16 @@ The experiments of the study are confucted mainly on ShapeNet benchmarks, as wel
 | Requires Pose at Inference Time  | No  | Yes | Yes | No |
 | Optimization at Inference Time  | No  | No | Yes | No |
 
-The qualitative comparisons against the baseline models in single shot novel view synthesis with the ShapeNet chairs dataset reveals that the model achieves similar to SoTA results while making far fewer assumptions than the other methods. It can produce high quality novel views by achieving the desired equivariant transformation in representation space.
+**Table 2.** _Comparison between assumptions of SoTA models._
 
-![Alt text](src/imgs/figs/results.png)
+The qualitative comparisons against the baseline models in single shot novel view synthesis with the ShapeNet chairs dataset, as shown in Figure 4, reveals that the model achieves similar to SoTA results while making far fewer assumptions than the other methods. It can produce high quality novel views by achieving the desired equivariant transformation in representation space.
+
+<!-- ![Alt text](src/imgs/figs/results.png) -->
+<p align="center">
+   <img src="src/imgs/figs/results.png">
+   <br>
+   <text><b>Figure 4. </b><em>Qualitative comparison of single shot novel view synthesis on the ShapeNet chairs dataset. Taken from [1].</em></text>
+</p>
 
 Experiments in other datasets include:
 
@@ -87,15 +88,16 @@ Experiments in other datasets include:
 - MugsHQ: a dataset of mugs based on the mugs ShapeNet class with an added background environment
 - 3D mountains: a dataset of mountain landscapes
 
-Results similar to the chairs were reported in the other datasets, with some variations due to the specific challenges of each one. For example, the mountains contain extremely complex geometric information, which severly limits the detail of the novel view synthesis.
+Results similar to the chairs were reported in the other datasets, with some variations due to the specific challenges of each one. For example, the mountains contain extremely complex geometric information, which severly limits the detail of the novel view synthesis. Instances of these are shown in Figure 5.
 
-![Alt text](src/imgs/figs/chairs.png) 
-
-![Alt text](src/imgs/figs/cars.png) 
-
-![Alt text](src/imgs/figs/mugs.png) 
-
-![Alt text](src/imgs/figs/mountains.png)
+<p align="center">
+   <img src="src/imgs/figs/chairs.png"> </br>
+   <img src="src/imgs/figs/cars.png"> </br>
+   <img src="src/imgs/figs/mugs.png"> </br>
+   <img src="src/imgs/figs/mountains.png"> </br>
+   <br>
+   <text><b>Figure 5. </b><em>Qualitative comparison with the different datasets. Taken from [1].</em></text>
+</p>
 
 Finally, the authors performed ablation studies to test novel view synthesis when using different loss functions. The results in each one were similar and no inherent prefered approach was suggested. In the end, they reason that choice of loss function is task specific. Their claim is supported by their experiments with different losses, showing minimal qualitative images in outputs.
 
@@ -103,14 +105,20 @@ Finally, the authors performed ablation studies to test novel view synthesis whe
 
 The model infers from a single image and renders a second image from a novel view, as illustrated in the figures below.
 
-![Alt text](src/imgs/figs/demo1.png) 
+<!-- ![Alt text](src/imgs/figs/demo1.png) 
+![Alt text](src/imgs/figs/demo2.png) -->
+<p align="center">
+   <img src="src/imgs/figs/demo1.png"> </br>
+   <img src="src/imgs/figs/demo2.png"> </br>
+   <br>
+   <text><b>Figure 6. </b><em>CAPTION HERE.</em></text>
+</p>
 
-![Alt text](src/imgs/figs/demo2.png)
 
 
 ## 2. Response 
 
-Much of the success of Deep Learning can be attributed to effective representation learning. Such representations do not need to be humanly interpretable, but can also be abstract. The original authors proposed an implicit 3D representation of the scene, instead of an explicit 3D representation such as mesh-grids or point clouds. By removing the need for an explicit 3D representation, they developed a model that requires no 3D supervision. It only requires 2D images with the corresponding rotation angle of the camera, that was used between these images. Their model can generate a novel view from a different angle, given a single image. The qualitative results of their model’s performance motivated us to extent their research.
+Much of the success of deep learning can be attributed to effective representation learning. Such representations do not need to be humanly interpretable, but can also be abstract. The original authors proposed an implicit 3D representation of the scene, instead of an explicit 3D representation such as mesh-grids or point clouds. By removing the need for an explicit 3D representation, they developed a model that requires no 3D supervision. It only requires 2D images with the corresponding rotation angle of the camera, that was used between these images. Their model can generate a novel view from a different angle, given a single image. The qualitative results of their model’s performance motivated us to extent their research.
 
 In the original paper the authors used 3D rotations to generate novel views, meaning that they rotate a camera on a sphere around the scene. 3D rotations do not act transitively on 3D space. Therefore, we proposed to extend their model to roto-translations, with the intermediate proof-of-concept step of using translations only. Roto-translations act transitively on 3D space, meaning that we can produce any possible camera angle. The full spectrum of rigid body motions are nescessary to produce satisfactory renderings of real world environments. For instance in applications such as virtual and agumented reality, and 3D reconstruction. Hence we hoped to obtain a model that can generate a novel view for any camera position in 3D space, within a reasonable range of movement.
 
@@ -121,13 +129,19 @@ The model, which was trained by the original authors, shows some nice out-of-the
 
 #### Translations through inductive bias
 
-Through inductive bias, (reasonably small) translations, which are orthogonal to the line of sight, already work on the model that has only been trained on rotations. This is due to the fact that the model uses a CNN architecture, which is translationally equivariant along the image plane. Due to the weight sharing property of the convolution kernels, a CNN will generally use the same encoding for the same image but with the same shift applied to the encoding. The same goes for the decoder (i.e. renderer) which will produce the same rendered image for a shifted reprensentation. Therefore, the model acts translationally equivariant for these kinds of shifts. Still, it seems interesting that the model does not seem to encode any information from the outside of the object to produce a good estimation.
+Through inductive bias, (reasonably small) translations, which are orthogonal to the line of sight, already work on the model that has only been trained on rotations. This is due to the fact that the model uses a CNN architecture, which is translationally equivariant along the image plane. Due to the weight sharing property of the convolution kernels, a CNN will generally use the same encoding for the same image but with the same shift applied to the encoding, as shown in Figure 7. The same goes for the decoder (i.e. renderer) which will produce the same rendered image for a shifted reprensentation. Therefore, the model acts translationally equivariant for these kinds of shifts. Still, it seems interesting that the model does not seem to encode any information from the outside of the object to produce a good estimation.
 
-![Alt text](./src/imgs/paper_screenshots/translational_eq_cnn.png)
+<!-- ![Alt text](./src/imgs/paper_screenshots/translational_eq_cnn.png) -->
 
-*Illustration of translational equivariance in CNNs (https://www.mdpi.com/2076-3417/10/9/3161). Shifting the input and encoding it is equivalent to shifting encoding the input and shifting the encoding.*
+<!-- *. * -->
 
-Nonetheless, translations along the line of sight do not work out-of-the-box and require explicit training. The reason for that is that the equivariant neural rendering model considers the depth dimension via incorporating its information into the channels of the CNN. More concrete, the model uses the following code:
+<p align="center">
+   <img src="./src/imgs/paper_screenshots/translational_eq_cnn.png"> </br>
+   <br>
+   <text><b>Figure 7. </b><em>Illustration of translational equivariance in CNNs from [2]. Shifting the input and encoding it is equivalent to shifting encoding the input and shifting the encoding..</em></text>
+</p>
+
+Nonetheless, translations along the line of sight do not work out-of-the-box and require explicit training, as shown in Figure 8. The reason for that is that the equivariant neural rendering model considers the depth dimension via incorporating its information into the channels of the CNN. More concrete, the model uses the following code:
 
 ```python
 # Reshape 3D -> 2D
@@ -138,17 +152,31 @@ Furthermore, due to the central positioning of the objects in the images, the mo
 
 #### Translations
 
-![Alt text](src/imgs/figs/translations.png)
+<!-- ![Alt text](src/imgs/figs/translations.png) -->
 
 Another problem with out-of-the-box translations from the rotation model is that it only shifts the 2D image instead of developing a real 3D understanding of the scene. When we compare the rendered image to the ground truth, we observe that the model does not grasp that a shift also changes the angle at which the camera is looking at the object. It is obvious because the model has never seen a shift and only works on 2D equivariance as described above. Furthermore, we simply added a functionality for translations without ever training the model on them.
 
-![Alt text](src/imgs/figs/translations2.png)
+<!-- ![Alt text](src/imgs/figs/translations2.png) -->
+
+<p align="center">
+   <img src="src/imgs/figs/translations.png"> </br>
+   <img src="src/imgs/figs/translations2.png"> </br>
+   <br>
+   <text><b>Figure 8. </b><em>Examples how the original rotation-only model is able to perform trannslation orthogonal to the line of sight (bottom) but is not able to perform translations alon the line of sight (top).</em></text>
+</p>
+
 
 #### Roto-translations
 
-We further observe that the same properties allow for out-of-the-box roto-translations. Also the roto-translations do not account for the angular shift between camera and object.
+We further observe that the same properties allow for out-of-the-box roto-translations. Also the roto-translations do not account for the angular shift between camera and object. This is shown in Figure 9.
 
-![Alt text](src/imgs/figs/rototrans.png)
+<p align="center">
+   <img src="src/imgs/figs/rototrans.png"> </br>
+   <br>
+   <text><b>Figure 9. </b><em>Examples how the original rotation-only model is not able to perform translations along the line of sight.</em></text>
+</p>
+
+<!-- ![Alt text](src/imgs/figs/rototrans.png) -->
 
 #### In conclusion...
 
@@ -331,4 +359,8 @@ Through experimentations throughouht the study, we were able to draw the followi
 
 **Orestis**: Adjusting code for homogenous coordinates to accomodate (roto-)translations, notebook & model demonstrations, blogpost report drafting.
 
-[^1]: Kolek et al. (2022, October). *Cartoon Explanations of Image Classifiers.* In Computer Vision–ECCV 2022.
+## 6. References
+
+1. Kolek et al. (2022, October). *Cartoon Explanations of Image Classifiers.* In Computer Vision–ECCV 2022.
+
+2. https://www.mdpi.com/2076-3417/10/9/3161
