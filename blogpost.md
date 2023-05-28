@@ -294,15 +294,27 @@ As the figures below show, this model reconstructs the original image with very 
 
 <!-- *** Depending on how our experiments go, we might need to talk about model architecture and more inductive biases here *** -->
 
-In particular, we observe that the models capabilities of translations along the x-axis (scaling) has significantly increased after training upon the translation data 
+In particular, we observe that the models capabilities of translations along the x-axis (scaling) has significantly increased after training upon the translation data. This is shown in Figure 13, where the model is able to zoom in on the chair, which was not possible with the original model.
 
-![image](src/imgs/figs/ourTrans3.png)
+<!-- ![image](src/imgs/figs/ourTrans3.png)
+![image](src/imgs/figs/ourTrans4.png) -->
 
-![image](src/imgs/figs/ourTrans4.png)
+<p align="center">
+   <img src="src/imgs/figs/ourTrans3.png"> </br>
+   <img src="src/imgs/figs/ourTrans4.png"> </br>
+   <br>
+   <text><b>Figure 13. </b><em>Results of rendering a new angle with our <b>translation-only</b> trained model.</em></text>
+</p>
 
-The training gif also shows that convergence is fast in this model, which we expected to be the case, as translations are a simpler symmetry form and require little information about the object's 3D structure.
+Video 2 shows that the training convergence is fast in this model, which we expected to be the case, as translations are a simpler symmetry form and require little information about the object's 3D structure.
 
-![image](src/imgs/output/translations.gif)
+<!-- ![image](src/imgs/output/translations.gif) -->
+
+<p align="center">
+   <img src="./src/imgs/output/translations.gif"> </br>
+   <br>
+   <text><b>Video 2. </b><em>Training of rendering a new angle with our <b>translations-only</b> trained model.</em></text>
+</p>
 
 
 
@@ -310,11 +322,18 @@ The training gif also shows that convergence is fast in this model, which we exp
 
 The motivation for our research was to extend the equivariant neural rendering model to be able to produce novel views for any camera position in 3D space. Roto-translations fulfill this requirement. More specifically, we can cover all 3D positions by limiting the azimuth angle to a range of -180 to 180 degrees and the elevation angle to a range of -90 to 90 degrees. The latter avoids a flipping of the camera which causes problems with the compatibility of translations in Blender vs translations in the model. Nonetheless, by being able to rotate the camera along the azimuth, we can still cover all necessary views. For translations, we can obviously only cover a finite distances, therefore we chose the same range as in section 3.2 (-0.4 to 0.4 for all directions). 
 
-The results were not on par with the previous experiments. At first, the outputs were completely white and the object completely disappeared in the reconstructed image.
+The results were not on par with the previous experiments. At first, the outputs were completely white and the object completely disappeared in the reconstructed image. Training results are shown in Video 3. 
+<!-- We hypothesize that the model is not able to learn the roto-translations because the dataset is not large enough. The model is not able to learn the necessary features to produce a valid output. -->
 
-![image](src/train_results/2023-05-18_13-38_rototrans_lr1e-4/images_during_training.gif)
+<p align="center">
+   <img src="src/train_results/2023-05-18_13-38_rototrans_lr1e-4/images_during_training.gif"> </br>
+   <br>
+   <text><b>Video 3. </b><em>Training of rendering a new angle with our <b>roto-translations</b> trained model.</em></text>
+</p>
 
-We performed an ablation study on the learning rate, hypothesizing that the features the model learns when a full rototranslation matrix is applied might need a less steep learning curve. We tested several values in the range of $[10^{-4}, 10^{-7}]$, but the output was blank. 
+<!-- ![image](src/train_results/2023-05-18_13-38_rototrans_lr1e-4/images_during_training.gif) -->
+
+We performed an ablation study on the learning rate, hypothesizing that the features the model learns when a full rototranslation matrix is applied might need a less steep learning curve. We tested several values in the range of $[10^{-4}, 10^{-7}]$, but the output remained blank. 
 
 
 Our conclusions on training a rototranslation model are that our data is not suficcient for this task. The experiment was unsuccessful and we hypothesize that there are not enough camera angles in our dataset for the model to leverage and construct an accurate representation. Using only 50 views for each scene might be too limiting to learn something as complex as rototranslations. To try and overcome this problem, we followed two different approaches.
