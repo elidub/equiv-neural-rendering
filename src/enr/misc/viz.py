@@ -236,7 +236,7 @@ def save_img_sequence_as_gif(img_sequence, filename, nrow=4, loop = 0):
     """
     img_grid_sequence = []
     for img in img_sequence:
-        if len(img.shape) == 4:
+        if len(img.shape) == nrow:
             img_grid = torchvision.utils.make_grid(img, nrow=nrow)
         else:
             img_grid = img

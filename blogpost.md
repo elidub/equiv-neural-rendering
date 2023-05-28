@@ -114,6 +114,14 @@ The model infers from a single image and renders a second image from a novel vie
    <text><b>Figure 6. </b><em>CAPTION HERE.</em></text>
 </p>
 
+<p align="center">
+   <img src="src/imgs/gifs/org_rot.gif"  width = 200> 
+   <img src="src/imgs/gifs/org_trans.gif" width = 200> 
+   <img src="src/imgs/gifs/org_rototrans.gif" width = 200> </br>
+   <br>
+   <text><b>Figure 6. </b><em>ALTERNATIVE FIGURE 6.</em></text>
+</p>
+
 
 
 ## 2. Response 
@@ -342,31 +350,38 @@ Our conclusions on training a rototranslation model are that our data is not suf
 
 Training a rototranslation model from scratch was unsuccessful. But the model of the original authors, trained in rotations with high-quality images already succeeded in reconstructing the rendered images. We decided to use this potent model and finetune it with our own data, hoping to achieve the desirable rototranslation results. Our hypothesis was that a model that can already reconstruct an image successful and apply a rotation matrix to it, will be able to leverage this knowledge and combine it with another form of symmetry to achieve rototranslations.
 
-To test this hypothesis, we experimented with images that had a size of 128 x 128, the same as the original authors used. The images were created the same way as discussed in section 3.1.
+To test this hypothesis, we experimented with images that had a size of 128 x 128, the same as the original authors used. The images were created the same way as discussed in [Section 3.1](#31-datasets).
 
-- First we finetuned on a rotation dataset, hoping to see some drop in loss which would provide a proof of concept for this method. We expected this outcome provide the original model with additional data in the same type of symmetry. 
+- First, we finetuned on a rotation dataset, hoping to see some drop in loss which would provide a proof of concept for this method. We expected this outcome provide the original model with additional data in the same type of symmetry. 
 
 
 - Then we finetuned the original model on a rototranslation dataset. We reasoned that a pretrained model might leverage its previous training on rotations and apply it on rototranslations. Since the original problem was not having enough angles, we expected to obtain somewhat accurate rototranslations with this method
 
-The results of both finetuning experiments can be seen in the figures below: 
 
-**ADD FINETUNE ROTO IMAGE**
+<!-- **ADD FINETUNE ROTO IMAGE**
 
 ![image](src/imgs/figs/finetune_roto.gif)
 
 **ADD FINETUNE ROTOTRANSLATION IMAGE**
 
-![image](src/imgs/figs/finetune_rototrans.gif)
+![image](src/imgs/figs/finetune_rototrans.gif) -->
 
-As the figures show, attempting to finetune the original models results in massive loss of precision in the reconstructed images. These results indicate that our datasets might be too different than the ones used in the original model. Finetuning seems to make the model worse, even if we just train for rotations. In any case, only blobs and low quality shapes are produced, which is why we concluded that this approach was unsuccessful.
+<p align="center">
+   <img src="src/imgs/figs/finetune_roto.gif" width = 600> <br> <img src="src/imgs/figs/finetune_roto.gif" width = 600>
+   <br>
+   <text><b>Video 4. </b><em>Training of rendering a new angle while funetuning the original rotations model with rotations (top) and roto-translations (bottom).</em></text>
+</p>
+
+**TODO: FIX THESE GIFS OR REMOVE THEM**
+
+The results of both finetuning experiments can be seen in Video 4. It shows that finetuning the original models results in massive loss of precision in the reconstructed images. These results indicate that our datasets might be too different than the ones used in the original model. Finetuning seems to make the model worse, even if we just train for rotations. In any case, only blobs and low quality shapes are produced, which is why we concluded that this approach was unsuccessful.
 
 
 #### 3.3.5 Few-scene training
 
 Since finetuning did not work, the only option is to obtain more data and train for more than 50 view for each scene, in an attempt to provide more camera angles and extrapolate into a 3D representation for rototranslations. Due to hardware and time limitations, using more views per scene while keeping the same amount of scenes as before was an impossible task. Therefore, we conducted an ablation study in the number of scenes and views. 
 
-By keeping a constant number of images, we start with one scene and produce a large amount of views for it. The total number of images is always 100.000 and we conducted experiments with 1,2,5 and 10 scenes, dividing the number of views equally among them. When creating each scene, we keep certain camera angle patches separate to test the quality of the rendered image and the transformations applied to it. This way we make sure to test our approach in a novel view that the model has not seen during training.
+By keeping a constant number of images, we start with one scene and produce a large amount of views for it. The total number of images is always 100.000 and we conducted experiments with 1, 2, 5 and 10 scenes, dividing the number of views equally among them. The total number of 100.000 training images is of the same order as our rotation-only and translation-only datasets. When creating each scene, we keep certain camera angle patches separate to test the quality of the rendered image and the transformations applied to it. This way we make sure to test our approach in a novel view that the model has not seen during training.
 
 The figs below showcase the results of training a model in one scene only. The training data is 100.000 images of the same chair, with a patch of angles left out. The test image below is part of these test angles.
 

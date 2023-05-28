@@ -1,10 +1,52 @@
 # Equivariant Neural Rendering
 
-This repo contains code to reproduce all experiments in [Equivariant Neural Rendering](https://arxiv.org/abs/2006.07630) by [E. Dupont](https://emiliendupont.github.io), [M. A. Bautista](https://scholar.google.com/citations?user=ZrRs-qoAAAAJ&hl=en), [A. Colburn](https://www.colburn.org), [A. Sankar](https://scholar.google.com/citations?user=6ZDIdEAAAAAJ&hl=en), [C. Guestrin](https://homes.cs.washington.edu/~guestrin/), [J. Susskind](https://scholar.google.com/citations?user=Sv2TGqsAAAAJ&hl=en), [Q. Shan](http://shanqi.github.io), ICML 2020.
+This repository contains code and blogpost on the reproduction and extension of [Equivariant Neural Rendering](https://arxiv.org/abs/2006.07630), ICML 2020. We present framework for learning neural scene implicit scene representations directly from images. The framework is able to render a scene from a single image. We present models trained on rotations-only, translations-only and roto-translations. For an in-depth discussion of our work, see the blogpost.
+
+
+## Code structure
+
+| Directory | Description |
+| --------- | ----------- |
+| `demos/` | Notebooks used to analyze training runs, results and render scenes. |
+| `src/configs/` | Configuration files to run the training experiments. |
+| `src/enr` | Source code used for equivariant neural rendering. Adapted from the [repo of the original paper](https://github.com/apple/ml-equivariant-neural-rendering). |
+| `src/imgs/` | Location where produced images are stored. |
+| `src/scripts/` | Files to run that reproduce the results. |
+| `src/train_results/` | Location where all trained models and its (intermediate) results are stored. |
+| `blogpost.md` | Report introducing original work, discussing our novel contribution and analaysis. |
+
+## Usage
+
+<!-- To create the necessary data, follow the instructions in the [ReadMe about the data](src/enr/data/ReadMe.md) -->
+
+First, install the conda environment:
+```shell
+conda env create -f env_nr.yml
+conda activate nr
+```
+
+To create the necessary data, follow the instructions in the [ReadMe about the data](src/enr/data/ReadMe.md)
+
+After installing the environment and creating the data, one can run the scripts in `src/scripts/` to reproduce the training runs and results. To train a model, run the following:
+
+```
+python experiments.py config.json
+```
+See the configuration files in `src/configs/` for detailed training options, such as training on rotations,translations or roto-translations, single or multi-GPU and more.
+
+To evaluate a model, run the following:
+
+```
+python evaluate_psnr.py <path_to_model> <path_to_data>
+```
+By default, models are stored in `src/train_results/`. See the configuration files in `src/configs/` for more information.
+
+Finally, the model can be analyzed and used to render scenes using the notebooks in `demos/`. The notebook `demos/analyze_training.ipynb` shows the loss curves of the different training runs. The notebook `EquivariantNR.ipynb` shows how to use a trained model to infer a scene representation from a single image and how to use this representation to render novel views.
 
 
 
 
+# Old stuff
 
 ### Pre-trained models
 
