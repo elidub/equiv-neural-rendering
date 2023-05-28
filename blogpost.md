@@ -305,6 +305,14 @@ As the figures below show, this model reconstructs the original image with very 
    <text><b>Figure 12. </b><em>Results of rendering a new angle with our <b>translation-only</b> trained model.</em></text>
 </p>
 
+<p align="center">
+   <img src="src/imgs/gifs/trans_rot.gif"  width = 200> 
+   <img src="src/imgs/gifs/trans_trans.gif" width = 200> 
+   <img src="src/imgs/gifs/trans_rototrans.gif" width = 200> </br>
+   <br>
+   <text><b>Figure 12. </b><em>ALTERNATIVE FIGURE 12.</em></text>
+</p>
+
 <!-- ![image](src/imgs/figs/ourTrans1.png) -->
 <!-- ![image](src/imgs/figs/ourTrans2.png) -->
 
@@ -396,6 +404,14 @@ The figs below showcase the results of training a model in one scene only. The t
 ![Alt text](src/imgs/figs/ourRototr1.png)
 
 ![Alt text](src/imgs/figs/ourRototr2.png)
+
+<p align="center">
+   <img src="src/imgs/gifs/one_rot.gif"  width = 200> 
+   <img src="src/imgs/gifs/one_trans.gif" width = 200> 
+   <img src="src/imgs/gifs/one_rototrans.gif" width = 200> </br>
+   <br>
+   <text><b>Figure 14. </b><em>ALTERNATIVE FIGURE 14.</em></text>
+</p>
 
 It is clear that this training procedure does result in accurate equivariant rendering with rototranslations. While the chair is already part of the training set, the angles tested on are not, which shows the model has successfully learned the assigned task.
 
