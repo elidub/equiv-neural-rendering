@@ -1,6 +1,6 @@
 # Equivariant Neural Rendering
 
-*Authors: Elias Dubbeldam, Aniek Eijpe, Robin Sasse, Oline Ranum, Orestis Gorgogiannis*
+*Authors: Elias Dubbeldam, Aniek Eijpe, Orestis Gorgogiannis, Oline Ranum, Robin Sasse*
 
 ## Introduction
 
@@ -413,11 +413,20 @@ The figs below showcase the results of training a model in one scene only. The t
    <text><b>Figure 14. </b><em>Novel view synthesis by our model trained on roto-translations from a single scene (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
-It is clear that this training procedure does result in accurate equivariant rendering with rototranslations. While the chair is already part of the training set, the angles tested on are not, which shows the model has successfully learned the assigned task.
+It is clear that this training procedure does result in accurate equivariant rendering with rototranslations. While the chair is already part of the training set, some of the angles tested on are not, which shows the model has successfully learned the assigned task.
 
 Below we provide a demonstration of the training procedure performed for different numbers of scenes.
 
-**Some kind of images/gifs**
+<p align="center">
+   <img src="src/imgs/gifs/one_rototrans.gif"  width = 200> 
+   <img src="src/imgs/gifs/two_rototrans.gif"  width = 200>  
+   <img src="src/imgs/gifs/five_rototrans.gif"  width = 200> 
+   <img src="src/imgs/gifs/ten_rototrans.gif"  width = 200>  </br>
+   <br>
+   <text><b>Figure 15. </b><em>Comparison of quality of rototranslation on a previously seen scene. The models were traned with one, two, five, and ten scenes (left to right).</em></text>
+</p>
+
+We observe that scaling the number of scenes does not negatively affect the quality of the novel view synthesis on a previously seen scene. Nonetheless, these models are still not capable of generating a novel view for a novel scene. Because the original authors were able to do that with more training time and more data for rotations, we believe that more data and more training time can do the same for roto-translations. We argue that the nonexistent decrease of quality implies that there is room for generalization without compromising on the quality of the images.
 
 #### 3.3.6 PSNR estimations 
 Table 4 presents the PSNR values estimated for a selection of the experiments. 
@@ -450,6 +459,10 @@ Through experimentations throughouht the study, we were able to draw the followi
 
 - This architecture is able to learn rototranslations. With adequate quality and quantity of data, it is possible to achieve a unification of the two symmetries and apply it to the implicit representations.
 
+- Roto-translations are difficult to learn and we did not have the time nor the resources to successfully produce a model that is capable of producing novel views for novel scenes. Nonetheless, the experiments we have run on the original model and on different training variations with variable numbers of scenes indicate that if enough data exists, the model is likely able to learn a good representation, allowing for better generalization across scenes.
+
+We observed that equivariance can be used as a supervision signal to train a model on learning implicit 3D scene representations of scenes. We believe that there is much more potential to leverage this idea. In future research we might see more methods making use of this property in a self-supervised setting, similar to NeRF models [2].
+
 ## 5. Contributions 
 
 **Oline**: Background research, dataset-production & scripting in blender, demonstration setup for blender, notebook & model-demonstrations, PSNR setup and evaluation.
@@ -462,6 +475,6 @@ Through experimentations throughouht the study, we were able to draw the followi
 
 ## 6. References
 
-1. Kolek et al. (2022, October). *Cartoon Explanations of Image Classifiers.* In Computer Vision–ECCV 2022.
+1. Dupont, Emilien, et al. "Equivariant neural rendering." International Conference on Machine Learning. PMLR, 2020.
 
-2. https://www.mdpi.com/2076-3417/10/9/3161
+2. Wang, Zirui, et al. "NeRF--: Neural radiance fields without known camera parameters." arXiv preprint arXiv:2102.07064 (2021).
