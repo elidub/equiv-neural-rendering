@@ -417,7 +417,14 @@ It is clear that this training procedure does result in accurate equivariant ren
 
 Below we provide a demonstration of the training procedure performed for different numbers of scenes.
 
-**Some kind of images/gifs**
+<p align="center">
+   <img src="src/imgs/gifs/one_rototrans.gif"  width = 200> 
+   <img src="src/imgs/gifs/two_rototrans.gif"  width = 200>  
+   <img src="src/imgs/gifs/five_rototrans.gif"  width = 200> 
+   <img src="src/imgs/gifs/ten_rototrans.gif"  width = 200>  </br>
+   <br>
+   <text><b>Figure 15. </b><em>Comparison of quality of rototranslation on a previously seen scene. The models were traned with one, two, five, and ten scenes (left to right).</em></text>
+</p>
 
 #### 3.3.6 PSNR estimations 
 Table 4 presents the PSNR values estimated for a selection of the experiments. 
