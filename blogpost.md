@@ -310,7 +310,7 @@ As the figures below show, this model reconstructs the original image with very 
    <img src="src/imgs/gifs/trans_trans.gif" width = 200> 
    <img src="src/imgs/gifs/trans_rototrans.gif" width = 200> </br>
    <br>
-   <text><b>Figure 12. </b><em>ALTERNATIVE FIGURE 12.</em></text>
+   <text><b>Figure 12. </b><emNovel view synthesis by our model trained on translations (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
 <!-- ![image](src/imgs/figs/ourTrans1.png) -->
