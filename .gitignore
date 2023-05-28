@@ -10,9 +10,3 @@ demos/blender*
 src/data/sample_data/original_data/*
 src/enr/data/sample_data/original_data/*
 src/enr/data/sample_data/*
-blogpost copy.md
-blogpost copy 2.md
-dev_elias.ipynb
-dev.ipynb
-demos/dev_elias copy.ipynb
-demos/EquivariantNR_elias.ipynb
