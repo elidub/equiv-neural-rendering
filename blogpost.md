@@ -105,15 +105,6 @@ Finally, the authors performed ablation studies to test novel view synthesis whe
 
 The model infers from a single image and renders a second image from a novel view, as illustrated in the figures below.
 
-<!-- ![Alt text](src/imgs/figs/demo1.png) 
-![Alt text](src/imgs/figs/demo2.png) -->
-<p align="center">
-   <img src="src/imgs/figs/demo1.png"> </br>
-   <img src="src/imgs/figs/demo2.png"> </br>
-   <br>
-   <text><b>Figure 6. </b><em>CAPTION HERE.</em></text>
-</p>
-
 <p align="center">
    <img src="src/imgs/gifs/org_rot.gif"  width = 200> 
    <img src="src/imgs/gifs/org_trans.gif" width = 200> 
@@ -265,14 +256,6 @@ With the dataset we created as discussed in [Section 3.1](#31-datasets), we trie
 
 ![Alt text](src/imgs/figs/ourRot2.png) -->
 
-
-<p align="center">
-   <img src="src/imgs/figs/ourRot1.png"> </br>
-   <img src="src/imgs/figs/ourRot2.png"> </br>
-   <br>
-   <text><b>Figure 11. </b><em>Results of rendering a new angle with our <b>rotation-only</b> trained model.</em></text>
-</p>
-
 <p align="center">
    <img src="src/imgs/gifs/rot_rot.gif"  width = 200> 
    <img src="src/imgs/gifs/rot_trans.gif" width = 200> 
@@ -400,10 +383,6 @@ Since finetuning did not work, the only option is to obtain more data and train 
 By keeping a constant number of images, we start with one scene and produce a large amount of views for it. The total number of images is always 100.000 and we conducted experiments with 1, 2, 5 and 10 scenes, dividing the number of views equally among them. The total number of 100.000 training images is of the same order as our rotation-only and translation-only datasets. When creating each scene, we keep certain camera angle patches separate to test the quality of the rendered image and the transformations applied to it. This way we make sure to test our approach in a novel view that the model has not seen during training.
 
 The figs below showcase the results of training a model in one scene only. The training data is 100.000 images of the same chair, with a patch of angles left out. The test image below is part of these test angles.
-
-![Alt text](src/imgs/figs/ourRototr1.png)
-
-![Alt text](src/imgs/figs/ourRototr2.png)
 
 <p align="center">
    <img src="src/imgs/gifs/one_rot.gif"  width = 200> 
