@@ -459,6 +459,10 @@ Through experimentations throughouht the study, we were able to draw the followi
 
 - This architecture is able to learn rototranslations. With adequate quality and quantity of data, it is possible to achieve a unification of the two symmetries and apply it to the implicit representations.
 
+- Roto-translations are difficult to learn and we did not have the time nor the resources to successfully produce a model that is capable of producing novel views for novel scenes. Nonetheless, the experiments we have run on the original model and on different training variations with variable numbers of scenes indicate that if enough data exists, the model is likely able to learn a good representation, allowing for better generalization across scenes.
+
+We observed that equivariance can be used as a supervision signal to train a model on learning implicit 3D scene representations of scenes. We believe that there is much more potential to leverage this idea. In future research we might see more methods making use of this property in a self-supervised setting, similar to NeRF models [2].
+
 ## 5. Contributions 
 
 **Oline**: Background research, dataset-production & scripting in blender, demonstration setup for blender, notebook & model-demonstrations, PSNR setup and evaluation.
@@ -471,6 +475,6 @@ Through experimentations throughouht the study, we were able to draw the followi
 
 ## 6. References
 
-1. Kolek et al. (2022, October). *Cartoon Explanations of Image Classifiers.* In Computer Vision–ECCV 2022.
+1. Dupont, Emilien, et al. "Equivariant neural rendering." International Conference on Machine Learning. PMLR, 2020.
 
-2. https://www.mdpi.com/2076-3417/10/9/3161
+2. Wang, Zirui, et al. "NeRF--: Neural radiance fields without known camera parameters." arXiv preprint arXiv:2102.07064 (2021).
