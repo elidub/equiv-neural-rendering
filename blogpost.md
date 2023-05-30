@@ -163,19 +163,22 @@ reshaped = inputs.view(batch_size, channels * depth, height, width)
 
 Furthermore, due to the central positioning of the objects in the images, the model has problems rendering scenes that extent to the image boundaries. Therefore, we trained our model on translations first, before moving on to roto-translations
 
-#### Translations
-
 <!-- ![Alt text](src/imgs/figs/translations.png) -->
+
+<p align="center">
+   <img src="src/imgs/figs/translations.png"> </br>
+   <br>
+   <text><b>Figure 8. </b><em>Example of how the original rotation-only model is able to perform trannslation orthogonal to the line of sight (bottom) but is not able to perform translations alon the line of sight (top).</em></text>
+</p>
 
 Another problem with out-of-the-box translations from the rotation model is that it only shifts the 2D image instead of developing a real 3D understanding of the scene. When we compare the rendered image to the ground truth, we observe that the model does not grasp that a shift also changes the angle at which the camera is looking at the object. It is obvious because the model has never seen a shift and only works on 2D equivariance as described above. Furthermore, we simply added a functionality for translations without ever training the model on them.
 
 <!-- ![Alt text](src/imgs/figs/translations2.png) -->
 
 <p align="center">
-   <img src="src/imgs/figs/translations.png"> </br>
    <img src="src/imgs/figs/translations2.png"> </br>
    <br>
-   <text><b>Figure 8. </b><em>Examples how the original rotation-only model is able to perform trannslation orthogonal to the line of sight (bottom) but is not able to perform translations alon the line of sight (top).</em></text>
+   <text><b>Figure 8. </b><em>Example of how the model does not grasp that a translational shift also affects the camera angle.</em></text>
 </p>
 
 
