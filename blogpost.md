@@ -178,7 +178,7 @@ Another problem with out-of-the-box translations from the rotation model is that
 <p align="center">
    <img src="src/imgs/figs/translations2.png"> </br>
    <br>
-   <text><b>Figure 8. </b><em>Example of how the model does not grasp that a translational shift also affects the camera angle. Notice that in the ground truth the chair is slightly tilted compared to the rendered chair.</em></text>
+   <text><b>Figure 9. </b><em>Example of how the model does not grasp that a translational shift also affects the camera angle. Notice that in the ground truth the chair is slightly tilted compared to the rendered chair.</em></text>
 </p>
 
 
@@ -189,7 +189,7 @@ We further observe that the same properties allow for out-of-the-box roto-transl
 <p align="center">
    <img src="src/imgs/figs/rototrans.png"> </br>
    <br>
-   <text><b>Figure 9. </b><em>Example of how the model does not grasp that a translational shift in the roto-translation setting also affects the camera angle. Notice that in the ground truth the chair is slightly tilted compared to the rendered chair.</em></text>
+   <text><b>Figure 10. </b><em>Example of how the model does not grasp that a translational shift in the roto-translation setting also affects the camera angle. Notice that in the ground truth the chair is slightly tilted compared to the rendered chair.</em></text>
 </p>
 
 <!-- ![Alt text](src/imgs/figs/rototrans.png) -->
@@ -219,7 +219,7 @@ Similar to [1], we perform experiments on the [ShapeNet Core](https://shapenet.o
 <p align="center">
    <img src="src/imgs/figs/data_demo.png"> </br>
    <br>
-   <text><b>Figure 10. </b><em>Examples of the dataset used for our novel contribution.</em></text>
+   <text><b>Figure 11. </b><em>Examples of the dataset used for our novel contribution.</em></text>
 </p>
 
 
@@ -276,7 +276,7 @@ With the dataset we created as discussed in [Section 3.1](#31-datasets), we trie
    <img src="src/imgs/gifs/rot_trans.gif" width = 200> 
    <img src="src/imgs/gifs/rot_rototrans.gif" width = 200> </br>
    <br>
-   <text><b>Figure 11. </b><em>Novel view synthesis by our model trained on rotations (left rotations, middle translations, right roto-translations).</em></text>
+   <text><b>Figure 12. </b><em>Novel view synthesis by our model trained on rotations (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
 <p align="center">
@@ -301,7 +301,7 @@ As the figures below show, this model reconstructs the original image with very 
    <img src="src/imgs/gifs/trans_trans.gif" width = 200> 
    <img src="src/imgs/gifs/trans_rototrans.gif" width = 200> </br>
    <br>
-   <text><b>Figure 12. </b><emNovel view synthesis by our model trained on translations (left rotations, middle translations, right roto-translations).</em></text>
+   <text><b>Figure 13. </b><emNovel view synthesis by our model trained on translations (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
 <!-- ![image](src/imgs/figs/ourTrans1.png) -->
@@ -318,7 +318,7 @@ In particular, we observe that the models capabilities of translations along the
    <img src="src/imgs/figs/ourTrans3.png"> </br>
    <img src="src/imgs/figs/ourTrans4.png"> </br>
    <br>
-   <text><b>Figure 13. </b><em>Results of rendering a new angle with our <b>translation-only</b> trained model.</em></text>
+   <text><b>Figure 14. </b><em>Results of rendering a new angle with our <b>translation-only</b> trained model.</em></text>
 </p>
 
 Video 2 shows that the training convergence is fast in this model, which we expected to be the case, as translations are a simpler symmetry form and require little information about the object's 3D structure.
@@ -395,7 +395,7 @@ The figs below showcase the results of training a model in one scene only. The t
    <img src="src/imgs/gifs/one_trans.gif" width = 200> 
    <img src="src/imgs/gifs/one_rototrans.gif" width = 200> </br>
    <br>
-   <text><b>Figure 14. </b><em>Novel view synthesis by our model trained on roto-translations from a single scene (left rotations, middle translations, right roto-translations).</em></text>
+   <text><b>Figure 15. </b><em>Novel view synthesis by our model trained on roto-translations from a single scene (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
 It is clear that this training procedure does result in accurate equivariant rendering with rototranslations. While the chair is already part of the training set, some of the angles tested on are not, which shows the model has successfully learned the assigned task.
@@ -408,7 +408,7 @@ Below we provide a demonstration of the training procedure performed for differe
    <img src="src/imgs/gifs/five_rototrans.gif"  width = 200> 
    <img src="src/imgs/gifs/ten_rototrans.gif"  width = 200>  </br>
    <br>
-   <text><b>Figure 15. </b><em>Comparison of quality of rototranslation on a previously seen scene. The models were traned with one, two, five, and ten scenes (left to right).</em></text>
+   <text><b>Figure 16. </b><em>Comparison of quality of rototranslation on a previously seen scene. The models were traned with one, two, five, and ten scenes (left to right).</em></text>
 </p>
 
 We observe that scaling the number of scenes does not negatively affect the quality of the novel view synthesis on a previously seen scene. Nonetheless, these models are still not capable of generating a novel view for a novel scene. Because the original authors were able to do that with more training time and more data for rotations, we believe that more data and more training time can do the same for roto-translations. We argue that the nonexistent decrease of quality implies that there is room for generalization without compromising on the quality of the images.
