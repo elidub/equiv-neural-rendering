@@ -182,14 +182,14 @@ Another problem with out-of-the-box translations from the rotation model is that
 </p>
 
 
-#### Roto-translations
+#### Roto-translations through inductive bias
 
 We further observe that the same properties allow for out-of-the-box roto-translations. Also the roto-translations do not account for the angular shift between camera and object. This is shown in Figure 9.
 
 <p align="center">
    <img src="src/imgs/figs/rototrans.png"> </br>
    <br>
-   <text><b>Figure 9. </b><em>Examples how the original rotation-only model is not able to perform translations along the line of sight.</em></text>
+   <text><b>Figure 9. </b><em>Example of how the model does not grasp that a translational shift in the roto-translation setting also affects the camera angle. Notice that in the ground truth the chair is slightly tilted compared to the rendered chair.</em></text>
 </p>
 
 <!-- ![Alt text](src/imgs/figs/rototrans.png) -->
