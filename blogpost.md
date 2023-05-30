@@ -214,7 +214,7 @@ The authors present datasets consisting of rotational transformations. However, 
 The following section demonstrates the practical application of our pipeline for data production, by demonstrating how to use blender to generate new training data containing roto-translations.
 
 #### 3.1.1  Demonstration: populating datasets using Blender 
-Similar to [1], we perform experiments on the [ShapeNet Core](https://shapenet.org/download/shapenetcore)-Chairs benchmark. It is worth noting that the objects included in the ShapeNetCore dataset are already normalized and consistently aligned. However, the subsequent pipeline can be adapted to accommodate any 3D-object data that is processable by Blender. The notebook report contains a brief demonstration of how data can be constructed using Blender 3.5.1. Some examples are shown in Figure 10.
+Similar to [1], we perform experiments on the [ShapeNet Core](https://shapenet.org/download/shapenetcore)-Chairs benchmark. It is worth noting that the objects included in the ShapeNetCore dataset are already normalized and consistently aligned. However, the subsequent pipeline can be adapted to accommodate any 3D-object data that is processable by Blender. The notebook report contains a brief demonstration of how data can be constructed using Blender 3.5.1. Some examples are shown in Figure 11.
 
 <p align="center">
    <img src="src/imgs/figs/data_demo.png"> </br>
@@ -265,7 +265,7 @@ With these extentions to the model architecture, we conducted the following expe
 
 #### 3.3.1 Retraining a rotation model with our dataset
 
-With the dataset we created as discussed in [Section 3.1](#31-datasets), we tried training a rotation-based model from scratch, hoping to reproduce the authors' original results on our data. The resulting model outputs did not match up to the original model, as can be seen in Figure 11. Not an insignificant amount of detail is gone in the reconstructed image. We suspect the reason behind this loss in performance might be the reduced image size, as the same amount of error pixels will impact our new images more significantly. 
+With the dataset we created as discussed in [Section 3.1](#31-datasets), we tried training a rotation-based model from scratch, hoping to reproduce the authors' original results on our data. The resulting model outputs did not match up to the original model, as can be seen in Figure 12. Not an insignificant amount of detail is gone in the reconstructed image. We suspect the reason behind this loss in performance might be the reduced image size, as the same amount of error pixels will impact our new images more significantly. 
 
 <!-- ![Alt text](src/imgs/figs/ourRot1.png)
 
@@ -301,7 +301,7 @@ As the figures below show, this model reconstructs the original image with very 
    <img src="src/imgs/gifs/trans_trans.gif" width = 200> 
    <img src="src/imgs/gifs/trans_rototrans.gif" width = 200> </br>
    <br>
-   <text><b>Figure 13. </b><emNovel view synthesis by our model trained on translations (left rotations, middle translations, right roto-translations).</em></text>
+   <text><b>Figure 13. </b><em>Novel view synthesis by our model trained on translations (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
 <!-- ![image](src/imgs/figs/ourTrans1.png) -->
