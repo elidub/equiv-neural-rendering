@@ -171,7 +171,7 @@ Furthermore, due to the central positioning of the objects in the images, the mo
    <text><b>Figure 8. </b><em>Example of how the original rotation-only model is able to perform trannslation orthogonal to the line of sight (bottom) but is not able to perform translations alon the line of sight (top).</em></text>
 </p>
 
-Another problem with out-of-the-box translations from the rotation model is that it only shifts the 2D image instead of developing a real 3D understanding of the scene. When we compare the rendered image to the ground truth, we observe that the model does not grasp that a shift also changes the angle at which the camera is looking at the object. It is obvious because the model has never seen a shift and only works on 2D equivariance as described above. Furthermore, we simply added a functionality for translations without ever training the model on them.
+Another problem with out-of-the-box translations from the rotation model is that it only shifts the 2D image instead of developing a real 3D understanding of the scene. When we compare the rendered image to the ground truth, we observe that the model does not grasp that a shift also changes the angle at which the camera is looking at the object. It is obvious because the model has never seen a shift and only works on 2D equivariance as described above. Furthermore, we simply added a functionality for translations without ever training the model on them. Figure 9 shows that, even though the translation looks rather convinving, the ground truth chair is slightly rotated due to the relative shift to the camera. The model has not learned to incorporate this.
 
 <!-- ![Alt text](src/imgs/figs/translations2.png) -->
 
@@ -184,7 +184,7 @@ Another problem with out-of-the-box translations from the rotation model is that
 
 #### Roto-translations through inductive bias
 
-We further observe that the same properties allow for out-of-the-box roto-translations. Also the roto-translations do not account for the angular shift between camera and object. This is shown in Figure 9.
+We further observe that the same properties allow for out-of-the-box roto-translations. Also the roto-translations do not account for the angular shift between camera and object. This is shown in Figure 10.
 
 <p align="center">
    <img src="src/imgs/figs/rototrans.png"> </br>
@@ -309,7 +309,7 @@ As the figures below show, this model reconstructs the original image with very 
 
 <!-- *** Depending on how our experiments go, we might need to talk about model architecture and more inductive biases here *** -->
 
-In particular, we observe that the models capabilities of translations along the x-axis (scaling) has significantly increased after training upon the translation data. This is shown in Figure 13, where the model is able to zoom in on the chair, which was not possible with the original model.
+In particular, we observe that the models capabilities of translations along the x-axis (scaling) has significantly increased after training upon the translation data. This is shown in Figure 14, where the model is able to zoom in on the chair, which was not possible with the original model.
 
 <!-- ![image](src/imgs/figs/ourTrans3.png)
 ![image](src/imgs/figs/ourTrans4.png) -->
