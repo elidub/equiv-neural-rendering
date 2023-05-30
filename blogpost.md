@@ -178,7 +178,7 @@ Another problem with out-of-the-box translations from the rotation model is that
 <p align="center">
    <img src="src/imgs/figs/translations2.png"> </br>
    <br>
-   <text><b>Figure 8. </b><em>Example of how the model does not grasp that a translational shift also affects the camera angle.</em></text>
+   <text><b>Figure 8. </b><em>Example of how the model does not grasp that a translational shift also affects the camera angle. Notice that in the ground truth the chair is slightly tilted compared to the rendered chair.</em></text>
 </p>
 
 
