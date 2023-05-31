@@ -248,7 +248,7 @@ The original datasets are intensive to train, both from a computational and a me
 |---|---|---|---|---|---|---|---|
 | Rotation  | 1.5  | [0, $2\pi$]  | [0, $2\pi$]  | [0, 0]  | [0, 0]  | [0, 0] | 64 x 64|
 | Translation  | 1.5  | [0, 0]  | [0, 0]  | [-0.4, 0.4]  | [-0.3, 0.5]  | [-0.4, 0.4] | 64 x 64|
-| Rototranslation  | 1.5  | [-$\pi$, $\pi$]  | [-$1/2\pi$, $1/2\pi$]  | [-0.4, 0.4]  | [-0.3, 0.5]  | [-0.4, 0.4] | 64 x 64|
+| Rototranslation  | 1.5  | [- $\pi$, $\pi$]  | [- $1/2\pi$, $1/2\pi$]  | [-0.4, 0.4]  | [-0.3, 0.5]  | [-0.4, 0.4] | 64 x 64|
 
 **Table 3:** _Hyperparameters used when populating the new dataset._
 
