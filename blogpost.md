@@ -51,7 +51,7 @@ Equivariance is enforced between representation and image space by applying tran
 
 #### 1.1.1: Training
 
-As shown in Figure 4, two images of the same object, obtained from different camera angles, are passed through the inverse renderer and the implicit representations are formed. Then, the forward and backward transformation grid is applied to both latent representations to turn one into the other, before passing them to the renderer. Finally, the reconstructed output images are compared to the original inputs to obtain the loss values. Training in this manner ensures the model learns equivariant representations, as the loss evaluates both the actual rendering and the accuracy of the matching transformations from both spaces.
+As shown in Figure 3, two images of the same object, obtained from different camera angles, are passed through the inverse renderer and the implicit representations are formed. Then, the forward and backward transformation grid is applied to both latent representations to turn one into the other, before passing them to the renderer. Finally, the reconstructed output images are compared to the original inputs to obtain the loss values. Training in this manner ensures the model learns equivariant representations, as the loss evaluates both the actual rendering and the accuracy of the matching transformations from both spaces.
 
 <!-- ![Alt text](src/imgs/figs/fig4.png) -->
 <p align="center">
@@ -77,7 +77,7 @@ The authors evaluate their model on 4 datasets, including two ShapeNet benchmark
 
 ### 1.3: Experiments of paper 
 
-The experiments of the study are confucted mainly on ShapeNet benchmarks, as well as two novel datasets of their design. The proposed model is compared against three baseline models. All three built for 3D rendering from one or multiple 2D images, but they all make assumptions much stronger than the original study. Comparison off the assumptions between other SoTA models and the proposed model is presented in Table 2.
+The experiments of the study are conducted mainly on ShapeNet benchmarks, as well as two novel datasets of their design. The proposed model is compared against three baseline models. All three baselines are built for 3D rendering from one or multiple 2D images, but they all make assumptions much stronger than the original study. A comparison of the assumptions between other SoTA models and the proposed model is presented in Table 2.
 
 |   | TCO  |  DGQN | SRN  | Proposed model  |
 |---|---|---|---|---|
@@ -87,7 +87,7 @@ The experiments of the study are confucted mainly on ShapeNet benchmarks, as wel
 
 **Table 2.** _Comparison between assumptions of SoTA models._
 
-The qualitative comparisons against the baseline models in single shot novel view synthesis with the ShapeNet chairs dataset, as shown in Figure 4, reveals that the model achieves similar to SoTA results while making far fewer assumptions than the other methods. It can produce high quality novel views by achieving the desired equivariant transformation in representation space.
+The qualitative comparisons against the baseline models in single shot novel view synthesis with the ShapeNet chairs dataset is shown in Figure 4. It reveals that the model achieves similar to SoTA results while making far less assumptions than the other methods. It can produce high quality novel views by achieving the desired equivariant transformation in representation space.
 
 <!-- ![Alt text](src/imgs/figs/results.png) -->
 <p align="center">
@@ -102,7 +102,7 @@ Experiments in other datasets include:
 - MugsHQ: a dataset of mugs based on the mugs ShapeNet class with an added background environment
 - 3D mountains: a dataset of mountain landscapes
 
-Results similar to the chairs were reported in the other datasets, with some variations due to the specific challenges of each one. For example, the mountains contain extremely complex geometric information, which severly limits the detail of the novel view synthesis. Instances of these are shown in Figure 5.
+Results similar to the chairs were reported on the other datasets, with some variations due to the specific challenges of each one. For example, the mountains contain extremely complex geometric information, which severly limits the detail of the novel view synthesis. Instances of these are shown in Figure 5.
 
 <p align="center">
    <img src="src/imgs/figs/chairs.png"> </br>
@@ -138,7 +138,7 @@ In the original paper the authors used 3D rotations to generate novel views, mea
 
 ###  What can the model do and what is missing?
 
-The model, which was trained by the original authors, shows some nice out-of-the-box capabilities. That is the model can already perform some limited (roto-)translations.
+The model, which was trained by the original authors, shows some nice out-of-the-box capabilities. That is, the model can already perform some limited (roto-)translations.
 
 #### Translations through inductive bias
 
@@ -209,9 +209,9 @@ In this section we describe the novel contributions of our research.
 
 ### 3.1 Datasets
 
-The authors present datasets consisting of rotational transformations. However, they do not provide instructions or tools for further data generation. To address this limitation we developed a new pipeline using blender for producing images of 3D-models under rotations, translations and roto-translations. Our pipeline can be used to increase the size of the training data, or to extend training data to new transformation groups.
+The authors present datasets consisting of rotational transformations. However, they do not provide instructions or tools for further data generation. To address this limitation, we developed a new pipeline using Blender for producing images of 3D-models under rotations, translations and roto-translations. Our pipeline can be used to increase the size of the training data, or to extend training data to new transformation groups.
 
-The following section demonstrates the practical application of our pipeline for data production, by demonstrating how to use blender to generate new training data containing roto-translations.
+The following section demonstrates the practical application of our pipeline for data production, by demonstrating how to use [Blender](https://www.blender.org) to generate new training data containing roto-translations.
 
 #### 3.1.1  Demonstration: populating datasets using Blender 
 Similar to [1], we perform experiments on the [ShapeNet Core](https://shapenet.org/download/shapenetcore)-Chairs benchmark. It is worth noting that the objects included in the ShapeNetCore dataset are already normalized and consistently aligned. However, the subsequent pipeline can be adapted to accommodate any 3D-object data that is processable by Blender. The notebook report contains a brief demonstration of how data can be constructed using Blender 3.5.1. Some examples are shown in Figure 11.
@@ -229,10 +229,10 @@ Similar to [1], we perform experiments on the [ShapeNet Core](https://shapenet.o
 We use the afformention pipeline to build 3 new datasets: 
 
    * _Rotations_: used to reproduce the results presented by [1].
-   * _Translations_: used to train a model with higher capacity for translation invariance.
-   * _Roto-translations_: used to train a roto-translational invariant model.
+   * _Translations_: used to train a model with higher capacity for translation equivariance.
+   * _Roto-translations_: used to train the model to be roto-translation equivariant.
     
-The original datasets are recouse intensive to train, both from a computational and a memory perspective. Because our computational resources are limited, both in timeline and parallel GPU availability, we downscale the datasets in order to reduce the computational costs and therefore time of training the new models. For all three datasets we use the partitioning described in Table 2.
+The original datasets are intensive to train, both from a computational and a memory perspective. Because our computational resources are limited, both in timeline and parallel GPU availability, we downscaled the datasets in order to reduce the computational costs and therefore time of training the new models. For all three datasets we use the partitioning described in Table 2.
 
 
 |   | **# Scenes**  |  **# Images per scene** | **Resolution**  | **# Total images**  |
@@ -244,20 +244,20 @@ The original datasets are recouse intensive to train, both from a computational 
 **Table 2:** _Partition of new datasets_
 
 
-| **Hyperparameter**  | **R**  |  **X** | **Y**  | **Z**  | **Resolution** |
-|---|---|---|---|---|---|
-|   | 1.5  | [-0.4, 0.4]  | [-0.3, 0.5]  | [-0.4, 0.4] | 64 x 64|
+| **Dataset**  | **R** | **Azimuth** | **Elevation** | **X** | **Y**  | **Z**  | **Resolution** |
+|---|---|---|---|---|---|---|---|
+| Rotation  | 1.5  | [0, $2\pi$]  | [0, $2\pi$]  | [0, 0]  | [0, 0]  | [0, 0] | 64 x 64|
+| Translation  | 1.5  | [0, 0]  | [0, 0]  | [-0.4, 0.4]  | [-0.3, 0.5]  | [-0.4, 0.4] | 64 x 64|
+| Rototranslation  | 1.5  | [-$\pi$, $\pi$]  | [-$1/2\pi$, $1/2\pi$]  | [-0.4, 0.4]  | [-0.3, 0.5]  | [-0.4, 0.4] | 64 x 64|
 
 **Table 3:** _Hyperparameters used when populating the new dataset._
 
-<!-- % Need to include rotations for training here, and fill in more info. -->
-
-We construct the datasets by sampling poses from various views. In case of rotations the camera is placed on a sphere with a radius **R**. For each view, a value between 0 and $2\pi$ is uniformly sampled for the elevation and azimuth angle of the camera and rotated accordingly. In case of translations, for each view, a value is uniformly sampled from a range of **X**, **Y** and **Z** locations of the chair.
+We construct the datasets by sampling poses from various views. For each dataset, the camera is placed on a sphere with a radius **R**. In case of rotations, a value between 0 and $2\pi$ is uniformly sampled for the elevation and azimuth angle of the camera for each view and rotated accordingly. In case of translations, for each view, a value is uniformly sampled from a range of **X**, **Y** and **Z** locations of the chair. Table 3 shows the (range of the) hyperparameters used for each dataset.
 
 
 ### 3.2 Extending the model
 
-After evaluating the pretrained model supplied by [1], we extend the architecture to allow for translation matrices to be applied to the input image. Furthermore, by combining it with the previously implemented rotation matrix, we also allow for rototranslations. To combine these two symmetries, we use a single rototranslation matric and perform the operartion in one go.
+After evaluating the pretrained model supplied by [1], we extend the architecture to allow for translation matrices to be applied to the input image. Furthermore, by combining it with the previously implemented rotation matrix, we also allow for rototranslations. To combine these two symmetries, we use a single rototranslation matrix and perform the operartion in one go.
 
 ### 3.3 Experiment Analysis
 
@@ -374,7 +374,7 @@ To test this hypothesis, we experimented with images that had a size of 128 x 12
 ![image](src/imgs/figs/finetune_rototrans.gif) -->
 
 <p align="center">
-   <img src="src/imgs/figs/finetune_roto.gif" width = 600> <br> <img src="src/imgs/figs/finetune_roto.gif" width = 600>
+   <img src="src/imgs/figs/finetune_roto.gif" width = 600> <br> <img src="src/imgs/figs/finetune_rototrans.gif" width = 600>
    <br>
    <text><b>Video 4. </b><em>Training of rendering a new angle while funetuning the original rotations model with rotations (top) and roto-translations (bottom).</em></text>
 </p>
@@ -388,7 +388,7 @@ Since finetuning did not work, the only option is to obtain more data and train 
 
 By keeping a constant number of images, we start with one scene and produce a large amount of views for it. The total number of images is always 100.000 and we conducted experiments with 1, 2, 5 and 10 scenes, dividing the number of views equally among them. The total number of 100.000 training images is of the same order as our rotation-only and translation-only datasets. When creating each scene, we keep certain camera angle patches separate to test the quality of the rendered image and the transformations applied to it. This way we make sure to test our approach in a novel view that the model has not seen during training.
 
-The figs below showcase the results of training a model in one scene only. The training data is 100.000 images of the same chair, with a patch of angles left out. The test image below is part of these test angles.
+Figure 15 showcases the results of training a model in one scene only. The training and validation data consists 100.000 images of the same chair, with a patch of angles left out. 
 
 <p align="center">
    <img src="src/imgs/gifs/one_rot.gif"  width = 200> 
@@ -398,9 +398,9 @@ The figs below showcase the results of training a model in one scene only. The t
    <text><b>Figure 15. </b><em>Novel view synthesis by our model trained on roto-translations from a single scene (left rotations, middle translations, right roto-translations).</em></text>
 </p>
 
-It is clear that this training procedure does result in accurate equivariant rendering with rototranslations. While the chair is already part of the training set, some of the angles tested on are not, which shows the model has successfully learned the assigned task.
+It is clear that this training procedure does result in accurate equivariant renderings with rototranslations. While the chair is already part of the training set, some of the angles that are shown in Figure 15 are not, which shows the model has successfully learned the assigned task.
 
-Below we provide a demonstration of the training procedure performed for different numbers of scenes.
+Figure 16 provides a demonstration of the training procedure performed for different numbers of scenes.
 
 <p align="center">
    <img src="src/imgs/gifs/one_rototrans.gif"  width = 200> 
@@ -428,7 +428,7 @@ Table 4 presents the PSNR values estimated for a selection of the experiments.
 
 **Table 4**: *PSNR-values for a selection of the experiments. The PSNR values of the original ENR rotation model, as well as our rotation and translation models on lower resolution, were tested on novel scenes. The PSNR values of the roto-translation model were estimated using the training scenes, but with novel angles and translation intervals held out during training.*
 
-When comparing the PSNR values of the original ENR model and our rotation model we observe a minor decrease in the PSNR value. This is expected due to to the fact that we used half the number of training scenes at half the resolution compared to the original ENR model. However our model still appears to perform well, indicating that training on a lower resolution with a smaller trainingset yields comparable quantitative results.
+When comparing the PSNR values of the original ENR model and our rotation model we observe a minor decrease in the PSNR value. This is expected due to to the fact that we used half the number of training scenes at half the resolution compared to the original ENR model. However, our model still appears to perform well, indicating that training on a lower resolution with a smaller trainingset yields comparable quantitative results.
 
 We observe a more drastic decrease in the PSNR values during testing of the translation and the roto-translation models. However, the signal is still sufficiently prominent to conclude that the models have learned reasonable representations. This supports the original observations in our qualitiative evaluations. 
 
