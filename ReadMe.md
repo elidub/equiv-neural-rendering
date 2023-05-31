@@ -90,4 +90,4 @@ Finally, the model can be analyzed and used to render scenes using the notebooks
 An in-depth discussion and analysis on the results can be found in [the blogpost](blogpost.md).
 
 ## License
-As this code has been built upon the the [repository `apple/ml-equivariant-neural-rendering`](https://github.com/apple/ml-equivariant-neural-rendering), the same license applies. That is, this project is licensed under the Apple Sample Code License.
+As this code has been built upon the [repository `apple/ml-equivariant-neural-rendering`](https://github.com/apple/ml-equivariant-neural-rendering), therefore the same license applies. That is, this project is licensed under the Apple Sample Code License.
