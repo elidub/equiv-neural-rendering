@@ -438,9 +438,7 @@ We denote that due to the additional complexity of testing on novel scenes with 
 
 Through experimentations throughouht the study, we were able to draw the following conclusions:
 
-- Translations are a simple type of symmetry for this model to learn. Information about changes in the object's coordinates is easiy encapsulated within the convolutional architecture along the image plane.
-
-- Translation along the third axis (scaling) is a simple operation to learn, as it consists of enlarging or shrinking features of the scene, similar to a pooling operation in CNNs.
+- Translations are a simple type of symmetry for this model to learn. Information about changes in the object's coordinates is easily encapsulated within the convolutional architecture along the image plane.
 
 - This architecture is able to learn rototranslations. With adequate quality and quantity of data, it is possible to achieve a unification of the two symmetries and apply it to the implicit representations.
 
